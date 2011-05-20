@@ -1,0 +1,296 @@
+% &latex
+\documentclass[preprint,12pt]{elsarticle}
+%% Use the option review to obtain double line spacing
+%% \documentclass[preprint,review,12pt]{elsarticle}
+
+%% Use the options 1p,twocolumn; 3p; 3p,twocolumn; 5p; or 5p,twocolumn
+%% for a journal layout:
+%% \documentclass[final,1p,times]{elsarticle}
+%% \documentclass[final,1p,times,twocolumn]{elsarticle}
+%% \documentclass[final,3p,times]{elsarticle}
+%% \documentclass[final,3p,times,twocolumn]{elsarticle}
+%% \documentclass[final,5p,times]{elsarticle}
+%% \documentclass[final,5p,times,twocolumn]{elsarticle}
+
+%% if you use PostScript figures in your article
+%% use the graphics package for simple commands
+%% \usepackage{graphics}
+%% or use the graphicx package for more complicated commands
+%% \usepackage{graphicx}
+%% or use the epsfig package if you prefer to use the old commands
+%% \usepackage{epsfig}
+
+%% The lineno packages adds line numbers. Start line numbering with
+%% \begin{linenumbers}, end it with \end{linenumbers}. Or switch it on
+%% for the whole article with \linenumbers after \end{frontmatter}.
+\usepackage{lineno}
+
+%% natbib.sty is loaded by default. However, natbib options can be
+%% provided with \biboptions{...} command. Following options are
+%% valid:
+
+%%   round  -  round parentheses are used (default)
+%%   square -  square brackets are used   [option]
+%%   curly  -  curly braces are used      {option}
+%%   angle  -  angle brackets are used    <option>
+%%   semicolon  -  multiple citations separated by semi-colon
+%%   colon  - same as semicolon, an earlier confusion
+%%   comma  -  separated by comma
+%%   numbers-  selects numerical citations
+%%   super  -  numerical citations as superscripts
+%%   sort   -  sorts multiple citations according to order in ref. list
+%%   sort&compress   -  like sort, but also compresses numerical citations
+%%   compress - compresses without sorting
+%%
+%% \biboptions{comma,round}
+
+% \biboptions{}
+
+\usepackage{pstricks}
+\usepackage{multido,pst-plot,pst-node}
+
+\usepackage{epic,eepic}
+\usepackage[centertags]{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{newlfont}
+\usepackage[inference]{semantic}\setpremisesend{0pt}
+\usepackage{alltt}
+\usepackage{enumerate}
+\usepackage[hypertex]{hyperref} %[hypertex] is the driver for dviout
+\usepackage{varioref}
+\usepackage{stmaryrd}
+\usepackage{xypic}
+\usepackage{subfig}
+%\usepackage{endfloat}
+
+%\hfuzz 0.1pt
+%\overfullrule=15pt
+%\brokenpenalty=10000
+
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{rem}{Remark}[section]
+\newtheorem{proof}{Proof}[section]
+
+\newcommand{\prop}{\mathrm{Prop}}
+\newcommand{\bocks}[1]{[#1]}
+\newcommand{\lift}[1]{\widehat{#1}}
+\newcommand{\nlift}[1]{\tilde{#1}}
+\newcommand{\sound}{\mathrm{sound}}
+\newcommand{\liftok}{\mathrm{lift_\beta}}
+\newcommand{\qind}{\mathrm{qind}}
+\newcommand{\exact}{\mathrm{exact}}
+\newcommand{\subst}{\mathrm{subst}}
+\newcommand{\Set}{\mathrm{Set}}
+\newcommand{\emb}{\mathrm{emb}}
+\newcommand{\compl}{\mathrm{complete}}
+\newcommand{\stable}{\mathrm{stable}}
+\newcommand{\List}{\mathrm{List}}
+\newcommand{\Fin}{\mathrm{Fin}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\pullbackcorner}[1][dr]{\save*!/#1-1.2pc/#1:(-1,1)@^{|-}\restore}
+\newcommand{\pushoutcorner}[1][dr]{\save*!/#1+1.2pc/#1:(1,-1)@^{|-}\restore}
+\newcommand{\todo}[1]{\textcolor{red}{#1}}
+\newcommand{\now}{\mathrm{now}}
+\newcommand{\later}{\mathrm{later}}
+\newcommand{\noweq}{\mathrm{now}_\sqsubseteq}
+\newcommand{\latereq}{\mathrm{later}_\sqsubseteq}
+\newcommand{\laterleft}{\mathrm{later}_{\mathrm{left}}}
+\newcommand{\inl}{\mathop{\mathrm{inl}}}
+\newcommand{\inr}{\mathop{\mathrm{inr}}}
+\journal{???}
+
+\begin{document}
+
+\input{definitions.tex}
+
+\begin{frontmatter}
+\title{Definable quotients in type theory}
+\author{TA,TA,LN}
+\address{Division of Computer Science, University of Nottingham in Ningbo, China,199 Taikang Road East, 315100, Ningbo, China.}
+
+\begin{abstract}
+
+\end{abstract}
+
+\begin{keyword}
+
+\end{keyword}
+\end{frontmatter}
+
+%% Line numbers can be started here if you want.
+%\linenumbers
+
+\section{Introduction}\label{sec:introduction}
+\subsection{Notation}
+We keep obvious quantifications implicit.
+
+Given $B : A \to \Set$, $b : B\,a$, $b' : B\,a'$ and $p : a\equiv a'$, we write $b \simeq_{p} b'$ for $\subst\,B\,p\,b \equiv b'$.
+We write $\prop$ for the type of sets with at most one inhabitant.
+
+\todo{define $\Fin$ and Bijection}  
+
+\todo{logical symbols in Prop}
+
+
+\section{Setoids}\label{sec:setoids}
+\begin{definition}
+A setoid $(A,\sim)$ is a set $A$ equipped with an equivalence relation $\sim : A \to A \to \prop$.
+\end{definition}
+\subsection{Examples}\label{sec:setoids:examples}
+\subsubsection*{Integers}
+The integers can be viewed as the setoid $(\Z_0=\nat\times\nat,\sim)$ where $(a,b)\sim(c,d)$ if{f} $a+d=c+b$ reflecting the idea that $(a,b)$ represents the integer $a-b$.
+\subsubsection*{Rational numbers}
+The rationals can in turn be defined as $(\Z\times\nat,\sim)$ where $(x,m)\sim(y,n)$ if{f} $x\times(n+1)=y\times(m+1)$, reflecting that $(x,m)$ represents the quotient $\frac {x}{m+1}$.
+\subsubsection*{The real numbers}
+The real numbers can then be defined as $(R_0,\sim)$ where $R_0$ is the set of Cauchy sequences and two sequences are equivalent if{f} their pointwise difference converges to $0$. 
+\begin{align*}
+R_0&=\set{s : \nat\to\Q \mid \forall\varepsilon :\Q,\varepsilon>0\to\exists m:\nat, \forall i:\nat, i>m\to |s\,i - s\, m|<\varepsilon}\\
+r\sim s &= \forall\varepsilon :\Q,\varepsilon>0\to\exists m:\nat, \forall i:\nat, i>m\to |r\,i - s\,i|<\varepsilon
+\end{align*}
+
+\subsubsection*{Unordered pairs}
+Given a set $A$, the unordered =airs of elements of $A$ is the setoid $(A\times A,\sim)$ where
+$(a,b)\sim(b,a)$.
+
+\subsubsection*{Finite multisets}
+Given a set $A$ , the finite multisets of elements in $A$ is the setoid $(\List A,\sim)$ where two lists are equivalent if{f} one is the permutation of the other.
+\begin{align*}
+\List A &= \Sigma n:\nat.\Fin\,n\to A\\
+(m,f)\sim(n,g) &= \exists \varphi : \Fin\,m \to \Fin\,n \cdot\ \mathrm{Bijection}\,\varphi \to g\circ\varphi = f  
+\end{align*}
+
+\subsubsection*{Finite sets}
+Given a set $A$ , the finite sets of elements in $A$ is the setoid $(\List A,\sim)$ where two lists are equivalent if{f} they contains the same elements.
+\begin{align*}
+(m,f)\subseteq(n,g) &= \exists \varphi : \Fin\,m \to \Fin\,n \cdot \varphi \to g\circ\varphi = f  \\
+(m,f)\sim(n,g)&= (m,f)\subseteq(n,g) \wedge (n,g)\subseteq(m,f)
+\end{align*}
+
+\subsubsection*{Partiality monad}
+Given a set $A$, the set of partial computations over $A$ is given by $(A_{\bot_0},{\sim})$ where $A_{\bot_0}$ is the set of delayed computations over $A$  and $\sim$ is a weak bisimilarity ignoring finite delays. Using the notation for mixed inductive coinductive  definitions from~\cite{danielson:altenkirch:2010}, where we mark coinductive occurrences of a datatype by using $\infty$, we define $A_{\bot_0} : \Set$ and the relations $\sqsubseteq:A_{\bot_0}\to A_{\bot_0} \to \prop$ by the following constructors:
+\begin{align*}
+\now  &: A \to A_{\bot_0}\\
+\later &: \infty A_{\bot_0} \to  A_{\bot_0}\\
+\noweq &: \now\, a \sqsubseteq \now\,a'\\
+\latereq &: \infty(d \sqsubseteq d') \to \later\,d \sqsubseteq \later\,d'\\
+\laterleft &: d\sqsubseteq d' \to \later\,d \sqsubseteq d'
+\end{align*}
+and we define $d\sim d'= d\sqsubseteq d' \wedge d'\sqsubseteq d$ .
+
+\section{Quotients and coequalizers}\label{sec:quotients}
+ 
+\begin{definition}
+\label{def:quotient}
+Given a setoid $(A,\sim)$,  a \emph{quotient} over that setoid is given by
+
+\begin{enumerate}[i.]
+\item \label{enum:Q} a set $Q$,
+\item \label{enum:box}a function $\bocks\cdot\colon A \to Q$ which is compatible with $\sim$, 
+that is \[\sound\colon (a,b : A) \to a\sim b \to [a] \equiv [b],\]
+\item \label{enum:dlift} a dependent lifting function for $B:Q\to\Set$
+ \[\lift\cdot: (f\colon (a:A) \to B\,\bocks a) \to ((p:a\sim b) \to f\,a \simeq_{\sound\,p}f\,b) 
+      \to ((q:Q) \to B\,q) \]
+such that $\liftok\colon \lift f \,p\,\bocks a\equiv f a$.
+ 
+\end{enumerate}
+If we only have \ref{enum:Q} and \ref{enum:box}, we call the triple $(Q,\bocks\cdot, \sound)$ a \emph{prequotient}.
+A quotient is \emph{exact} if additionally
+we have 
+\begin{enumerate}[i.]
+\setcounter{enumi}{3}
+\item $\exact :(a,b : A) \to  \bocks a \equiv \bocks b \to a \sim b$.
+
+\end{enumerate}
+\end{definition}
+
+There are two special cases of the dependent lift property \ref{enum:dlift}. One is $B$ is not dependent,
+ \[\nlift\cdot: (f\colon A \to B) \to (a\sim b \to f\,a \equiv f\,b) \to (Q \to B)\]
+and the other is if $B$ is a predicate, i.e. $B : Q\to \prop$, in which case we get an induction principle:
+\[\qind \colon((a\colon A)\to B \,\bocks a)\to ((q\colon Q)\to B\,q)\]
+since the condition $((p:a\sim b) \to f\,a \simeq_{\sound\,p}f\,b) $  of the dependent lifting function $\lift\cdot$ is trivially satisfied.
+On the other hand, these two special cases are sufficient to recover the dependent lifting function:      
+
+
+\begin{proposition}\label{prop:nlifteq}
+A prequotient with non-dependent lift~~$\nlift\cdot$ and an induction principle $\qind$ is a quotient.
+\end{proposition}
+This characterization was given as a definition of quotients in~\cite{hofmann:thesis}.
+
+
+Quotients correspond to coequalizers. We remind the reader of the definition of coequalizer in a category. 
+
+\begin{definition}
+Given two morphisms $g,h : S\to A$, a \emph{coequalizer} of $g$ and $h$ is a morphism $\bocks\cdot:A\to Q$ such that for any $f:A\to X$ satisfying $f \circ g = f \circ h$, there exists a unique $\lift f$ such that  
+\[\xymatrix{
+S\ar@<0.5ex>[r]^g\ar@<-0.5ex>[r]_h& A\ar[r]^{\bocks\cdot}\ar[dr]_{f} & Q\ar@{-->}[d]^{\lift f}\\
+&&X
+}\]
+A coequalizer is \emph{exact} if 
+\[\xymatrix{
+S\pullbackcorner\ar[r]^g\ar[d]_h & A\ar[d]^{\bocks\cdot} \\
+A\ar[r]_{\bocks\cdot} & Q
+}\]
+and it is \emph{split} if the morphism $\bocks\cdot$ is a split epi, that is if it has a right inverse $\emb : Q \to A$.
+\end{definition}
+
+We observe that there is an exact correspondence between quotients and coequalizers:
+\begin{proposition}\hfill
+\begin{enumerate}
+\item $Q$ is the quotient on $(S,\sim)$ where $s\sim s'$ if and only if $g\,s=h\,s'$.
+This quotient is exact if{f} the coequalizer is exact.
+\item Let $R$ be $\Sigma a,a':A,a\sim a'$ and $\pi_0,\pi_1 : R\to A$ the projection functions. The quotient for $(R,\sim)$ is then the coequalizer for those projections and it is exact if and only if the coequalizer is exact.
+\[\xymatrix{
+R\ar@<0.5ex>[r]^{\pi_0}\ar@<-0.5ex>[r]_{\pi_1}& A\ar[r]^{\bocks\cdot}\ar[dr]_{f} & Q\ar@{-->}[d]^{\lift f}\\
+&&X
+}\]
+\end{enumerate}
+\end{proposition}
+
+\section{Definable quotients\\ }\label{sec:defquotients}
+
+We now consider a general construction which allows us to construct quotients in type theory.
+
+\begin{definition}\label{def:defquotients}
+A \emph{definable quotient} on the setoid $(A,\sim)$ is a prequotient $(Q,\bocks\cdot,\sound)$ on $(A,\sim)$ with
+\begin{align*}
+\emb &: Q \to A\\
+\compl &: (a : A) \to \emb {\bocks a} \sim a\\
+\stable &: (q:Q) \to \bocks{\emb\,q} \equiv q\\
+\end{align*}
+\end{definition}
+
+\begin{proposition}
+All definable quotients are exact quotients.
+\end{proposition}
+\begin{proof}
+
+Given $(f\colon A \to B)$ and $p : a\sim b \to f\,a \equiv f\,b$, define $\nlift f\, p \,q = f (\emb\,q)$ from which we get $\nlift f \,(p : a \sim b)\,\bocks a\equiv f(\emb\,\bocks a)\equiv f\,a$ because $\emb\,\bocks a\sim a$ by completeness and $f$ respects $\sim$ by $p$. 
+
+To derive $\qind$, let $f:(a\colon A)\to B\,\bocks a$ and $q:Q$. Since $ \bocks{\emb\,q} \equiv q$ by stability, hence from $f (\emb\,q):B\,\bocks{\emb\,q}$ we can derive a proof of $B\,q$. 
+
+It follows from Proposition~\ref{prop:nlifteq} that this defines a quotient. 
+
+Finally, from $\bocks a \equiv \bocks b$ 
+we obtain by completeness that $a\sim\emb(\bocks a)\equiv\emb(\bocks b)\sim b$ and hence $a\sim b$. That is, the quotient is exact.
+\end{proof}
+\subsection{Examples}\label{sec:dquotients:examples}
+\subsubsection*{The integers}
+Define $\Z =\nat + \nat $ and 
+
+\begin{align*}
+\bocks{(a,0)} &= \inl\,a\\
+\bocks{(a+1,b+1)} &= \bocks{(a,b)}\\
+\bocks{(0,b+1)} &= \inr\,b\\\\
+\emb (\inl a) &= (a,0)\\
+\emb (\inr b) &= (0,b+1)\\
+\end{align*}
+The fact that this gives rise to a definable quotient has been verified in Agda~\cite{nuo:report:2010}.
+ One could of course just use that $\Z=\nat + \nat$ and define the operations on $\Z$ directly. However, seeing  $\Z$ as a quotient is helpful in proving properties of those operations and reflects the usual mathematical definition of the integers. E.g., to define $+$, we define 
+\[(a,b){+_0}(a'b')= (a+a',b+b')\]
+on $\Z_0$ and show that it respects $\sim$. Then by lifting $+_0$, we get $+$ on $\Z$, thus avoiding a rather incomprehensible case analysis. This becomes even more relevant when showing other properties such as distributivity of multiplication over addition~\cite{nuo:report:2010}.
+\end{document}
+

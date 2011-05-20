@@ -1,0 +1,266 @@
+\renewcommand{\above}{\sqsupseteq} \renewcommand{\epsilon}{\varepsilon}
+\renewcommand{\vec}{\overrightarrow}
+\renewcommand{\emptyset}{\varnothing}
+
+\providecommand{\bigcupbar}{\bigcup}
+\providecommand{\cupbar}{\cup}
+\providecommand{\downarrowvar}{\mathrel{\downarrow}}
+\providecommand{\llbrace}{\mathopen{{\{\hspace{-3.5pt}|}}}
+\providecommand{\real}{\mathbb{R}}
+\providecommand{\rrbrace}{\mathopen{{|\hspace{-3.5pt}\}}}}
+\providecommand{\uparrowvar}{\mathrel{\uparrow}}
+\providecommand{\waydownarrow}{\mathrel{\downarrow\hspace{-9.3pt}\raisebox{2pt}{\(\downarrow\)}}}
+\providecommand{\wayuparrow}{\mathrel{\uparrow\hspace{-9.3pt}\raisebox{2pt}{\(\uparrow\)}}}
+
+\newcommand{\colonp}{\mathrel{\colon\hspace{-1.5ex}\subseteq}}
+\newcommand{\coloneq}{\mathrel{\colon\hspace{-1.5ex}=}}
+\newcommand{\tp}{\colon}
+\newcommand{\Bool}{\mathtt{bool}}
+\newcommand{\Bound}{\mathop{\mathtt{bound}}\nolimits}
+\newcommand{\B}{{\mathbb B_\bot}}
+\newcommand{\Cons}{\mathop{\mathtt{cons}}\nolimits}
+\newcommand{\Definition}[1]{\emph{#1}}
+\newcommand{\D}{D}
+\newcommand{\False}{\mathop{\mathtt{false}}}
+\newcommand{\ISZEROfalse}{\Rulec[\redRNiszerofalse]{}{\Iszero(\K{n+1})\redto \False}}
+\newcommand{\ISZEROtrue}{\Rulec[\redRNiszerotrue]{}{\Iszero{(\K{0})}\redto \True}}
+\newcommand{\ISZEROweak}{\Rulec[\redRNiszeroweak]{ L\redto  L'}{(=0)(L) \redto(=0)(L')}}
+\newcommand{\Iftheni}[3]{\operatorname{\mathtt{if}} {#1} \mathrel{\operatorname{\mathtt{then}}}{#2}\mathrel{\operatorname{\mathtt{else}}}{#3}}
+\newcommand{\Piftheni}[3]{\operatorname{\mathtt{pif}} {#1} \mathrel{\operatorname{\mathtt{then}}}{#2}\mathrel{\operatorname{\mathtt{else}}}{#3}}
+\newcommand{\Ifthenl}[3]{\operatorname{\mathtt{if}}#1\begin{array}[t]{ll}\operatorname{\mathtt{then}}&#2\\\operatorname{\mathtt{else}}&#3\end{array}}
+\newcommand{\Iszero}{({0}=)}
+\newcommand{\K}[1]{\underline{#1}}
+\newcommand{\NQ}{\rc{\mathcal{R}}}
+\newcommand{\Nat}{\mathtt{nat}}
+\newcommand{\Nif}{\operatorname{\mathtt{if}}}
+\newcommand{\N}{{\mathbb N_\bot}}
+\newcommand{\OR}[3][]{{#2}\mathrel{\mathtt{OR_{#1}}}{#3}}
+\newcommand{\PSB}{\mathsf{B}}\newcommand{\PSN}{\mathsf{N}}\newcommand{\PSQ}{\mathsf{Q}}\newcommand{\PSR}{\mathsf{R}}\newcommand{\PSZ}{\mathsf{Z}}\newcommand{\pws}{\mathcal{P}}
+\newcommand{\Pred}{\mathtt{pred}}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\REL}[3]{#1\subseteq#2\times#3}
+\newcommand{\RQ}{\R_\mathbb{Q}}
+\newcommand{\RT}{\widetilde{\mathcal R}}
+\newcommand{\Real}{\mathtt{real}}
+\newcommand{\Rtest}{\mathop{\mathtt{rtest}}\nolimits}
+\newcommand{\Rulec}[4][]{\inference[$#1$]{#2}{#3}#4} \newcommand{\ruleetc}{\vdots}
+\newcommand{\Rule}[3][]{\inference[]{#2}{#3}} \newcommand{\R}{\mathcal{R}}
+\newcommand{\SM}[1]{#1^{\mathcal S}}
+\newcommand{\Succ}{\mathtt{succ}}
+\newcommand{\True}{\mathop{\mathtt{true}}}
+\newcommand{\TtoR}{\rho_{\ast}}
+\newcommand{\WTReal}{\widetilde\Real}
+\newcommand{\WTR}{\widetilde\PSR}
+\newcommand{\Wpor}{\operatorname{\texttt{wpor}}}
+\newcommand{\Y}{\mathtt{Y}}
+\newcommand{\absa}{\operatorname{abs}}
+\newcommand{\abs}[1]{{|#1|}}
+\newcommand{\adda}{\operatorname{add}}
+\newcommand{\addinta}{\operatorname{add_{\mathbb{Z}}}}
+\newcommand{\approxa}{\operatorname{bound}\nolimits''}
+\newcommand{\approxb}{\operatorname{\phi}}
+\newcommand{\approxc}{\operatorname{\psi}}
+\newcommand{\below}{\sqsubseteq}
+\newcommand{\bnd}{\overrightarrow{\sqcup}}
+\newcommand{\bool}{\mathbb{B}}
+\newcommand{\bound}{\operatorname{bound}}
+\newcommand{\brBIG}[1]{\Bigg(#1\Bigg)}
+\newcommand{\brBIg}[1]{\bigg(#1\bigg)}
+\newcommand{\brBig}[1]{\Big(#1\Big)}
+\newcommand{\brbig}[1]{\big(#1\big)}
+\newcommand{\br}[1]{\left(#1\right)}
+\newcommand{\case}[4]{\Case{#1}{#2}{#3}{#4}}
+\newcommand{\Case}[4]{\operatorname{\operatorname{cases}}\begin{array}[t]{l@{\quad\rightarrow\quad}l}#1&#2\\#3&#4\end{array}}
+\newcommand{\ccase}[4]{\operatorname{cases}\begin{array}[t]{l@{\quad\rightarrow\quad}l}#1&#2\\#3&#4\end{array}}
+\newcommand{\cas}[4]{\setlength{\arraycolsep}{0pt}\begin{array}[t]{l}\operatorname{cases}\\\setlength{\arraycolsep}{1ex}\begin{array}[t]{l@{\quad\rightarrow\quad}l}#1&#2\\#3&#4\end{array}\end{array}}
+\newcommand{\casA}[4]{\setlength{\arraycolsep}{0pt}\begin{array}[t]{l}\operatorname{cases}\\\setlength{\arraycolsep}{0ex}\begin{array}[t]{l@{\ \ \rightarrow\ \  }l}#1&#2\\#3&#4\end{array}\end{array}}
+\newcommand{\casB}[4]{\setlength{\arraycolsep}{0pt}\begin{array}[t]{l}\setlength{\arraycolsep}{0ex}\begin{array}[t]{l@{\  \rightarrow\  }l}\mid#1&#2\\\mid#3&#4\end{array}\end{array}}
+\newcommand{\cf}{\textit{cf}.}
+\newcommand{\circc}{\mathrel{\circ}}
+\newcommand{\cons}{\operatorname{cons}\nolimits}
+\newcommand{\contains}{\supseteq}
+\newcommand{\curry}{\operatorname{curry}}
+\newcommand{\dYY}{\mathop{\mu}\nolimits}
+\newcommand{\denapp}{\(\den{\Gamma\vdash{M(N)\tp\tau}}(\vec{d})=\den{\Gamma\vdash{M\tp\sigma}\to\tau}(\vec{d})\Big(\den{\Gamma\vdash{N\tp\sigma}}(\vec{d})\Big)\)}
+\newcommand{\denbound}{\den{\Gamma\vdash\Bound_a(M)\tp\Real}(\vec{d})=\left(\smyth(\bound_a)\right)\left(\den{\Gamma\vdash{M\tp\Real}}\right)}
+\newcommand{\denfalse}{\den{\Gamma\vdash\False\tp\Bool}(\vec{d})=\set{{\ffalse}}}
+\newcommand{\denifr}{=\begin{cases}\den{\Gamma\vdash{M\tp\gamma}}(\vec{d}) & \text{if $\den{\Gamma\vdash{B\tp\Bool}}(\vec{d})=\set{\ttrue}$}\\\den{\Gamma\vdash{N\tp\gamma}}(\vec{d}) & \text{if $\den{\Gamma\vdash{B\tp\Bool}}(\vec{d})=\set{\ffalse}$}\\ {\den{\Gamma\vdash{M\tp\gamma}}(\vec{d})}
+\\\quad{}\cup\quad{\den{\Gamma\vdash{N\tp\gamma}}(\vec{d})} & \text{if $\den{\Gamma\vdash{B\tp\Bool}}(\vec{d})=\set{\ttrue,\ffalse}$}\\\bot_{D_\gamma} & \text{otherwise}\end{cases}}
+\newcommand{\denif}{\den{\Gamma\vdash\Nif_\gamma(B, M, N)\tp\gamma}(\vec{d})}
+\newcommand{\deniszero}{\den{\Gamma\vdash{\Iszero(M)\tp\Bool}}(\vec{d})=\left(\smyth(\iszero)\right)\left(\den{\Gamma\vdash{M\tp\Nat}}\right)}
+\newcommand{\denkn}{\den{\Gamma\vdash\K{n}\tp\Nat}(\vec{d})=\set{{n}}}
+\newcommand{\denlambda}{\(\den{\Gamma\vdash(\lambda{x}\tp\sigma.M)\tp\sigma\to\tau}(\vec{d})(e)=\den{\Gamma,x\tp\sigma\vdash{M\tp\tau}}(\vec{d},e)\)}
+\newcommand{\denom}{\operatorname{denominator}}
+\newcommand{\denomd}{\operatorname{denomin.}}
+\newcommand{\denpcffalse}{\den{\Gamma\vdash\False\tp\Bool}(\vec{d})={{\ffalse}}}
+\newcommand{\denpcfifr}{=\begin{cases}\den{\Gamma\vdash{M\tp\gamma}}(\vec{d}) & \text{if $\den{\Gamma\vdash{B\tp\Bool}}(\vec{d})={\ttrue}$}\\\den{\Gamma\vdash{N\tp\gamma}}(\vec{d}) & \text{if $\den{\Gamma\vdash{B\tp\Bool}}(\vec{d})={\ffalse}$}\\\bot_{D_\gamma} & \text{otherwise}\end{cases}}
+\newcommand{\denpcfiszero}{$\den{\Gamma\vdash{\Iszero(M)\tp\Bool}}(\vec{d})=(\iszero)\br{\den{\Gamma\vdash{M\tp\Nat}}}$}
+\newcommand{\denpcfkn}{\den{\Gamma\vdash\K{n}\tp\Nat}(\vec{d})={{n}}}
+\newcommand{\denpcfpred}{\den{\Gamma\vdash{\Pred(M)\tp\Nat}}(\vec{d})=\ppred\left(\den{\Gamma\vdash{M\tp\Nat}}\right)}
+\newcommand{\denpcfsucc}{\den{\Gamma\vdash{\Succ(M)\tp\Nat}}(\vec{d})=\ssucc\left(\den{\Gamma\vdash{M\tp\Nat}}\right)}
+\newcommand{\denpcftrue}{\den{\Gamma\vdash\True\tp\Bool}(\vec{d})={{{\ttrue}}}}
+\newcommand{\denplus}{\den{\Gamma\vdash{p+(M)\tp\Real}}(\vec{d})=\left(\smyth(p+)\right)\left(\den{\Gamma\vdash{M\tp\Real}}\right)}
+\newcommand{\denpred}{\den{\Gamma\vdash{\Pred(M)\tp\Nat}}(\vec{d})=\left(\smyth(\ppred)\right)\left(\den{\Gamma\vdash{M\tp\Nat}}\right)}
+\newcommand{\densucc}{\den{\Gamma\vdash{\Succ(M)\tp\Nat}}(\vec{d})=\left(\smyth(\ssucc)\right)\left(\den{\Gamma\vdash{M\tp\Nat}}\right)}
+\newcommand{\dentimes}{\den{\Gamma\vdash{p\times(M)\tp\Real}}(\vec{d})=\left(\smyth(p\times)\right)\left(\den{\Gamma\vdash{M\tp\Real}}\right)}
+\newcommand{\dentrue}{\den{\Gamma\vdash\True\tp\Bool}(\vec{d})=\set{{{\ttrue}}}}
+\newcommand{\denttest}{\den{\Gamma\vdash\Rtest(L)\tp\Bool}(\vec{d})=\ttest^{\ast}\Big(\den{\Gamma\vdash{L\tp\Real}}(\vec{d})\Big)}
+\newcommand{\denvar}{\den{x_1\tp\sigma_1,\ldots,x_k\tp\sigma_k\vdash x_i\tp\sigma_i}(\vec{d}) = d_i}
+\newcommand{\deny}{\den{\Gamma\vdash\Y_\sigma(M)\tp\sigma}(\vec{d})=\dYY_{D_\sigma}\left(\den{\Gamma\vdash{M\tp\sigma\to\sigma}}(\vec{d})\right)}
+\newcommand{\den}[1]{\left\llbracket #1 \right\rrbracket}
+\newcommand{\dirsup}{\bigsqcup}
+\newcommand{\divinta}{\operatorname{div_\mathbb{Z}}}
+\newcommand{\divintb}{\operatorname{\phi_1}}
+\newcommand{\divintc}{\operatorname{div_\mathbb{N}}}
+\newcommand{\divintd}{\operatorname{div_\mathbb{Q}}}
+\newcommand{\dom}{\operatorname{dom}}
+\newcommand{\downset}{\mathop{\downarrowvar}}
+\newcommand{\dtest}{\operatorname{dtest}}
+\newcommand{\eelse}{\operatorname{else}}
+\newcommand{\escardo}{Escard\'{o}}
+\newcommand{\ffalse}{\operatorname{false}}
+\newcommand{\hoare}{\mathop{{\mathcal P}^{\mathcal H}}\nolimits}
+\newcommand{\ida}{\operatorname{id}'}
+\newcommand{\id}{\operatorname{id}}
+\newcommand{\ie}{\textit{i.e.~}}
+\newcommand{\iftheni}[3]{\operatorname{if}{#1}\operatorname{then}{#2}\operatorname{else}{#3}}
+\newcommand{\ifthenll}[3]{\setlength{\arraycolsep}{5pt}\begin{array}[t]{ll}{\mathop{\operatorname{if}}}&#1\\{\mathop{\operatorname{then}}}&#2\\{\mathop{\operatorname{else}}}&#3\end{array}}
+\newcommand{\ifthenl}[3]{\operatorname{if}{\,\,{#1}}{\begin{array}[t]{rl}\operatorname{then}&#2\\ \operatorname{else}&#3\end{array}}}
+\newcommand{\infa}{\operatorname{inf}\nolimits}
+\newcommand{\intervDU}{{\interv{-2}{2}}}
+\newcommand{\intervHU}{\interv[2]{-1}{1}}
+\newcommand{\intervU}{{\interv{-1}{1}}}
+\newcommand{\interv}[2]{\left[#1,#2\right]}
+\newcommand{\iszero}{\operatorname{0=}}
+\newcommand{\jdgapp}{\Rule{\Gamma,x\tp\sigma\vdash M\tp\tau}{\Gamma\vdash(\lambda x\tp\sigma. M)\tp\sigma\to\tau}}
+\newcommand{\jdgbound}{\Rule{\Gamma\vdash M\tp\Real}{\Gamma\vdash \Bound_a( M) \tp\Real}}
+\newcommand{\jdgfalse}{\Rule{}{\Gamma\vdash\False\tp\Bool}}
+\newcommand{\jdgif}{\Rule{\Gamma\vdash{L\tp\Bool},&\Gamma\vdash{M\tp\gamma},&\Gamma\vdash{N\tp\gamma}}{\Gamma\vdash\Nif_\gamma(L,M,N)\tp\gamma}}
+\newcommand{\jdgiszero}{\Rule{\Gamma\vdash L\tp\Nat}{\Gamma\vdash\Iszero\br{L}\tp\Bool}}
+\newcommand{\jdglambda}{\Rule{\Gamma\vdash M\tp\sigma\to\tau & \Gamma\vdash N\tp\sigma}{\Gamma\vdash M( N)\tp\tau}}
+\newcommand{\jdgplus}{\Rule{\Gamma\vdash M\tp\Real}{\Gamma\vdash p+(M)\tp\Real}}
+\newcommand{\jdgpred}{\Rule{\Gamma\vdash M\tp\Nat}{\Gamma\vdash \Pred{(M)}\tp\Nat}}
+\newcommand{\jdgrtest}{\Rule{\Gamma\vdash  L\tp\Real}{\Gamma\vdash\Rtest( L)\tp\Bool}}
+\newcommand{\jdgsucc}{\Rule{\Gamma\vdash M\tp\Nat}{\Gamma\vdash \Succ{(M)}\tp\Nat}}
+\newcommand{\jdgtimes}{\Rule{\Gamma\vdash M\tp\Real}{\Gamma\vdash p\times( M)\tp\Real}}
+\newcommand{\jdgtrue}{\Rule{}{\Gamma\vdash\True\tp\Bool}}
+\newcommand{\jdgvar}{\Rule{}{\Gamma, x\tp\sigma\vdash x\tp\sigma}}
+\newcommand{\jdgy}{\Rule{\Gamma\vdash M\tp\sigma\to\sigma}{\Gamma\vdash\Y_\sigma( M)\tp\sigma}}
+\newcommand{\jdgzero}{\Rule{}{\Gamma\vdash \K{n}\tp\Nat}}
+\newcommand{\lb}[1]{\underline{#1}}
+\newcommand{\letin}[2]{\begin{array}[t]{ll}{\mathop{let}#1}\\{\mathop{in}#2}\end{array}}
+\newcommand{\lima}{\operatorname{lim}}\newcommand{\limb}{\operatorname{\phi}}
+\newcommand{\limc}{{\lim\nolimits'}_\infty}
+\newcommand{\multinta}{\operatorname{mult_{\mathbb{Z}}}}
+\newcommand{\natbnd}{\operatorname{natBound}}
+\newcommand{\nat}{\mathbb {N}}
+\newcommand{\nif}{\operatorname{if}}
+\newcommand{\ntort}{\operatorname{\widetilde{\iota_{\mathbb{N},\mathbb{R}}}}}
+\newcommand{\ntor}{\operatorname{\iota_{\mathbb{N},\mathbb{R}}}}
+\newcommand{\num}{\operatorname{numerator}}
+\newcommand{\opsem}[1]{\left[ #1\right] }
+\newcommand{\op}[1]{\operatorname{#1}\nolimits}
+\newcommand{\order}{\operatorname{order}}
+\newcommand{\outputs}{\operatorname{Outputs}}
+\newcommand{\out}[1]{|#1|}
+\newcommand{\piftheni}[4][black]{\mathop{\textcolor{#1}{\pif}} #2 \mathrel{\tthen} #3 \mathrel{\eelse} #4}
+\newcommand{\pif}{\operatorname{pif}}
+\newcommand{\positive}{\operatorname{\phi}}
+\newcommand{\ppred}{\operatorname{pred}}
+\newcommand{\prg}{\mathtt{Prg}}
+\newcommand{\qtort}{\operatorname{\widetilde{\iota_{\mathbb{Q},\mathbb{R}}}}}
+\newcommand{\qtor}{\operatorname{\iota_{\mathbb{Q},\mathbb{R}}}}
+\newcommand{\rat}{\mathbb{Q}}
+\newcommand{\rc}[1]{\widehat{#1}}
+\newcommand{\redAPP}{\Rulec[\redRNapp]{ M\redto M'}{ M( N)\redto M'( N)}}
+\newcommand{\redBOUNDweak}{\Rulec[]{ M\redto M'}{\Bound_a( M)\redto\Bound_a( M')}{\out{ M}=\bot}}
+\newcommand{\redBOUND}{\Rulec[]{}{\Bound_a\big(\Bound_b( M)\big) \redto \Bound_{\bound_a(b)}( M)}}
+\newcommand{\redLAMBDA}{\Rulec[\redRNlambda]{}{(\lambda x\tp\sigma. M)( N)\redto M[ N/x]}}
+\newcommand{\redNIFfalse}{\Rulec[\redRNiffalse]{}{\Nif(\False, M, N)\redto N}}
+\newcommand{\redNIFtrue}{\Rulec[\redRNiftrue]{}{\Nif(\True, M, N) \redto M}}
+\newcommand{\redNIFweak}{\Rulec[\redRNif]{B\redto B'}{\Nif(B,M,N) \redto \Nif(B',M,N)}}
+\newcommand{\redPLUSbound}{\Rulec[]{}{p+\big(\Bound_a( M)\big)\redto\Bound_{p+a}\big(p+( M)\big)}}
+\newcommand{\redPLUSweak}{\Rulec[]{ M\redto M'}{p+( M)\redto p+( M')}{\out{ M}=\bot}}
+\newcommand{\redPREDweak}{\Rulec[\redRNpredweak]{ M\redto M'}{\Pred{(M)}\redto \Pred( M')}}
+\newcommand{\redPREDzero}{\Rulec[\redRNpredzero]{}{\Pred{(\K{0})}\redto \K{0}}}
+\newcommand{\redPRED}{\Rulec[\redRNpred]{}{\Pred{(\K{n+1})}\redto \K{n}}}
+\newcommand{\redRNapp}{\redRNformat{3}}
+\newcommand{\redRNboundbound}{\redRNformat{15}}
+\newcommand{\redRNbound}{\redRNformat{16}}
+\newcommand{\redRNformat}[1]{(#1)}
+\newcommand{\redRNiffalse}{\redRNformat{5}}
+\newcommand{\redRNiftrue}{\redRNformat{4}}
+\newcommand{\redRNif}{\redRNformat{6}}
+\newcommand{\redRNiszerofalse}{\redRNformat{8}}
+\newcommand{\redRNiszerotrue}{\redRNformat{7}}
+\newcommand{\redRNiszeroweak}{\redRNformat{9}}
+\newcommand{\redRNlambda}{\redRNformat{2}}
+\newcommand{\redRNplusbound}{\redRNformat{17}}
+\newcommand{\redRNplus}{\redRNformat{18}}
+\newcommand{\redRNpredweak}{\redRNformat{14}}
+\newcommand{\redRNpredzero}{\redRNformat{12}}
+\newcommand{\redRNpred}{\redRNformat{13}}
+\newcommand{\redRNrtestfalse}{\redRNformat{22}}
+\newcommand{\redRNrtesttrue}{\redRNformat{21}}
+\newcommand{\redRNrtest}{\redRNformat{23}}
+\newcommand{\redRNsuccweak}{\redRNformat{11}}
+\newcommand{\redRNsucc}{\redRNformat{10}}
+\newcommand{\redRNtimesbound}{\redRNformat{19}}
+\newcommand{\redRNtimes}{\redRNformat{20}}
+\newcommand{\redRNy}{\redRNformat{1}}
+\newcommand{\redRTESTfalse}{\Rulec[\redRNrtestfalse]{}{\Rtest(L)\redto \False}{0<\out{L}}}
+\newcommand{\redRTESTtrue}{\Rulec[\redRNrtesttrue]{}{\Rtest( L)\redto \True}{\out{L}<1}}
+\newcommand{\redRTESTweak}{\Rulec[\redRNrtest]{ L\redto  L'}{\Rtest( L) \redto\Rtest( L')}}
+\newcommand{\redSUCCweak}{\Rulec[\redRNsuccweak]{ M\redto M'}{\Succ{(M)}\redto \Succ( M')}}
+\newcommand{\redSUCC}{\Rulec[\redRNsucc]{}{\Succ{(\K{n})}\redto \K{n+1}}}
+\newcommand{\redTIMESbound}{\Rulec[]{}{p\times\big(\Bound_a(M)\big)\redto\Bound_{p\times{a}}\big(p\times(M)\big)}}
+\newcommand{\redTIMESweak}{\Rulec[]{ M\redto M'}{p\times( M)\redto p\times( M')}{\out{ M}=\bot}}
+\newcommand{\redY}{\Rulec[\redRNy]{}{\Y_\sigma( M)\redto M(\Y_\sigma( M))}}
+\newcommand{\redto}[1][]{\mathrel{\shortrightarrow^{#1}}}
+\newcommand{\rel}{\leftrightarrow}
+\newcommand{\romero}{Marcial-Romero}
+\newcommand{\roota}{\operatorname{root}}
+\newcommand{\rtest}{\operatorname{rtest}}
+\newcommand{\sbr}{\mathrel{\colon\subseteq}}
+\newcommand{\setfunc}[1]{\dot{#1}}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\sg}{\set}
+\newcommand{\singleton}[1]{\llbrace#1\rrbrace}
+\newcommand{\smyth}{\mathop{{\mathcal P}^{\mathcal S}}\nolimits}
+\newcommand{\sqbrbig}[1]{\big[#1\big]}
+\newcommand{\sqbr}[1]{\left[#1\right]}
+\newcommand{\sqrta}{\operatorname{sqrt}}
+\newcommand{\squarea}{\operatorname{square}}
+\newcommand{\squareb}{\operatorname{square'}}
+\newcommand{\ssucc}{\operatorname{succ}}
+\newcommand{\supa}{\operatorname{sup}\nolimits}
+\newcommand{\tail}{\operatorname{tail}\nolimits}
+\newcommand{\ttest}{\operatorname{ttest}\nolimits}
+\newcommand{\tthen}{\operatorname{then}}
+\newcommand{\ttrue}{\operatorname{true}}
+\newcommand{\ub}[1]{\overline{#1}}
+\newcommand{\uncurry}{\operatorname{uncurry}}
+\newcommand{\under}{\unlhd}
+\newcommand{\unit}[1]{\mathop{\eta}\left(#1\right)}
+\newcommand{\upset}{\mathop{\uparrow}}
+\newcommand{\vs}{\vec\sigma}
+\newcommand{\vxs}{\vec{x\tp\sigma}}
+\newcommand{\vx}{\vec{x}}
+\newcommand{\wayabove}{\gg}
+\newcommand{\waybelow}{\ll}
+\newcommand{\waydown}{\mathop{\waydownarrow}}
+\newcommand{\wayup}{\mathop{\wayuparrow}}
+\newcommand{\wbound}{\widetilde{bound}}
+\newcommand{\wcons}{\widetilde{cons}}
+\newcommand{\witnessa}{\operatorname{witness}'}
+\newcommand{\witnessb}{\phi}
+\newcommand{\witnessc}{\operatorname{witness}}
+\newcommand{\wminus}{\mathop{\widetilde{-}}}
+\newcommand{\wplus}{\mathop{\widetilde{+}}}
+\newcommand{\wpor}{\operatorname{wpor}}
+\newcommand{\wtail}{\widetilde{tail}}
+\newcommand{\wtest}{\widetilde{ttest}}
+\newcommand{\wtimes}{\mathop{\widetilde{\times}}}
+\newcommand{\zero}{\operatorname{zero}}
+\newcommand{\ztor}{\operatorname{\iota_{\mathbb{Z},\mathbb{R}}}}
+\newcommand{{\half}}{\mathop{\operatorname{half}}}
