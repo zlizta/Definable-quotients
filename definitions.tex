@@ -44,7 +44,8 @@
 \newcommand{\Real}{\mathtt{real}}
 \newcommand{\Rtest}{\mathop{\mathtt{rtest}}\nolimits}
 \newcommand{\Rulec}[4][]{\inference[$#1$]{#2}{#3}#4} \newcommand{\ruleetc}{\vdots}
-\newcommand{\Rule}[3][]{\inference[]{#2}{#3}} \newcommand{\R}{\mathcal{R}}
+\newcommand{\Rule}[3][]{\inference[]{#2}{#3}} 
+\newcommand{\R}{\mathbb{R}}
 \newcommand{\SM}[1]{#1^{\mathcal S}}
 \newcommand{\Succ}{\mathtt{succ}}
 \newcommand{\True}{\mathop{\mathtt{true}}}
@@ -62,14 +63,14 @@
 \newcommand{\approxc}{\operatorname{\psi}}
 \newcommand{\below}{\sqsubseteq}
 \newcommand{\bnd}{\overrightarrow{\sqcup}}
-\newcommand{\bool}{\mathbb{B}}
+\newcommand{\bool}{\mathrm{Bool}}
 \newcommand{\bound}{\operatorname{bound}}
 \newcommand{\brBIG}[1]{\Bigg(#1\Bigg)}
 \newcommand{\brBIg}[1]{\bigg(#1\bigg)}
 \newcommand{\brBig}[1]{\Big(#1\Big)}
 \newcommand{\brbig}[1]{\big(#1\big)}
 \newcommand{\br}[1]{\left(#1\right)}
-\newcommand{\case}[4]{\Case{#1}{#2}{#3}{#4}}
+%\newcommand{\case}[4]{\Case{#1}{#2}{#3}{#4}}
 \newcommand{\Case}[4]{\operatorname{\operatorname{cases}}\begin{array}[t]{l@{\quad\rightarrow\quad}l}#1&#2\\#3&#4\end{array}}
 \newcommand{\ccase}[4]{\operatorname{cases}\begin{array}[t]{l@{\quad\rightarrow\quad}l}#1&#2\\#3&#4\end{array}}
 \newcommand{\cas}[4]{\setlength{\arraycolsep}{0pt}\begin{array}[t]{l}\operatorname{cases}\\\setlength{\arraycolsep}{1ex}\begin{array}[t]{l@{\quad\rightarrow\quad}l}#1&#2\\#3&#4\end{array}\end{array}}
