@@ -93,7 +93,7 @@
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\pullbackcorner}[1][dr]{\save*!/#1-1.2pc/#1:(-1,1)@^{|-}\restore}
 \newcommand{\pushoutcorner}[1][dr]{\save*!/#1+1.2pc/#1:(1,-1)@^{|-}\restore}
-\newcommand{\todo}[1]{\textcolor{red}{#1}}
+\newcommand{\todo}[1]{\textcolor{red}{TO~DO:~#1}}
 \DeclareMathOperator*{\now}{\mathrm{now}}
 \DeclareMathOperator*{\later}{\mathrm{later}}
 \DeclareMathOperator*{\noweq}{\mathrm{now}_\sqsubseteq}
@@ -134,6 +134,9 @@
 %\linenumbers
 
 \section{Introduction}\label{sec:introduction}
+\todo{Which type theory is used. Meaning of $=$. Meaning of $\Prop$. Meaning of  extensionality (eliminator (99 paper) or axiom?).
+}
+
 \subsection{Notation}
 We keep obvious quantifications implicit.
 
@@ -405,7 +408,7 @@ Left to the reader as it is essentially the same as the proof for Proposition~\r
 \end{proof}
 To show that any set $\R$ which is a definable quotient of the setoid $(\R_0,\sim)$ given earlier in~\ref{sec:???} is not discrete, we need
 
-\todo{Define local continuity instead of assuming it and argue later that it is reasonable and if it holds then bla bla}
+\todo{Define local continuity instead of assuming it and argue later that it is reasonable and if it holds then bla bla.}
 \begin{assumption}
 Local continuity  for $(\N \to \N) \to \N$ is admissible, i.e.
 
@@ -425,16 +428,52 @@ In the presence of local continuity we have
 \begin{proof}
 Assume that $\R$ is discrete. By exactness of the quotient defined in~\ref{sec:??}, $\bocks{\vec 0} \neq \bocks{\vec 1}$ where $\vec 0$ and $\vec 1$ are the elements representing the constant $0$ or $1$ Cauchy sequences in $\R_0$. By discreteness of $\R$, there is a definable $P:\R\to\bool$ 
 such that $\vdash P\bocks{\vec 0}\neq P\bocks{\vec 1 }$. We define $P^\prime:\R_0\to\bool$ by $P^\prime\,s = P\bocks{s}$, which has the property that $P^\prime\,\vec0\neq P^\prime\,\vec 1$ and that $P^\prime$ is closed under $\sim$. By local continuity, there is a number $n$  such that if $\forall i\leq n,\, \vdash f\,i = 0$ then $P^\prime \, f = P^\prime\,\vec 0$. Define $g\,i=\text{if } i\leq n \text{ then } 0 \text{ else } 1$, such that $P^\prime g =P^\prime \vec 0$ by local continuity. However $g \sim \vec 1$ and hence $P^\prime\,g=P^\prime \vec 1$, which contradicts $P^\prime \vec 1 \neq P^\prime \vec 0$. 
-\todo{Remove abuses of notation and refine local continuity to Cauchy sequences}
+\todo{Remove abuses of notation and refine local continuity to Cauchy sequences.}
 \end{proof}
 
-\todo{see if we can use the same counter for different classes of theorems}
+It seems that all sets definable in ordinary type theory~(using only the set formers $\Pi$, $\Sigma$, $=$, finite sets, $W$, see e.g.~\cite{Bengt, Peter Aczel}) are discrete. This observation shows that the reals are not  definable as an exact quotient in ordinary type theory while Proposition~\ref{prop:Rnotdiscrete} shows that reals are not a definable  quotient in any extension of ordinary type theory, as long as local continuity is admissible.
+
+\todo{See whether we can use the same counter for different classes of theorems.}
+
 \begin{corollary}
 $\R$ is not a definable quotient of $\R_0$.
 \end{corollary}
 \begin{proof}
 Directly follows from Propositions~\ref{prop:Rnotdiscrete} and~\ref{prop:splitepidiscrete}.
 \end{proof}
+
+Other examples: 
+  Partiality monad (not definable)
+  Extensional set theoretic universe (not definable)
+  finite set theoretic universe (definable)
+
+  unordered pairs ? 
+  unordered pairs over Nat are definable
+  also unordered pair over Nat → Nat
+    (which is a bit surprising)
+    min : (Nat → Nat)^2 → Nat → Nat
+    min f g n = let z = min {y | f y != g y} 0
+                        if f z <= g z then f x
+                        else g x
+    but this doesn't work for (Nat → Nat) → Nat
+
+  finite multisets
+  
+
+Discussion:
+  Since many interesting sets are not definable we should add
+  axiomatic quotients (which are conservative over ext. TT, Hofmann)
+  or we eliminate quotients (cf my old LICS paper) using the setoid
+  model with proof irrelevance.
+
+  Mention proof relevant quotients?
+
+Questions:
+
+  Are all quotients in TT definable by normalisation.
+  (Maybe all epis are split anyway)?
+
+
 \end{document}
 
 
