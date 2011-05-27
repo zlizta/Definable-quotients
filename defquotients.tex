@@ -20,13 +20,11 @@
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\Z}{\mathbb{Z}}
 
-
-
 \providecommand{\abs}  [1]{\lvert#1\rvert}
 \providecommand{\norm} [1]{\lVert#1\rVert}
 \providecommand{\class}[1]{[#1]}
 \providecommand{\set}  [1]{\left\{#1\right\}}
-\newcommand{\dlift}[1]{\widehat{#1}}
+\providecommand{\dlift}[1]{\widehat{#1}}
 
 \DeclareMathOperator{\Prop}{\mathbf{Prop}}
 \DeclareMathOperator{\Set}{\mathbf{Set}}
@@ -56,7 +54,7 @@
 
 \newcommand{\eqqm}{\overset{\text{\tiny ?}}{=}}
 \newcommand{\sep}{\mathrel{\sharp}}
-
+\renewcommand{\equiv}{=}
 % For xy matrices
 \newcommand{\pullbackcorner}[1][dr]{\save*!/#1-1.2pc/#1:(-1,1)@^{|-}\restore}
 \newcommand{\pushoutcorner} [1][dr]{\save*!/#1+1.2pc/#1:(1,-1)@^{|-}\restore}
@@ -99,7 +97,7 @@ We write $\Prop$ for the type of sets with at most one inhabitant.
 
 \todo{Define subsets as sigma types}
 
-\todo{We implicitely coherce elements of a subset with elements of the underlying set.}
+\todo{We implicitly coerce elements of a subset with elements of the underlying set.}
 
 \section{Setoids}\label{sec:setoids}
 \begin{definition}
@@ -107,9 +105,9 @@ A setoid $(A,\sim)$ is a set $A$ equipped with an equivalence relation $\sim : A
 \end{definition}
 \subsection{Examples}\label{sec:setoids:examples}
 \subsubsection*{Integers}
-The integers can be viewed as the setoid $(\Z_0=\N\times\N,\sim)$ where $(a,b)\sim(c,d)$ if{f} $a+d=c+b$ reflecting the idea that $(a,b)$ represents the integer $a-b$.
+The integers can be viewed as the setoids $(\Z_0=\N\times\N,\sim)$ where $(a,b)\sim(c,d)$ if{f} $a+d=c+b$ reflecting the idea that $(a,b)$ represents the integer $a-b$.
 \subsubsection*{Rational numbers}
-The rationals can in turn be defined as $(\Z\times\N,\sim)$ where $(x,m)\sim(y,n)$ if{f} $x\times(n+1)=y\times(m+1)$, reflecting that $(x,m)$ represents the quotient $\frac {x}{m+1}$.
+The rational numbers can in turn be defined as $(\Z\times\N,\sim)$ where $(x,m)\sim(y,n)$ if{f} $x\times(n+1)=y\times(m+1)$, reflecting that $(x,m)$ represents the quotient $\frac {x}{m+1}$.
 
 
 \subsubsection*{The real numbers}
@@ -201,7 +199,7 @@ This is reminiscent of the fact that dependent elimination for the natural numbe
 The characterization in Proposition~\ref{prop:nlifteq} was given as a definition of quotients in~\cite{hofmann:thesis}.
 
 
-Quotients correspond to coequalizers. We remind the reader of the definition of coequalizer in a category. 
+Quotients correspond to coequalizers. We remind the reader of the definition of coequalizers in a category. 
 
 \begin{definition}
 Given two morphisms $g,h : S\to A$, a \emph{coequalizer} of $g$ and $h$ is a morphism $\class\cdot:A\to Q$ such that for any $f:A\to X$ satisfying $f \circ g = f \circ h$, there exists a unique $\dlift f$ such that  
@@ -279,12 +277,13 @@ on $\Z_0$ and show that it respects $\sim$. Then by lifting $+_0$, we get $+$ on
 
 \subsubsection*{The rational numbers}
 
-Define $\Q = \set{(x,m):\Z\times\N \,|\, x \text{ and } m+1 \text{ are coprime}}$ and
+Define $\Q = \set{(x,m):\Z\times\N \,|\, \gcd\, x\,  (m+1) = 1}$ and
 \begin{align*}
-\class{(x,m)}&=\left(\frac x d, \frac m d\right) \text{ where } d = \gcd\,x \,y\\
+\class{(x,m)}&=\left(\frac{x}{d},\frac{m+1}{d}-1\right) \text{ where } d = \gcd\,x \,(m+1)\\
 \emb \,(x,m) &= (x,m)
 \end{align*}
-\todo{check $(x/d,n/d)\sim(x,n), x/d*n= n/d*x, (x,n)\equiv(x/d,n/d),coprime=>d=1$}
+Note that the greatest common divisor function ($\gcd$) is definable in type theory. Completeness comes from the fact that, for any common divisor $d$ of $x$ and $m+1$, it is provable that $\left(\frac x d,\frac {m+1} d-1\right)\sim\left(x,m\right)$ because $\frac x d \times (m+1) = x\times(\frac {m+1} d - 1+1)$.  Stability holds because whenever $d=\gcd\, x\, (m+1) = 1$, we have $\left(\frac{x}{d},\frac{m+1}{d}-1\right)=(x,m)$.    
+
 
 \subsubsection*{Unordered pairs}
 
@@ -326,7 +325,7 @@ For instance, the operator $\min : (\N \to \N) \to (\N\to\N) \to (\N \to \N)$ ca
 
 
 \section{Undefinable quotients}
-However there are setoids specifications for which it is impossible to construct a definable quotient in type theory. Examples include the real numbers and the partiality monad described in Section~\ref{sec:???}.
+However there are setoids specifications for which it is impossible to construct a definable quotient in type theory. Examples include the real numbers and the partiality monad described in Section~\ref{sec:setoids:examples}.
 
 To show that this is the case, we show some properties of type theory in a classical metatheory.
 
@@ -361,7 +360,7 @@ Therefore $B$ is discrete.
 \begin{proof}
 Left to the reader as it is essentially the same as the proof for Proposition~\ref{prop:NtoNdiscrete}.
 \end{proof}
-To show that any set $\R$ which is a definable quotient of the setoid $(\R_0,\sim)$ given earlier in~\ref{sec:???} is not discrete, we need
+To show that any set $\R$ which is a definable quotient of the setoid $(\R_0,\sim)$ given earlier in~\ref{sec:setoids:examples} is not discrete, we need
 
 \todo{Define local continuity instead of assuming it and argue later that it is reasonable and if it holds then bla bla.}
 \begin{assumption}
@@ -398,6 +397,8 @@ Directly follows from Propositions~\ref{prop:Rnotdiscrete} and~\ref{prop:splitep
 \end{proof}
 
 \end{document}
+
+
 
 
 
