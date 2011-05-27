@@ -1,147 +1,97 @@
 % &latex
-\documentclass{llncs}
-%% Use the option review to obtain double line spacing
-%% \documentclass[preprint,review,12pt]{elsarticle}
+\documentclass[envcountsame]{llncs}
 
-%% Use the options 1p,twocolumn; 3p; 3p,twocolumn; 5p; or 5p,twocolumn
-%% for a journal layout:
-%% \documentclass[final,1p,times]{elsarticle}
-%% \documentclass[final,1p,times,twocolumn]{elsarticle}
-%% \documentclass[final,3p,times]{elsarticle}
-%% \documentclass[final,3p,times,twocolumn]{elsarticle}
-%% \documentclass[final,5p,times]{elsarticle}
-%% \documentclass[final,5p,times,twocolumn]{elsarticle}
-
-%% if you use PostScript figures in your article
-%% use the graphics package for simple commands
-%% \usepackage{graphics}
-%% or use the graphicx package for more complicated commands
-%% \usepackage{graphicx}
-%% or use the epsfig package if you prefer to use the old commands
-%% \usepackage{epsfig}
-
-%% The lineno packages adds line numbers. Start line numbering with
-%% \begin{linenumbers}, end it with \end{linenumbers}. Or switch it on
-%% for the whole article with \linenumbers after \end{frontmatter}.
-\usepackage{lineno}
-
-%% natbib.sty is loaded by default. However, natbib options can be
-%% provided with \biboptions{...} command. Following options are
-%% valid:
-
-%%   round  -  round parentheses are used (default)
-%%   square -  square brackets are used   [option]
-%%   curly  -  curly braces are used      {option}
-%%   angle  -  angle brackets are used    <option>
-%%   semicolon  -  multiple citations separated by semi-colon
-%%   colon  - same as semicolon, an earlier confusion
-%%   comma  -  separated by comma
-%%   numbers-  selects numerical citations
-%%   super  -  numerical citations as superscripts
-%%   sort   -  sorts multiple citations according to order in ref. list
-%%   sort&compress   -  like sort, but also compresses numerical citations
-%%   compress - compresses without sorting
-%%
-%% \biboptions{comma,round}
-
-% \biboptions{}
-
-\usepackage{pstricks}
-\usepackage{multido,pst-plot,pst-node}
-
-\usepackage{epic,eepic}
-\usepackage[centertags]{amsmath}
+\usepackage{color}
+\usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
-\usepackage{newlfont}
-\usepackage[inference]{semantic}\setpremisesend{0pt}
-\usepackage{alltt}
-\usepackage{enumerate}
-%\usepackage[hypertex]{hyperref} %[hypertex] is the driver for dviout
-\usepackage{varioref}
-\usepackage{stmaryrd}
 \usepackage{xypic}
-\usepackage{subfig}
-%\usepackage{endfloat}
 
+% Editing and debugging
 %\hfuzz 0.1pt
 %\overfullrule=15pt
 %\brokenpenalty=10000
-
-%\newtheorem{definition}{Definition}[section]
-%\newtheorem{theorem}{Theorem}[section]
-%\newtheorem{proposition}{Proposition}[section]
-%\newtheorem{lemma}{Lemma}[section]
-%\newtheorem{rem}{Remark}[section]
-%\newtheorem{proof}{Proof}[section]
-\newtheorem{assumption}{Assumption}%[section]
-\newcommand{\prop}{\mathbf{Prop}}
-\newcommand{\bocks}[1]{[#1]}
-\newcommand{\lift}[1]{\widehat{#1}}
-
-\DeclareMathOperator*{\sound}{\mathrm{sound}}
-\DeclareMathOperator*{\qelimok}{\mathrm{qelim}-\beta}
-\DeclareMathOperator{\qind}{\mathrm{qind}}
-\DeclareMathOperator*{\exact}{\mathrm{exact}}
-\DeclareMathOperator*{\subst}{\mathrm{subst}}
-\newcommand{\Set}{\mathbf{Set}}
-\DeclareMathOperator*{\emb}{\mathrm{emb}}
-\DeclareMathOperator*{\compl}{\mathrm{complete}}
-\DeclareMathOperator*{\stable}{\mathrm{stable}}
-\DeclareMathOperator*{\List}{\mathrm{List}}
-\DeclareMathOperator*{\Fin}{\mathrm{Fin}}
-\newcommand{\Z}{\mathbb{Z}}
-\newcommand{\pullbackcorner}[1][dr]{\save*!/#1-1.2pc/#1:(-1,1)@^{|-}\restore}
-\newcommand{\pushoutcorner}[1][dr]{\save*!/#1+1.2pc/#1:(1,-1)@^{|-}\restore}
 \newcommand{\todo}[1]{\textcolor{red}{TO~DO:~#1}}
-\DeclareMathOperator*{\now}{\mathrm{now}}
-\DeclareMathOperator*{\later}{\mathrm{later}}
-\DeclareMathOperator*{\noweq}{\mathrm{now}_\sqsubseteq}
-\DeclareMathOperator*{\latereq}{\mathrm{later}_\sqsubseteq}
-\DeclareMathOperator*{\laterleft}{\mathrm{later}_{\mathrm{left}}}
-\DeclareMathOperator*{\inl}{\mathop{\mathrm{inl}}}
-\DeclareMathOperator*{\inr}{\mathop{\mathrm{inr}}}
-\DeclareMathOperator{\elim}{\mathrm{qelim}}
-\DeclareMathOperator{\nlift}{\mathrm{lift}}
-\DeclareMathOperator{\LC}{\mathrm{LC}}
-\DeclareMathOperator{\nliftbeta}{\mathrm{lift}-\beta}
-\newcommand{\RZ}{\mathbb{R}_0}
-\newcommand{\eqqm}{\stackrel{\text{\tiny ?}}{\,=\,}}
-\newcommand{\sep}{\,\#\,}
-\providecommand{\abs}[1]{\lvert#1\rvert}
-\providecommand{\norm}[1]{\lVert#1\rVert}
-%\journal{???}
+
+\newtheorem{assumption}[theorem]{Assumption}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+
+
+
+\providecommand{\abs}  [1]{\lvert#1\rvert}
+\providecommand{\norm} [1]{\lVert#1\rVert}
+\providecommand{\class}[1]{[#1]}
+\providecommand{\set}  [1]{\left\{#1\right\}}
+\newcommand{\dlift}[1]{\widehat{#1}}
+
+\DeclareMathOperator{\Prop}{\mathbf{Prop}}
+\DeclareMathOperator{\Set}{\mathbf{Set}}
+\DeclareMathOperator{\Bool}{Bool}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\sound}{sound}
+\DeclareMathOperator{\qelimbeta}{qelim-\beta}
+\DeclareMathOperator{\qind}{qind}
+\DeclareMathOperator{\exact}{exact}
+\DeclareMathOperator{\subst}{subst}
+\DeclareMathOperator{\emb}{emb}
+\DeclareMathOperator{\complete}{complete}
+\DeclareMathOperator{\stable}{stable}
+\DeclareMathOperator{\List}{List}
+\DeclareMathOperator{\Fin}{Fin}
+\DeclareMathOperator{\now}{now}
+\DeclareMathOperator{\later}{later}
+\DeclareMathOperator{\nowequal}{now_\sqsubseteq}
+\DeclareMathOperator{\laterequal}{later_\sqsubseteq}
+\DeclareMathOperator{\laterleft}{later_{left}}
+\DeclareMathOperator{\inl}{inl}
+\DeclareMathOperator{\inr}{inr}
+\DeclareMathOperator{\qelim}{qelim}
+\DeclareMathOperator{\lift}{lift}
+\DeclareMathOperator{\LC}{LC}
+\DeclareMathOperator{\liftbeta}{lift-\beta}
+
+\newcommand{\eqqm}{\overset{\text{\tiny ?}}{=}}
+\newcommand{\sep}{\mathrel{\sharp}}
+
+% For xy matrices
+\newcommand{\pullbackcorner}[1][dr]{\save*!/#1-1.2pc/#1:(-1,1)@^{|-}\restore}
+\newcommand{\pushoutcorner} [1][dr]{\save*!/#1+1.2pc/#1:(1,-1)@^{|-}\restore}
+
+% FRONTMATTER
+\title{Definable Quotients in Type Theory}
+\author{Thorsten Altenkirch \inst{1} 
+   \and Thomas   Anberree   \inst{2} 
+   \and Nuo      Li         \inst{2}}
+\institute{
+School of Computer Science, University of Nottingham, Jubilee Campus, Wollaton Road, Nottingham, NG8 1BB, UK
+\and 
+School of Computer Science, University of Nottingham, Ningbo Campus, 199 Taikang East Road, Ningbo, 315100, China}
+% END FRONTMATTER
 
 \begin{document}
 
-\input{definitions.tex}
-%
-%\begin{frontmatter}
-%\title{Definable quotients in type theory}
-%\author{TA,TA,LN}
-%\address{Division of Computer Science, University of Nottingham in Ningbo, China,199 Taikang Road East, 315100, Ningbo, China.}
+\maketitle
 
-%\begin{abstract}
-
-%\end{abstract}
-
-%\begin{keyword}
-
-%\end{keyword}
-%\end{frontmatter}
-
-%% Line numbers can be started here if you want.
-%\linenumbers
+\begin{abstract}
+    The abstract should summarize the contents of the paper
+    using at least 70 and at most 150 words. It will be set in 9-point
+    font size and be inset 1.0 cm from the right and left margins.
+    There will be two blank lines before and after the Abstract.
+\end{abstract}
 
 \section{Introduction}\label{sec:introduction}
-\todo{Which type theory is used. Meaning of $=$. Meaning of $\Prop$. Meaning of  extensionality (eliminator (99 paper) or axiom?).
-}
+
+\todo{Which type theory is used. Meaning of $=$. Meaning of $\Prop$. Meaning of  extensionality (eliminator (99 paper) or axiom?).}
 
 \subsection{Notation}
 We keep obvious quantifications implicit.
 
 Given $B : A \to \Set$, $b : B\,a$, $b' : B\,a'$ and $p : a\equiv a'$, we write $b \simeq_{p} b'$ for $\subst\,B\,p\,b \equiv b'$.
-We write $\prop$ for the type of sets with at most one inhabitant.
+We write $\Prop$ for the type of sets with at most one inhabitant.
 
 \todo{define $\Fin$ and Bijection}  
 
@@ -153,18 +103,21 @@ We write $\prop$ for the type of sets with at most one inhabitant.
 
 \section{Setoids}\label{sec:setoids}
 \begin{definition}
-A setoid $(A,\sim)$ is a set $A$ equipped with an equivalence relation $\sim : A \to A \to \prop$.
+A setoid $(A,\sim)$ is a set $A$ equipped with an equivalence relation $\sim : A \to A \to \Prop$.
 \end{definition}
 \subsection{Examples}\label{sec:setoids:examples}
 \subsubsection*{Integers}
-The integers can be viewed as the setoid $(\Z_0=\nat\times\nat,\sim)$ where $(a,b)\sim(c,d)$ if{f} $a+d=c+b$ reflecting the idea that $(a,b)$ represents the integer $a-b$.
+The integers can be viewed as the setoid $(\Z_0=\N\times\N,\sim)$ where $(a,b)\sim(c,d)$ if{f} $a+d=c+b$ reflecting the idea that $(a,b)$ represents the integer $a-b$.
 \subsubsection*{Rational numbers}
-The rationals can in turn be defined as $(\Z\times\nat,\sim)$ where $(x,m)\sim(y,n)$ if{f} $x\times(n+1)=y\times(m+1)$, reflecting that $(x,m)$ represents the quotient $\frac {x}{m+1}$.
+The rationals can in turn be defined as $(\Z\times\N,\sim)$ where $(x,m)\sim(y,n)$ if{f} $x\times(n+1)=y\times(m+1)$, reflecting that $(x,m)$ represents the quotient $\frac {x}{m+1}$.
+
+
 \subsubsection*{The real numbers}
-The real numbers can then be defined as $(\RZ,\sim)$ where $\RZ$ is the set of Cauchy sequences and two sequences are equivalent if{f} their pointwise difference converges to $0$. 
+
+The real numbers can then be defined as $(\R_0,\sim)$ where $\R_0$ is the set of Cauchy sequences and two sequences are equivalent if{f} their pointwise difference converges to $0$. 
 \begin{align*}
-\RZ&=\set{s : \nat\to\Q \mid \forall\varepsilon :\Q,\varepsilon>0\to\exists m:\nat, \forall i:\nat, i>m\to |s\,i - s\, m|<\varepsilon}\\
-r\sim s &= \forall\varepsilon :\Q,\varepsilon>0\to\exists m:\nat, \forall i:\nat, i>m\to |r\,i - s\,i|<\varepsilon
+\R_0&=\set{s : \N\to\Q \mid \forall\varepsilon :\Q,\varepsilon>0\to\exists m:\N, \forall i:\N, i>m\to |s\,i - s\, m|<\varepsilon}\\
+r\sim s &= \forall\varepsilon :\Q,\varepsilon>0\to\exists m:\N, \forall i:\N, i>m\to |r\,i - s\,i|<\varepsilon
 \end{align*}
 
 \subsubsection*{Unordered pairs}
@@ -174,8 +127,8 @@ $(a,b)\sim(b,a)$.
 \subsubsection*{Finite multisets}
 Given a set $A$ , the finite multisets of elements in $A$ is the setoid $(\List A,\sim)$ where two lists are equivalent if{f} one is the permutation of the other.
 \begin{align*}
-\List A &= \Sigma n:\nat.\Fin\,n\to A\\
-(m,f)\sim(n,g) &= \exists \varphi : \Fin\,m \to \Fin\,n \cdot\ \mathrm{Bijection}\,\varphi \to g\circ\varphi = f  
+\List A &= \Sigma n:\N.\Fin\,n\to A\\
+(m,f)\sim(n,g) &= \exists \varphi : \Fin\,m \to \Fin\,n \cdot\ \mathop{Bijection}\,\varphi \to g\circ\varphi = f  
 \end{align*}
 
 \subsubsection*{Finite sets}
@@ -186,12 +139,12 @@ Given a set $A$ , the finite sets of elements in $A$ is the setoid $(\List A,\si
 \end{align*}
 
 \subsubsection*{Partiality monad}
-Given a set $A$, the set of partial computations over $A$ is given by $(A_{\bot_0},{\sim})$ where $A_{\bot_0}$ is the set of delayed computations over $A$  and $\sim$ is a weak bisimilarity ignoring finite delays. Using the notation for mixed inductive coinductive  definitions from~\cite{danielson:altenkirch:2010}, where we mark coinductive occurrences of a datatype by using $\infty$, we define $A_{\bot_0} : \Set$ and the relations $\sqsubseteq:A_{\bot_0}\to A_{\bot_0} \to \prop$ by the following constructors:
+Given a set $A$, the set of partial computations over $A$ is given by $(A_{\bot_0},{\sim})$ where $A_{\bot_0}$ is the set of delayed computations over $A$  and $\sim$ is a weak bisimilarity ignoring finite delays. Using the notation for mixed inductive coinductive  definitions from~\cite{danielson:altenkirch:2010}, where we mark coinductive occurrences of a datatype by using $\infty$, we define $A_{\bot_0} : \Set$ and the relations $\sqsubseteq:A_{\bot_0}\to A_{\bot_0} \to \Prop$ by the following constructors:
 \begin{align*}
 \now  &: A \to A_{\bot_0}\\
 \later &: \infty A_{\bot_0} \to  A_{\bot_0}\\
-\noweq &: \now\, a \sqsubseteq \now\,a'\\
-\latereq &: \infty(d \sqsubseteq d') \to \later\,d \sqsubseteq \later\,d'\\
+\nowequal &: \now\, a \sqsubseteq \now\,a'\\
+\laterequal &: \infty(d \sqsubseteq d') \to \later\,d \sqsubseteq \later\,d'\\
 \laterleft &: d\sqsubseteq d' \to \later\,d \sqsubseteq d'
 \end{align*}
 and we define $d\sim d'= d\sqsubseteq d' \wedge d'\sqsubseteq d$ .
@@ -202,46 +155,46 @@ and we define $d\sim d'= d\sqsubseteq d' \wedge d'\sqsubseteq d$ .
 \label{def:quotient}
 Given a setoid $(A,\sim)$,  a \emph{quotient} over that setoid is given by
 
-\begin{enumerate}[i.]
+\begin{enumerate}
 \item \label{enum:Q} a set $Q$,
-\item \label{enum:box}a function $\bocks\cdot\colon A \to Q$ which is compatible with $\sim$, 
-that is \[\sound\colon (a,b : A) \to a\sim b \to [a] \equiv [b],\]
+\item \label{enum:box}a function $\class\cdot\colon A \to Q$ which is compatible with $\sim$, 
+that is \[\sound\colon (a,b : A) \to a\sim b \to [a] = [b],\]
 \item \label{enum:elim}   for any $B$ an eliminator : $Q\to\Set$
  \begin{align*}
- \elim_B\colon &(f\colon (a:A) \to B\,\bocks a) \\
+ \qelim_B\colon &(f\colon (a:A) \to B\,\class a) \\
         {\to}\, &((p:a\sim b) \to f\,a \simeq_{\sound\,p}f\,b)\\
         {\to}\, &((q:Q) \to B\,q)
  \end{align*}
-such that $\qelimok\colon \elim_B f \,p\,\bocks a\equiv f a$.
+such that $\qelimbeta\colon \qelim_B f \,p\,\class a\equiv f a$.
  
 \end{enumerate}
-If we only have \ref{enum:Q} and \ref{enum:box}, we call the triple $(Q,\bocks\cdot, \sound)$ a \emph{prequotient}.
+If we only have \ref{enum:Q} and \ref{enum:box}, we call the triple $(Q,\class\cdot, \sound)$ a \emph{prequotient}.
 A quotient is \emph{exact} if additionally
 we have 
-\begin{enumerate}[i.]
+\begin{enumerate}
 \setcounter{enumi}{3}
-\item $\exact :(\forall a,b : A) \to  \bocks a \equiv \bocks b \to a \sim b$.
+\item $\exact :(\forall a,b : A) \to  \class a \equiv \class b \to a \sim b$.
 
 \end{enumerate}
 \end{definition}
 
 There are two special cases of the eliminator \ref{enum:elim}. One is $B$ is not dependent,
- \[\nlift\colon (f\colon A \to B) \to (\forall a,b\cdot a\sim b \to f\,a \equiv f\,b) \to (Q \to B)\]
-and the other is if $B$ is a predicate, i.e. $B : Q\to \prop$, in which case we get an induction principle:
-\[\qind \colon((a\colon A)\to B \,\bocks a)\to ((q\colon Q)\to B\,q)\]
+ \[\lift\colon (f\colon A \to B) \to (\forall a,b\cdot a\sim b \to f\,a \equiv f\,b) \to (Q \to B)\]
+and the other is if $B$ is a predicate, i.e. $B : Q\to \Prop$, in which case we get an induction principle:
+\[\qind \colon((a\colon A)\to B \,\class a)\to ((q\colon Q)\to B\,q)\]
 since the condition $((p:a\sim b) \to f\,a \simeq_{\sound\,p}f\,b) $  of  the eliminator is trivially satisfied.
 On the other hand, these two special cases are sufficient to recover the eliminator :      
 
 
 \begin{proposition}\label{prop:nlifteq}
-A prequotient $(Q,\bocks\cdot,\sound)$ with 
+A prequotient $(Q,\class\cdot,\sound)$ with 
 
 \begin{enumerate}
-\item a non-dependent eliminator $$\nlift_B\colon (f\colon A \to B) \to (\forall a,b\cdot a\sim b \to f\,a \equiv f\,b) \to (Q \to B)$$ for any $B\colon\Set$,
-\item a $\beta$-law $$\nliftbeta : \nlift_B f \,p\,\bocks a\equiv f a,$$
-\item an induction principle $$\qind_P\colon ((a\colon A)\to P \,\bocks a)\to ((q\colon Q)\to P\,q)$$
+\item a non-dependent eliminator $$\lift_B\colon (f\colon A \to B) \to (\forall a,b\cdot a\sim b \to f\,a \equiv f\,b) \to (Q \to B)$$ for any $B\colon\Set$,
+\item a $\beta$-law $$\liftbeta : \lift_B f \,p\,\class a\equiv f a,$$
+\item an induction principle $$\qind_P\colon ((a\colon A)\to P \,\class a)\to ((q\colon Q)\to P\,q)$$
 \end{enumerate} 
-gives rise to a quotient $(Q,\bocks\cdot,\sound,\elim,\qelimok)$.
+gives rise to a quotient $(Q,\class\cdot,\sound,\qelim,\qelimbeta)$.
 \end{proposition}
 This is reminiscent of the fact that dependent elimination for the natural numbers can be constructed from non-dependent elimination and a induction principle.
 
@@ -251,17 +204,17 @@ The characterization in Proposition~\ref{prop:nlifteq} was given as a definition
 Quotients correspond to coequalizers. We remind the reader of the definition of coequalizer in a category. 
 
 \begin{definition}
-Given two morphisms $g,h : S\to A$, a \emph{coequalizer} of $g$ and $h$ is a morphism $\bocks\cdot:A\to Q$ such that for any $f:A\to X$ satisfying $f \circ g = f \circ h$, there exists a unique $\lift f$ such that  
+Given two morphisms $g,h : S\to A$, a \emph{coequalizer} of $g$ and $h$ is a morphism $\class\cdot:A\to Q$ such that for any $f:A\to X$ satisfying $f \circ g = f \circ h$, there exists a unique $\dlift f$ such that  
 \[\xymatrix{
-S\ar@<0.5ex>[r]^g\ar@<-0.5ex>[r]_h& A\ar[r]^{\bocks\cdot}\ar[dr]_{f} & Q\ar@{-->}[d]^{\lift f}\\
+S\ar@<0.5ex>[r]^g\ar@<-0.5ex>[r]_h& A\ar[r]^{\class\cdot}\ar[dr]_{f} & Q\ar@{-->}[d]^{\dlift f}\\
 &&X
 }\]
 A coequalizer is \emph{exact} if 
 \[\xymatrix{
-S\pullbackcorner\ar[r]^g\ar[d]_h & A\ar[d]^{\bocks\cdot} \\
-A\ar[r]_{\bocks\cdot} & Q
+S\pullbackcorner\ar[r]^g\ar[d]_h & A\ar[d]^{\class\cdot} \\
+A\ar[r]_{\class\cdot} & Q
 }\]
-and it is \emph{split} if the morphism $\bocks\cdot$ is a split epi, that is if it has a right inverse $\emb : Q \to A$.
+and it is \emph{split} if the morphism $\class\cdot$ is a split epi, that is if it has a right inverse $\emb : Q \to A$.
 \end{definition}
 
 We observe that there is an exact correspondence between quotients and coequalizers:
@@ -271,10 +224,10 @@ We observe that there is an exact correspondence between quotients and coequaliz
 This quotient is exact if{f} the coequalizer is exact.
 \item Let $R$ be $\Sigma a,a':A,a\sim a'$ and $\pi_0,\pi_1 : R\to A$ the projection functions. The quotient for $(R,\sim)$ is then the coequalizer for those projections and it is exact if and only if the coequalizer is exact.
 \[\xymatrix{
-R\ar@<0.5ex>[r]^{\pi_0}\ar@<-0.5ex>[r]_{\pi_1}& A\ar[r]^{\bocks\cdot}\ar[dr]_{f} & Q\ar@{-->}[d]^{\lift f}\\
+R\ar@<0.5ex>[r]^{\pi_0}\ar@<-0.5ex>[r]_{\pi_1}& A\ar[r]^{\class\cdot}\ar[dr]_{f} & Q\ar@{-->}[d]^{\dlift f}\\
 &&X
 }\]
-where $\lift f=\nlift f p$ and $p \colon \forall a,b\cdot a\sim b \to f\,a \equiv f\,b$ follows from $f \circ \pi_0 = f \circ \pi_1$.
+where $\dlift f=\lift f p$ and $p \colon \forall a,b\cdot a\sim b \to f\,a \equiv f\,b$ follows from $f \circ \pi_0 = f \circ \pi_1$.
 \end{enumerate}
 \end{proposition}
 
@@ -283,11 +236,11 @@ where $\lift f=\nlift f p$ and $p \colon \forall a,b\cdot a\sim b \to f\,a \equi
 We now consider a general construction which allows us to construct quotients in type theory.
 
 \begin{definition}\label{def:defquotients}
-A \emph{definable quotient} on the setoid $(A,\sim)$ is a prequotient $(Q,\bocks\cdot,\sound)$ on $(A,\sim)$ with
+A \emph{definable quotient} on the setoid $(A,\sim)$ is a prequotient $(Q,\class\cdot,\sound)$ on $(A,\sim)$ with
 \begin{align*}
 \emb &: Q \to A\\
-\compl &: (a : A) \to \emb {\bocks a} \sim a\\
-\stable &: (q:Q) \to \bocks{\emb\,q} \equiv q\\
+\complete &: (a : A) \to \emb {\class a} \sim a\\
+\stable &: (q:Q) \to \class{\emb\,q} \equiv q\\
 \end{align*}
 \end{definition}
 
@@ -296,39 +249,39 @@ All definable quotients are exact quotients.
 \end{proposition}
 \begin{proof}
 
-Given $(f\colon A \to B)$ and $p : a\sim b \to f\,a \equiv f\,b$, define $\nlift f\, p \,q = f (\emb\,q)$ from which we get $\nlift f \,(p : a \sim b)\,\bocks a\equiv f(\emb\,\bocks a)\equiv f\,a$ because $\emb\,\bocks a\sim a$ by completeness and $f$ respects $\sim$ by $p$. 
+Given $(f\colon A \to B)$ and $p : a\sim b \to f\,a \equiv f\,b$, define $\lift f\, p \,q = f (\emb\,q)$ from which we get $\lift f \,(p : a \sim b)\,\class a\equiv f(\emb\,\class a)\equiv f\,a$ because $\emb\,\class a\sim a$ by completeness and $f$ respects $\sim$ by $p$. 
 
-To derive $\qind$, let $f:(a\colon A)\to B\,\bocks a$ and $q:Q$. Since $ \bocks{\emb\,q} \equiv q$ by stability, hence from $f (\emb\,q):B\,\bocks{\emb\,q}$ we can derive a proof of $B\,q$. 
+To derive $\qind$, let $f:(a\colon A)\to B\,\class a$ and $q:Q$. Since $ \class{\emb\,q} \equiv q$ by stability, hence from $f (\emb\,q):B\,\class{\emb\,q}$ we can derive a proof of $B\,q$. 
 
 It follows from Proposition~\ref{prop:nlifteq} that this defines a quotient. 
 
-Finally, from $\bocks a \equiv \bocks b$ 
-we obtain by completeness that $a\sim\emb(\bocks a)\equiv\emb(\bocks b)\sim b$ and hence $a\sim b$. That is, the quotient is exact.
+Finally, from $\class a \equiv \class b$ 
+we obtain by completeness that $a\sim\emb(\class a)\equiv\emb(\class b)\sim b$ and hence $a\sim b$. That is, the quotient is exact.
 \end{proof}
 
 
 \subsection{Examples}\label{sec:dquotients:examples}
 
 \subsubsection*{The integers}
-Define $\Z =\nat + \nat $ and 
+Define $\Z =\N + \N $ and 
 
 \begin{align*}
-\bocks{(a,0)} &= \inl\,a\\
-\bocks{(a+1,b+1)} &= \bocks{(a,b)}\\
-\bocks{(0,b+1)} &= \inr\,b\\\\
+\class{(a,0)} &= \inl\,a\\
+\class{(a+1,b+1)} &= \class{(a,b)}\\
+\class{(0,b+1)} &= \inr\,b\\\\
 \emb (\inl a) &= (a,0)\\
 \emb (\inr b) &= (0,b+1)\\
 \end{align*}
 The fact that this gives rise to a definable quotient has been verified in Agda~\cite{nuo:report:2010}.
- One could of course just use that $\Z=\nat + \nat$ and define the operations on $\Z$ directly. However, seeing  $\Z$ as a quotient is helpful in proving properties of those operations and reflects the usual mathematical definition of the integers. E.g., to define $+$, we define 
+ One could of course just use that $\Z=\N + \N$ and define the operations on $\Z$ directly. However, seeing  $\Z$ as a quotient is helpful in proving properties of those operations and reflects the usual mathematical definition of the integers. E.g., to define $+$, we define 
 \[(a,b){+_0}(a', b')= (a+a',b+b')\]
 on $\Z_0$ and show that it respects $\sim$. Then by lifting $+_0$, we get $+$ on $\Z$, thus avoiding a rather incomprehensible case analysis. This becomes even more relevant when showing other properties such as distributivity of multiplication over addition~\cite{nuo:report:2010}.
 
 \subsubsection*{The rational numbers}
 
-Define $\Q = \set{(x,m):\Z\times\nat \,|\, x \text{ and } m+1 \text{ are coprime}}$ and
+Define $\Q = \set{(x,m):\Z\times\N \,|\, x \text{ and } m+1 \text{ are coprime}}$ and
 \begin{align*}
-\bocks{(x,m)}&=\left(\frac x d, \frac m d\right) \text{ where } d = \gcd\,x \,y\\
+\class{(x,m)}&=\left(\frac x d, \frac m d\right) \text{ where } d = \gcd\,x \,y\\
 \emb \,(x,m) &= (x,m)
 \end{align*}
 \todo{check $(x/d,n/d)\sim(x,n), x/d*n= n/d*x, (x,n)\equiv(x/d,n/d),coprime=>d=1$}
@@ -336,7 +289,7 @@ Define $\Q = \set{(x,m):\Z\times\nat \,|\, x \text{ and } m+1 \text{ are coprime
 \subsubsection*{Unordered pairs}
 
 The construction of the definable quotient depends on the choice of $A$. In general we
-require a partial order $\leq : A \to A \to \prop$ together with functions:
+require a partial order $\leq : A \to A \to \Prop$ together with functions:
 \begin{align*}
 \min, \max : A \to A \to A
 \end{align*}
@@ -345,21 +298,23 @@ calculating the binary minimum/maximum. We define $Q = \set{(a , b) \mid  a \leq
 Clearly $[(a,b)] \sim (a,b)$ and if $a\leq b$ then $[(a,b)]=(a,b)$. Both facts follow from
  the properties of $\min$ and $\max$. We consider two cases:
 \begin{description}
-\item[$A = \nat$] \hfill 
+\item[$A = \N$] \hfill 
 
-We use the standard ordering $\leq : \nat \to \nat \to \prop$ and exploit
+We use the standard ordering $\leq : \N \to \N \to \Prop$ and exploit
 that it is constructively total $\forall m ,n\cdot m \leq n + n \leq m$ to define $\min$ and 
 $\max$.  
-\item[$A=\nat\to\nat$] \hfill\\
-We use the lexicographic ordering ${<},{\leq}:(\nat \to \nat) \to (\nat\to\nat)\to\prop$
+\item[$A=\N\to\N$] \hfill\\
+We use the lexicographic ordering ${<},{\leq}:(\N \to \N) \to (\N\to\N)\to\Prop$
 \begin{align*}
-f < g & = \exists m:\nat \cdot f m < g n \wedge \forall i<m\cdot f\,i = g \,i\\
+f < g & = \exists m:\N \cdot f m < g n \wedge \forall i<m\cdot f\,i = g \,i\\
 f \leq g &= f < g \vee f=g
 \end{align*}
-While this order is not constructively total, it is still possible to define $\min$ and $\max$. 
-We define $\min : (\nat \to \nat) \to (\nat\to\nat) \to (\nat \to \nat)$ (max is symmetric):
+While this order is not constructively total, in the sense that one cannot define a test to decide whether $f<g$, it is still possible to define $\min$ and $\max$. 
+For instance, the operator $\min : (\N \to \N) \to (\N\to\N) \to (\N \to \N)$ can be defined as : 
 \begin{align*}
- \min\,f\,g\,n = &\text{let}\,i = \min \{ j \leq n \mid f\,j \not= g\,j \}\\ 
+ \min f\,g\,n =\,&\text{if $f \,n$ = $g\,n$ then $f n$}\\
+                 &\text{else }\\
+                 &\text{let}\,i = \min \{ j \leq n \mid f\,j \not= g\,j \}\\ 
                  &\text{in }\text{if}\, f\,i< g\,i\,\text{ then } f\,n \text{ else } g\,n   
 \end{align*} 
 \end{description}
@@ -375,19 +330,19 @@ However there are setoids specifications for which it is impossible to construct
 
 To show that this is the case, we show some properties of type theory in a classical metatheory.
 
-We write $\vdash a\colon A$ if $a\colon A$ is derivable in type theory. In case that $\vdash P\colon \prop$, we write $\vdash P$ to indicate that there is a proof $\vdash p\colon P$
+We write $\vdash a\colon A$ if $a\colon A$ is derivable in type theory. In case that $\vdash P\colon \Prop$, we write $\vdash P$ to indicate that there is a proof $\vdash p\colon P$
 \begin{definition}\hfill
-\begin{enumerate}[i.]
-\item Two elements $a$ and $b$ of a definable set are separable, written $a\sep b$, if there exists a test definable test $P\colon A\to \bool$ such that $\vdash P\,a\neq P\,b$. 
+\begin{enumerate}
+\item Two elements $a$ and $b$ of a definable set are separable, written $a \sep b$, if there exists a test definable test $P\colon A\to \Bool$ such that $\vdash P\,a \neq P\,b$. 
 \item A definable set $A$ is \emph{discrete} whenever $\vdash a, b\colon A$ and   $\vdash a\not= b$
 entails that $a$ and $b$ are separable.
 \end{enumerate}
 \end{definition}
 \begin{proposition}\label{prop:NtoNdiscrete}
-The set $\nat\to\nat$ is discrete. 
+The set $\N\to\N$ is discrete. 
 \end{proposition}
 \begin{proof}
-Assume $\vdash f, g\colon \nat \to \nat$ and $\vdash f\neq g$. By soundness, $f$ and $g$ must denote different functions and hence there is a natural number $i$ such that $\vdash f\,i\neq g\,i$. Hence we can define $P\,h = h\,i{\eqqm}f\,i$ where ${\eqqm}\colon \nat\to\nat\to\bool$ is a decision procedure for equality on $\nat$. 
+Assume $\vdash f, g\colon \N \to \N$ and $\vdash f\neq g$. By soundness, $f$ and $g$ must denote different functions and hence there is a natural number $i$ such that $\vdash f\,i\neq g\,i$. Hence we can define $P\,h = {h\,i} \eqqm {f\,i}$ where ${\eqqm}\colon \N\to\N\to\Bool$ is a decision procedure for equality on $\N$. 
 \end{proof}
 
 Note that we have used classical reasoning in the proof above. We don't think it is necessary, i.e. it should be possible to extract the witness $i$ from the proof that $f\neq g$.
@@ -396,7 +351,7 @@ Note that we have used classical reasoning in the proof above. We don't think it
 Assume $ e\colon A\to B$ is a definable split~epi.  If $A$ is discrete then $B$ is discrete.
 \end{proposition}
 \begin{proof}
-Let $\vdash s\colon B\to A$ such that $\vdash e\circ s=\id_B$. Let $\vdash b\neq b'\colon B$. Then $\vdash s\,b\neq s\,b'$, because $s$ is a right inverse of $e$, and hence there exists $\vdash P\colon A\to\bool$ such that $\vdash P\,(s\,b)\neq P\,(s\,b')$, because $A$ is discrete, and hence $\vdash P'\colon B\to\bool$ defined by $P' = P\circ s$ provably separates $b$ and $b'$.
+Let $\vdash s\colon B\to A$ such that $\vdash e\circ s=\id_B$. Let $\vdash b\neq b'\colon B$. Then $\vdash s\,b\neq s\,b'$, because $s$ is a right inverse of $e$, and hence there exists $\vdash P\colon A\to\Bool$ such that $\vdash P\,(s\,b)\neq P\,(s\,b')$, because $A$ is discrete, and hence $\vdash P'\colon B\to\Bool$ defined by $P' = P\circ s$ provably separates $b$ and $b'$.
 Therefore $B$ is discrete.
 \end{proof}
 
@@ -426,8 +381,8 @@ In the presence of local continuity we have
 \begin{proposition}\label{prop:Rnotdiscrete} The set $\R$ is not discrete.
 \end{proposition}
 \begin{proof}
-Assume that $\R$ is discrete. By exactness of the quotient defined in~\ref{sec:??}, $\bocks{\vec 0} \neq \bocks{\vec 1}$ where $\vec 0$ and $\vec 1$ are the elements representing the constant $0$ or $1$ Cauchy sequences in $\R_0$. By discreteness of $\R$, there is a definable $P:\R\to\bool$ 
-such that $\vdash P\bocks{\vec 0}\neq P\bocks{\vec 1 }$. We define $P^\prime:\R_0\to\bool$ by $P^\prime\,s = P\bocks{s}$, which has the property that $P^\prime\,\vec0\neq P^\prime\,\vec 1$ and that $P^\prime$ is closed under $\sim$. By local continuity, there is a number $n$  such that if $\forall i\leq n,\, \vdash f\,i = 0$ then $P^\prime \, f = P^\prime\,\vec 0$. Define $g\,i=\text{if } i\leq n \text{ then } 0 \text{ else } 1$, such that $P^\prime g =P^\prime \vec 0$ by local continuity. However $g \sim \vec 1$ and hence $P^\prime\,g=P^\prime \vec 1$, which contradicts $P^\prime \vec 1 \neq P^\prime \vec 0$. 
+Assume that $\R$ is discrete. By exactness of the quotient defined in~\ref{sec:??}, $\class{\vec 0} \neq \class{\vec 1}$ where $\vec 0$ and $\vec 1$ are the elements representing the constant $0$ or $1$ Cauchy sequences in $\R_0$. By discreteness of $\R$, there is a definable $P:\R\to\Bool$ 
+such that $\vdash P\class{\vec 0}\neq P\class{\vec 1 }$. We define $P^\prime:\R_0\to\Bool$ by $P^\prime\,s = P\class{s}$, which has the property that $P^\prime\,\vec0\neq P^\prime\,\vec 1$ and that $P^\prime$ is closed under $\sim$. By local continuity, there is a number $n$  such that if $\forall i\leq n,\, \vdash f\,i = 0$ then $P^\prime \, f = P^\prime\,\vec 0$. Define $g\,i=\text{if } i\leq n \text{ then } 0 \text{ else } 1$, such that $P^\prime g =P^\prime \vec 0$ by local continuity. However $g \sim \vec 1$ and hence $P^\prime\,g=P^\prime \vec 1$, which contradicts $P^\prime \vec 1 \neq P^\prime \vec 0$. 
 \todo{Remove abuses of notation and refine local continuity to Cauchy sequences.}
 \end{proof}
 
@@ -442,39 +397,14 @@ $\R$ is not a definable quotient of $\R_0$.
 Directly follows from Propositions~\ref{prop:Rnotdiscrete} and~\ref{prop:splitepidiscrete}.
 \end{proof}
 
-Other examples: 
-  Partiality monad (not definable)
-  Extensional set theoretic universe (not definable)
-  finite set theoretic universe (definable)
-
-  unordered pairs ? 
-  unordered pairs over Nat are definable
-  also unordered pair over Nat → Nat
-    (which is a bit surprising)
-    min : (Nat → Nat)^2 → Nat → Nat
-    min f g n = let z = min {y | f y != g y} 0
-                        if f z <= g z then f x
-                        else g x
-    but this doesn't work for (Nat → Nat) → Nat
-
-  finite multisets
-  
-
-Discussion:
-  Since many interesting sets are not definable we should add
-  axiomatic quotients (which are conservative over ext. TT, Hofmann)
-  or we eliminate quotients (cf my old LICS paper) using the setoid
-  model with proof irrelevance.
-
-  Mention proof relevant quotients?
-
-Questions:
-
-  Are all quotients in TT definable by normalisation.
-  (Maybe all epis are split anyway)?
-
-
 \end{document}
+
+
+
+
+
+
+
 
 
 
