@@ -21,7 +21,7 @@
 \newcommand{\Z}{\mathbb{Z}}
 
 \newcommand{\dotph}{\,\cdot\,} % dot place holder as ub [.]
-
+\newcommand{\dotop}{\mathrel{.}}
 \providecommand{\abs}  [1]{\lvert#1\rvert}
 \providecommand{\norm} [1]{\lVert#1\rVert}
 \providecommand{\class}[1]{[#1]}
@@ -96,11 +96,15 @@ We keep obvious quantifications implicit.
 Given $B : A \to \Set$, $b : B\,a$, $b' : B\,a'$ and $p : a\equiv a'$, we write $b \simeq_{p} b'$ for $\subst\,B\,p\,b \equiv b'$.
 We write $\Prop$ for the type of sets with at most one inhabitant.
 
+\todo{Meaning of ``definable''; functions are total}
+
+\todo{explain $\simeq_{\sound\,p}$}
+
 \todo{define $\Fin$ and Bijection}
 
 \todo{logical symbols in Prop}
 
-\todo{Define subsets as sigma types}
+\todo{Define subsets as sigma types.  For $A:\Set$ and $P\colon A\to\Prop$, we defined the subset of elements of $A$ satisfying $P$, written $\set{a:A\mid P\,a}$, as \[\set{a:A\mid P\,a}=\Sigma a:A \dotop P\]}
 
 \todo{We implicitly coerce elements of a subset with elements of the underlying set.}
 
@@ -154,15 +158,21 @@ and we define $d\sim d'= d\sqsubseteq d' \wedge d'\sqsubseteq d$ .
 
 \section{Quotients and coequalizers}\label{sec:quotients}
 
-\begin{definition}
+\begin{definition}[prequotient, quotient, exact quotient]
 \label{def:quotient}
-Given a setoid $(A,\sim)$,  a \emph{quotient} over that setoid is given by
 
+\noindent
+Given a setoid $(A,\sim)$,  a \emph{prequotient} $(Q,\class\dotph,\sound)$ over that setoid consists in
 \begin{enumerate}
 \item \label{enum:Q} a set $Q$,
-\item \label{enum:box}a function $\class\cdot\colon A \to Q$ which is compatible with $\sim$,
+\item \label{enum:box}a function $\class\dotph\colon A \to Q$,
+\item \label{enum:sound} a proof $\sound$ that  the function $\class\dotph$ is compatible with the relation $\sim$,
 that is \[\sound\colon (a,b : A) \to a\sim b \to [a] = [b],\]
-\item \label{enum:elim}   for any $B$ an eliminator : $Q\to\Set$
+\end{enumerate}
+Such a prequotient is a \emph{quotient} if  we also have\begin{enumerate}
+\setcounter{enumi}{3}
+\item \label{enum:elim}   
+for any $B\colon A\to\Set$, an eliminator $\qelim_B: Q\to\Set$
  \begin{align*}
  \qelim_B\colon &(f\colon (a:A) \to B\,\class a) \\
         {\to}\, &((p:a\sim b) \to f\,a \simeq_{\sound\,p}f\,b)\\
@@ -171,11 +181,10 @@ that is \[\sound\colon (a,b : A) \to a\sim b \to [a] = [b],\]
 such that $\qelimbeta\colon \qelim_B f \,p\,\class a\equiv f a$.
 
 \end{enumerate}
-If we only have \ref{enum:Q} and \ref{enum:box}, we call the triple $(Q,\class\cdot, \sound)$ a \emph{prequotient}.
-A quotient is \emph{exact} if additionally
+Finally, such a quotient is \emph{exact} if additionally
 we have
-\begin{enumerate}
-\setcounter{enumi}{3}
+a proof\begin{enumerate}
+\setcounter{enumi}{4}
 \item $\exact :(\forall a,b : A) \to  \class a \equiv \class b \to a \sim b$.
 
 \end{enumerate}
@@ -190,14 +199,14 @@ On the other hand, these two special cases are sufficient to recover the elimina
 
 
 \begin{proposition}\label{prop:nlifteq}
-A prequotient $(Q,\class\cdot,\sound)$ with
+A prequotient $(Q,\class\dotph,\sound)$ with
 
 \begin{enumerate}
 \item a non-dependent eliminator $$\lift_B\colon (f\colon A \to B) \to (\forall a,b\cdot a\sim b \to f\,a \equiv f\,b) \to (Q \to B)$$ for any $B\colon\Set$,
 \item a $\beta$-law $$\liftbeta : \lift_B f \,p\,\class a\equiv f a,$$
 \item an induction principle $$\qind_P\colon ((a\colon A)\to P \,\class a)\to ((q\colon Q)\to P\,q)$$
 \end{enumerate}
-gives rise to a quotient $(Q,\class\cdot,\sound,\qelim,\qelimbeta)$.
+gives rise to a quotient $(Q,\class\dotph,\sound,\qelim,\qelimbeta)$.
 \end{proposition}
 This is reminiscent of the fact that dependent elimination for the natural numbers can be constructed from non-dependent elimination and a induction principle.
 
@@ -207,17 +216,17 @@ The characterization in Proposition~\ref{prop:nlifteq} was given as a definition
 Quotients correspond to coequalizers. We remind the reader of the definition of coequalizers in a category.
 
 \begin{definition}
-Given two morphisms $g,h : S\to A$, a \emph{coequalizer} of $g$ and $h$ is a morphism $\class\cdot:A\to Q$ such that for any $f:A\to X$ satisfying $f \circ g = f \circ h$, there exists a unique $\dlift f$ such that
+Given two morphisms $g,h : S\to A$, a \emph{coequalizer} of $g$ and $h$ is a morphism $\class\dotph:A\to Q$ such that for any $f:A\to X$ satisfying $f \circ g = f \circ h$, there exists a unique $\dlift f$ such that
 \[\xymatrix{
-S\ar@<0.5ex>[r]^g\ar@<-0.5ex>[r]_h& A\ar[r]^{\class\cdot}\ar[dr]_{f} & Q\ar@{-->}[d]^{\dlift f}\\
+S\ar@<0.5ex>[r]^g\ar@<-0.5ex>[r]_h& A\ar[r]^{\class\dotph}\ar[dr]_{f} & Q\ar@{-->}[d]^{\dlift f}\\
 &&X
 }\]
 A coequalizer is \emph{exact} if
 \[\xymatrix{
-S\pullbackcorner\ar[r]^g\ar[d]_h & A\ar[d]^{\class\cdot} \\
-A\ar[r]_{\class\cdot} & Q
+S\pullbackcorner\ar[r]^g\ar[d]_h & A\ar[d]^{\class\dotph} \\
+A\ar[r]_{\class\dotph} & Q
 }\]
-and it is \emph{split} if the morphism $\class\cdot$ is a split epi, that is if it has a right inverse $\emb : Q \to A$.
+and it is \emph{split} if the morphism $\class\dotph$ is a split epi, that is if it has a right inverse $\emb : Q \to A$.
 \end{definition}
 
 We observe that there is an exact correspondence between quotients and coequalizers:
@@ -227,7 +236,7 @@ We observe that there is an exact correspondence between quotients and coequaliz
 This quotient is exact if{f} the coequalizer is exact.
 \item Let $R$ be $\Sigma a,a':A,a\sim a'$ and $\pi_0,\pi_1 : R\to A$ the projection functions. The quotient for $(R,\sim)$ is then the coequalizer for those projections and it is exact if and only if the coequalizer is exact.
 \[\xymatrix{
-R\ar@<0.5ex>[r]^{\pi_0}\ar@<-0.5ex>[r]_{\pi_1}& A\ar[r]^{\class\cdot}\ar[dr]_{f} & Q\ar@{-->}[d]^{\dlift f}\\
+R\ar@<0.5ex>[r]^{\pi_0}\ar@<-0.5ex>[r]_{\pi_1}& A\ar[r]^{\class\dotph}\ar[dr]_{f} & Q\ar@{-->}[d]^{\dlift f}\\
 &&X
 }\]
 where $\dlift f=\lift f p$ and $p \colon \forall a,b\cdot a\sim b \to f\,a \equiv f\,b$ follows from $f \circ \pi_0 = f \circ \pi_1$.
@@ -247,7 +256,7 @@ A \emph{definable quotient} is a prequotient $(Q, \class{\dotph}, \sound)$ on a 
 \end{align*}
 \end{definition}
 
-\begin{proposition}
+\begin{proposition}\label{prop:definableimpliesexact}
 All definable quotients are exact quotients.
 \end{proposition}
 \begin{proof}
@@ -337,7 +346,7 @@ To show that this is the case, we show some properties of type theory in a class
 We write $\vdash a\colon A$ if $a\colon A$ is derivable in type theory. In case that $\vdash P\colon \Prop$, we write $\vdash P$ to indicate that there is a proof $\vdash p\colon P$
 \begin{definition}\hfill
 \begin{enumerate}
-\item Two elements $a$ and $b$ of a definable set are separable, written $a \sep b$, if there exists a test definable test $P\colon A\to \Bool$ such that $\vdash P\,a \neq P\,b$.
+\item Two elements $a$ and $b$ of a definable set are separable, written $a \sep b$, if there exists a definable test $P\colon A\to \Bool$ such that $\vdash P\,a \neq P\,b$.
 \item A definable set $A$ is \emph{discrete} whenever $\vdash a, b\colon A$ and   $\vdash a\not= b$
 entails that $a$ and $b$ are separable.
 \end{enumerate}
@@ -359,7 +368,7 @@ Let $\vdash s\colon B\to A$ such that $\vdash e\circ s=\id_B$. Let $\vdash b\neq
 Therefore $B$ is discrete.
 \end{proof}
 
-\begin{proposition}
+\begin{proposition}\label{prop:RZdiscrete}
  $\R_0$ is discrete.
 \end{proposition}
 \begin{proof}
@@ -368,23 +377,48 @@ Left to the reader as it is essentially the same as the proof for Proposition~\r
 To show that any set $\R$ which is a definable quotient of the setoid $(\R_0,\sim)$ given earlier in~\ref{sec:setoids:examples} is not discrete, we need
 
 \todo{Define local continuity instead of assuming it and argue later that it is reasonable and if it holds then bla bla.}
-\begin{assumption}
-Local continuity  for $(\N \to \N) \to \N$ is admissible, i.e.
+\begin{definition}[local continuity]\label{def:localcontinuity}
+\emph{Local continuity} at type $(\N \to \N) \to \N$ is the property that
 \begin{align*}
-   &\fad \varphi : (\N \to \N) \to \N,\\
-   &\fad f : \N \to \N,\\
+   &\fad\text{functions }\varphi : (\N \to \N) \to \N,\\
+   &\fad\text{sequences }f : \N \to \N,\\
    &\text{there exists }  n:\N\text{ such that }\\
-   &\fad g : \N \to \N \text{ such that } (\forall i\leq n,\, \vdash f\,i = g\,i),\\
-   &{\,\vdash \varphi\, f} = \varphi\, g.
+   &\fad\text{sequences } g : \N \to \N \text{ satisfying } (\forall i\leq n,\, \vdash f\,i = g\,i),\\
+   &\text{we have that }{\,\vdash \varphi\, f} = \varphi\, g.
 \end{align*}
-\end{assumption}
+\end{definition}
 
-In the presence of local continuity we have
-\begin{proposition}\label{prop:Rnotdiscrete} The set $\R$ is not discrete.
+Local continuity expresses the fact that, to compute $\varphi f$, the reduction relation defining the operational semantics of type theory only inspects finitely many terms of the input sequence $f$. We have stated local continuity in its perhaps simplest form, at a particular type. However, we conjecture that it can be expressed and proved at all types. Whatever the case, it is easily shown that local continuity at type $(\N\to\N)\to\N$  entails local continuity at some other types, in particular at type $(\N\to\Q)\to\Bool$, which we next use to show that the set $\R$ is not a definable quotient of the setoid $(\R_0,\sim) $ described in Section~\ref{sec:setoids:examples}$.
+
+\begin{lemma}(local continuity for decisions on rational sequences)
+\label{lem:lcratseq}
+
+In the presence of local continuity as in Definition~\ref{def:localcontinuity}, the following property holds :
+\begin{align*}
+   &\fad\text{functions }\varphi \colon (\N \to \Q) \to \Bool,\\
+   &\fad\text{sequences }f  \colon  \N \to \Q,\\
+   &\text{there exists }  n:\N\text{ such that }\\
+   &\fad\text{sequences } g  \colon  \N \to \Q \text{ satisfying } (\forall i\leq n,\, \vdash f\,i = g\,i),\\
+   &\text{we have that }{\,\vdash \varphi\, f} = \varphi\, g.
+\end{align*}
+\end{lemma} 
+\begin{proof}
+Let $\eta\colon \N\to\Q$ be a definable bijection from $\N$ to $\Q$ and $\iota\colon\Bool\to\N$ a definable monomorphism. Let $\varphi\colon (\N \to \Q) \to \Bool$ and $f  \colon  \N \to \Q$ be as above. 
+Define $\varphi'\colon (\N\to\N)\to\N$ by $\varphi'\,f=\iota(\varphi(\eta\,f))$. By local continuity at type $(\N\to\N)\to\N$, there exists $n:\N$ such that for all definable sequences $g'\colon\N\to\N$ satisfying $(\forall i\leq n,\, \vdash (\eta^{-1}\circ f)\,i = g'\,i)$, we have that $\,\vdash\varphi'\,(\eta^{-1}\circ f) } = \varphi'\,g'$. Now suppose that some definable function $g\colon(\N\to\Q)\to\Bool$ is
+such that $(\forall i\leq n,\, \vdash f\,i = g\,i)$. Then we also have that $(\forall i\leq n,\, \vdash (\eta^{-1}\circ f)\,i = (\eta^{-1}\circ g)\,i)$ and hence that $\vdash\varphi'\,(\eta^{-1}\circ f) } = \varphi'\,(\eta^{-1}\circ g)$, 
+that is $\vdash(\iota\circ \varphi)\,f } = (\iota\circ \varphi)\,g$, by definition of $\varphi'$. Since $\iota$ is mono, we then have $\vdash \varphi\,f=\varphi\,g$, as expected.
+\end{proof}
+
+
+\begin{proposition}\label{prop:Rnotdiscrete} In the presence of local continuity, the set $\R$ is not a definable quotient of the setoid $(\R_0,\sim).
 \end{proposition}
 \begin{proof}
-Assume that $\R$ is discrete. By exactness of the quotient defined in~\ref{sec:setoids:examples}, $\class{\vec 0} \neq \class{\vec 1}$ where $\vec 0$ and $\vec 1$ are the elements representing the constant $0$ or $1$ Cauchy sequences in $\R_0$. By discreteness of $\R$, there is a definable $P:\R\to\Bool$
-such that $\vdash P\class{\vec 0}\neq P\class{\vec 1 }$. We define $P^\prime:\R_0\to\Bool$ by $P^\prime\,s = P\class{s}$, which has the property that $P^\prime\,\vec0\neq P^\prime\,\vec 1$ and that $P^\prime$ is closed under $\sim$. By local continuity, there is a number $n$  such that if $\forall i\leq n,\, \vdash f\,i = 0$ then $P^\prime \, f = P^\prime\,\vec 0$. Define $g\,i=\text{if } i\leq n \text{ then } 0 \text{ else } 1$, such that $P^\prime g =P^\prime \vec 0$ by local continuity. However $g \sim \vec 1$ and hence $P^\prime\,g=P^\prime \vec 1$, which contradicts $P^\prime \vec 1 \neq P^\prime \vec 0$.
+Suppose for the sake of contradiction that $(\R,\class\dotph, \sound)$ is a definable quotient of the setoid $(\R_0,\sim)$. The function $\class\dotph\colon \R_0\to\R$ is a split epi, as it has a right inverse $\emb$, and hence by propositions~\ref{prop:RZdiscrete} and~\ref{prop:splitepidiscrete}, the set $\R$ is discrete. By exactness of the quotient,  we have that $\class{\vec 0} \neq \class{\vec 1}$ where $\vec 0$ and $\vec 1$ are  elements of $\R_0$ representing the Cauchy sequences $\lambda x.0$ and $\lambda x.1$, respectively. By discreteness of $\R$, there exists a definable function $P:\R\to\Bool$
+such that $\vdash P\class{\vec 0}\neq P\class{\vec 1 }$. It follows that the  function $P^\prime:\R_0\to\Bool$ defined by $P^\prime\,s = P\class{s}$ has the property that $\vdash P^\prime\,\vec0\neq P^\prime\,\vec 1$ and that $P^\prime$ is closed under $\sim$. By local continuity at type $(\N\to\Q)\to\Bool$ (Lemma~\ref{lem:lcratseq}), there is a number $n_P$  such that, for all definable sequences $f\colon\N\to\Q$, 
+\[
+\left(\forall i\leq n_P,\, \vdash f\,i = 0_\Q\right)\text{ entails } P^\prime \, f = P^\prime\,(\pi_0\,\vec0).
+\] 
+Define $g\,i=\text{if } i\leq n \text{ then } 0_\Q \text{ else } 1_\Q$, such that $P^\prime g =P^\prime \vec 0$ by local continuity. However $g \sim \vec 1$ and hence $P^\prime\,g=P^\prime\,\vec 1$, which contradicts $P^\prime\,\vec 1 \neq P^\prime\,\vec 0$.
 \todo{Remove abuses of notation and refine local continuity to Cauchy sequences.}
 \end{proof}
 
@@ -402,6 +436,9 @@ Directly follows from Propositions~\ref{prop:Rnotdiscrete} and~\ref{prop:splitep
 \bibliographystyle{plain}
 \bibliography{biblio}
 \end{document}
+
+
+
 
 
 
