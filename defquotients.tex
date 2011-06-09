@@ -110,7 +110,7 @@ We write $\Prop$ for the type of sets with at most one inhabitant.
 
 \section{Setoids}\label{sec:setoids}
 \begin{definition}
-A setoid $(A,\sim)$ is a set $A$ equipped with an equivalence relation $\sim : A \to A \to \Prop$.
+A setoid $(A,\sim)$ is a set $A$ equipped with an equivalence relation ${\,\sim\,}\colon A \to A \to \Prop$.
 \end{definition}
 \subsection{Examples}\label{sec:setoids:examples}
 \subsubsection*{Integers}
@@ -135,13 +135,13 @@ $(a,b)\sim(b,a)$.
 Given a set $A$ , the finite multisets of elements in $A$ is the setoid $(\List A,\sim)$ where two lists are equivalent if{f} one is the permutation of the other.
 \begin{align*}
 \List A &= \Sigma n:\N.\Fin\,n\to A\\
-(m,f)\sim(n,g) &= \exists \varphi : \Fin\,m \to \Fin\,n \cdot\ \mathop{Bijection}\,\varphi \to g\circ\varphi = f
+(m,f)\sim(n,g) &= \exists \varphi : \Fin\,m \to \Fin\,n \cdot\ \mathop{Bijection}\,\varphi \land g\circ\varphi = f
 \end{align*}
 
 \subsubsection*{Finite sets}
 Given a set $A$ , the finite sets of elements in $A$ is the setoid $(\List A,\sim)$ where two lists are equivalent if{f} they contains the same elements.
 \begin{align*}
-(m,f)\subseteq(n,g) &= \exists \varphi : \Fin\,m \to \Fin\,n \cdot \varphi \to g\circ\varphi = f  \\
+(m,f)\subseteq(n,g) &= \exists \varphi : \Fin\,m \to \Fin\,n \cdot  g\circ\varphi = f  \\
 (m,f)\sim(n,g)&= (m,f)\subseteq(n,g) \wedge (n,g)\subseteq(m,f)
 \end{align*}
 
