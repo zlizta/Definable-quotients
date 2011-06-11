@@ -53,7 +53,10 @@
 \DeclareMathOperator{\lift}{lift}
 \DeclareMathOperator{\LC}{LC}
 \DeclareMathOperator{\liftbeta}{lift-\beta}
-
+\DeclareMathOperator{\Bijection}{Bijection}
+\DeclareMathOperator{\true}{true}
+\DeclareMathOperator{\false}{false}
+\DeclareMathOperator{\order}{order}
 \newcommand{\eqqm}{\overset{\text{\tiny ?}}{=}}
 \newcommand{\sep}{\mathrel{\sharp}}
 \renewcommand{\equiv}{=}
@@ -98,11 +101,15 @@ We write $\Prop$ for the type of sets with at most one inhabitant.
 
 \todo{Meaning of ``definable''; functions are total}
 
+
+
 \todo{explain $\simeq_{\sound\,p}$}
 
 \todo{define $\Fin$ and Bijection}
 
 \todo{logical symbols in Prop}
+
+\todo{State and explain proof irrelevance}
 
 \todo{Define subsets as sigma types.  For $A:\Set$ and $P\colon A\to\Prop$, we defined the subset of elements of $A$ satisfying $P$, written $\set{a:A\mid P\,a}$, as \[\set{a:A\mid P\,a}=\Sigma a:A \dotop P\]}
 
@@ -135,16 +142,16 @@ $(a,b)\sim(b,a)$.
 Given a set $A$ , the finite multisets of elements in $A$ is the setoid $(\List A,\sim)$ where two lists are equivalent if{f} one is the permutation of the other.
 \begin{align*}
 \List A &= \Sigma n:\N.\Fin\,n\to A\\
-(m,f)\sim(n,g) &= \exists \varphi : \Fin\,m \to \Fin\,n \cdot\ \mathop{Bijection}\,\varphi \land g\circ\varphi = f
+(m,f)\sim(n,g) &= \exists \varphi : \Fin\,m \to \Fin\,n \cdot\ \Bijection\,\varphi \land g\circ\varphi = f
 \end{align*}
-
+Notice that if $(m,g)\sim(n,g)$ then $m=n$ is provable in type theory. 
 \subsubsection*{Finite sets}
-Given a set $A$ , the finite sets of elements in $A$ is the setoid $(\List A,\sim)$ where two lists are equivalent if{f} they contains the same elements.
+Given a set $A$, the finite sets of elements in $A$ is the setoid $(\List A,{\sim})$ where two lists are equivalent if{f} they contain the same elements.
 \begin{align*}
 (m,f)\subseteq(n,g) &= \exists \varphi : \Fin\,m \to \Fin\,n \cdot  g\circ\varphi = f  \\
 (m,f)\sim(n,g)&= (m,f)\subseteq(n,g) \wedge (n,g)\subseteq(m,f)
 \end{align*}
-
+For example the lists $[1,1,2]$ and $[1,2]$ are equivalent and both represent the set $\set{1,2}$.
 \subsubsection*{Partiality monad}
 Given a set $A$, the set of partial computations over $A$ is given by $(A_{\bot_0},{\sim})$ where $A_{\bot_0}$ is the set of delayed computations over $A$  and $\sim$ is a weak bisimilarity ignoring finite delays. Using the notation for mixed inductive coinductive  definitions from~\cite{danielsson2010mpc}, where we mark coinductive occurrences of a datatype by using $\infty$, we define $A_{\bot_0} : \Set$ and the relations $\sqsubseteq:A_{\bot_0}\to A_{\bot_0} \to \Prop$ by the following constructors:
 \begin{align*}
@@ -301,7 +308,7 @@ Note that the greatest common divisor function ($\gcd$) is definable in type the
 
 \subsubsection*{Unordered pairs}
 
-The construction of the definable quotient depends on the choice of $A$. In general we
+The construction of a definable quotient over the setoids of unordered pairs $(A\times A,\sim)$ as defined in Section~~\ref{sec:setoids:examples} depends on the choice of $A$. In general we
 require a partial order $\leq : A \to A \to \Prop$ together with functions:
 \begin{align*}
 \min, \max : A \to A \to A
@@ -314,7 +321,7 @@ Clearly $[(a,b)] \sim (a,b)$ and if $a\leq b$ then $[(a,b)]=(a,b)$. Both facts f
 \item[$A = \N$] \hfill
 
 We use the standard ordering $\leq : \N \to \N \to \Prop$ and exploit
-that it is constructively total $\forall m ,n\cdot m \leq n + n \leq m$ to define $\min$ and
+that it is constructively total $\forall m ,n\cdot m \leq n \lor n \leq m$ to define $\min$ and
 $\max$.
 \item[$A=\N\to\N$] \hfill\\
 We use the lexicographic ordering ${<},{\leq}:(\N \to \N) \to (\N\to\N)\to\Prop$
@@ -335,19 +342,55 @@ For instance, the operator $\min : (\N \to \N) \to (\N\to\N) \to (\N \to \N)$ ca
 
 \subsubsection*{Finite multisets}
 
+Finite multisets can be viewed as a generalization of unordered pairs and again, the construction of a definable quotient over the setoids of unordered pairs $(\List A,\sim)$ as defined in Section~~\ref{sec:setoids:examples} depends on the choice of $A$. 
+
+We define $Q = \set{(m , s) \mid  \forall i,j:\Fin\,m, i\leq j\implies s\,i \leq s\,j}$ and
+\[ [(m,s)] = (m,\order_m.\]
+Clearly $[(a,b)] \sim (a,b)$ and if $a\leq b$ then $[(a,b)]=(a,b)$. Both facts follow from
+ the properties of $\min$ and $\max$. We consider two cases:
+
+\begin{description}
+\item[$A=\N\to\N$] \hfill\\
+First we define a family of orders $\set{{\leq_n}}_{n:\N}$ 
+on sequences of natural numbers where $f\leq_n g$ 
+if and only if $[f_0,\dots, f_n]$ comes before $[g_0,\dots, g_n]$ in the lexicographic order: 
+
+
+\begin{align*}
+&{{-}\leq_{-}{-}} : \N\to (\N\to\N) \to (\N\to\N)\to \Bool\\
+&{f\leq_n g} =  f\,i\leq g\,i \\
+&\text{\phantom{$f\leq_n g =$} where }i =\min\set{i:\N\mid i>n\lor f\,i\neq g\,i}.
+\end{align*}
+Notice that if $f<_n g$ for some $n$ then $f<_m g$ for all $m$ greater than $n$. 
+
+Now, given a finite set of natural sequences $\varphi:\Fin m\to (\N\to\N)$, we can order it using any algorithm
+\[\order_{m,n} :(\Fin m \to (\N\to\N)) \to (\Fin m \to (\N\to\N))\] 
+which sorts $m$ sequences according to the order $\leq_n$.
+\begin{align*}
+\class{(m,\varphi)} &= (m,\psi)\\
+&\text{where $\psi\,i\,j = (\order_{m,j}\,\varphi)\,i\,j$}\\
+\end{align*}
+The key point to show the correctness of this algorithm is that 
+\begin{equation}\label{eq:ms:order}
+(\order_{m, j}\,\varphi)\,i\,k=(\order^\ast_{m}\,\varphi)\,i\,k
+\end{equation}
+for all $i:\Fin m$ and all $k\leq j$ where $\order^\ast_m\,\varphi$ is the finite sequence whose elements are the functions $\varphi\,i:\N\to\N$ ordered in full lexicographical order --- we do not assume $\order^\ast_m$ to be definable a priori although it is as a consequence of the definability of $\order_{m,j}$.
+We omit the proof, which is too technical and not very enlightening, believing that intuition drawn from the case of unordered pairs above is more interesting. 
+ 
+%Suppose that Equation~\ref{eq:ms:order} is not correct. Take $i_0$ to be the smallest $i$ for which it fails for some $j$ and $k$. Then take $k_0$ to be the smallest $k$ for which $(\order_{m, j}\,\varphi)\,i_0\,k\neq(\order^\ast_{m}\,\varphi)\,i_0\,k$.
+\end{description}
+
 \subsubsection*{Finite sets}
 
 
 \section{Undefinable quotients}
-However there are setoids specifications for which it is impossible to construct a definable quotient in type theory. Examples include the real numbers and the partiality monad described in Section~\ref{sec:setoids:examples}.
-
-To show that this is the case, we show some properties of type theory in a classical metatheory.
-
-We write $\vdash a\colon A$ if $a\colon A$ is derivable in type theory. In case that $\vdash P\colon \Prop$, we write $\vdash P$ to indicate that there is a proof $\vdash p\colon P$
-\begin{definition}\hfill
+However there are interesting setoid specifications for which it is impossible to construct a definable quotient in type theory. Examples include the real numbers and the partiality monad described in Section~\ref{sec:setoids:examples}.
+To prove that these are indeed undefinable quotients, we first establish some properties of type theory in a classical metatheory.
+We write $\vdash a : A$ if $a : A$ is derivable in the type theory under consideration. In case that $\vdash P : \Prop$, we simply  write $\vdash P$ to indicate that there is a proof $p$ of $P$ which is derivable, that is $\vdash p : P$.
+\begin{definition}[separable elements, discrete sets]\hfill
 \begin{enumerate}
-\item Two elements $a$ and $b$ of a definable set are separable, written $a \sep b$, if there exists a definable test $P\colon A\to \Bool$ such that $\vdash P\,a \neq P\,b$.
-\item A definable set $A$ is \emph{discrete} whenever $\vdash a, b\colon A$ and   $\vdash a\not= b$
+\item Two elements $a$ and $b$ of a definable set are \emph{separable}, written $a \sep b$, if there exists a definable test $P\colon A\to \Bool$ such that $\vdash P\,a \neq P\,b$.
+\item A definable set $A$ is \emph{discrete} whenever $\vdash a, b :A$ and   $\vdash a\not= b$
 entails that $a$ and $b$ are separable.
 \end{enumerate}
 \end{definition}
@@ -358,13 +401,19 @@ The set $\N\to\N$ is discrete.
 Assume $\vdash f, g\colon \N \to \N$ and $\vdash f\neq g$. By soundness, $f$ and $g$ must denote different functions and hence there is a natural number $i$ such that $\vdash f\,i\neq g\,i$. Hence we can define $P\,h = {h\,i} \eqqm {f\,i}$ where ${\eqqm}\colon \N\to\N\to\Bool$ is a decision procedure for equality on $\N$.
 \end{proof}
 
-Note that we have used classical reasoning in the proof above. We don't think it is necessary, i.e. it should be possible to extract the witness $i$ from the proof that $f\neq g$.
+Note that we have used classical reasoning in the proof of Proposition~\ref{prop:NtoNdiscrete}. However, we do not think it is necessary because it should be possible to extract the witness $i$ from the proof that $f\neq g$.
 
 \begin{proposition}\label{prop:splitepidiscrete}
 Assume $ e\colon A\to B$ is a definable split~epi.  If $A$ is discrete then $B$ is discrete.
 \end{proposition}
 \begin{proof}
-Let $\vdash s\colon B\to A$ such that $\vdash e\circ s=\id_B$. Let $\vdash b\neq b'\colon B$. Then $\vdash s\,b\neq s\,b'$, because $s$ is a right inverse of $e$, and hence there exists $\vdash P\colon A\to\Bool$ such that $\vdash P\,(s\,b)\neq P\,(s\,b')$, because $A$ is discrete, and hence $\vdash P'\colon B\to\Bool$ defined by $P' = P\circ s$ provably separates $b$ and $b'$.
+Let $\vdash s\colon B\to A$ such that $\vdash e \circ s=\id_B$ and let $\vdash b\neq b'\colon B$. Then $\vdash s\,b\neq s\,b'$ because  $s$ is a right inverse of $e$ :
+\begin{align*}
+&\vdash s\,b = s\,b'\to (e\circ s)\, b = (e\circ s)\,b'&\text{by congruence}  \\
+&\vdash s\,b = s\,b'\to \id_B\, b = \id_B\,b'&e\circ s = \id_B  \\
+&\vdash s\,b = s\,b'\to b = b'&\text{by definition of $\id_B$}\\
+&\vdash s\,b = s\,b'\to \bot&\text{by modus ponens with $b=b'\to\bot.$}\\
+\end{align*}Hence there exists $\vdash P\colon A\to\Bool$ such that $\vdash P\,(s\,b)\neq P\,(s\,b')$, because $A$ is discrete, and  $\vdash P'\colon B\to\Bool$ defined by $P' = P\circ s$ provably separates $b$ and $b'$.
 Therefore $B$ is discrete.
 \end{proof}
 
@@ -376,7 +425,7 @@ Left to the reader as it is essentially the same as the proof for Proposition~\r
 \end{proof}
 To show that any set $\R$ which is a definable quotient of the setoid $(\R_0,\sim)$ given earlier in~\ref{sec:setoids:examples} is not discrete, we need
 
-\todo{Define local continuity instead of assuming it and argue later that it is reasonable and if it holds then bla bla.}
+
 \begin{definition}[local continuity]\label{def:localcontinuity}
 \emph{Local continuity} at type $(\N \to \N) \to \N$ is the property that
 \begin{align*}
@@ -387,10 +436,9 @@ To show that any set $\R$ which is a definable quotient of the setoid $(\R_0,\si
    &\text{we have that }{\,\vdash \varphi\, f} = \varphi\, g.
 \end{align*}
 \end{definition}
+Local continuity expresses the fact that, to compute $\varphi\,f$, the reduction relation defining the operational semantics of type theory only inspects finitely many terms of the input sequence $f$. We have stated local continuity in its perhaps simplest form, at a particular type. However, we conjecture that it can be expressed and proved at all types. Whatever the case, it is easily shown that local continuity at type $(\N\to\N)\to\N$  entails local continuity at some other types, in particular at type $(\N\to\Q)\to\Bool$, which we next use to show that the set $\R$ is not a definable quotient of the setoid $(\R_0,\sim) $ described in Section~\ref{sec:setoids:examples}$.
 
-Local continuity expresses the fact that, to compute $\varphi f$, the reduction relation defining the operational semantics of type theory only inspects finitely many terms of the input sequence $f$. We have stated local continuity in its perhaps simplest form, at a particular type. However, we conjecture that it can be expressed and proved at all types. Whatever the case, it is easily shown that local continuity at type $(\N\to\N)\to\N$  entails local continuity at some other types, in particular at type $(\N\to\Q)\to\Bool$, which we next use to show that the set $\R$ is not a definable quotient of the setoid $(\R_0,\sim) $ described in Section~\ref{sec:setoids:examples}$.
-
-\begin{lemma}(local continuity for decisions on rational sequences)
+\begin{lemma}(local continuity for tests on rational sequences)
 \label{lem:lcratseq}
 
 In the presence of local continuity as in Definition~\ref{def:localcontinuity}, the following property holds :
@@ -403,7 +451,7 @@ In the presence of local continuity as in Definition~\ref{def:localcontinuity}, 
 \end{align*}
 \end{lemma} 
 \begin{proof}
-Let $\eta\colon \N\to\Q$ be a definable bijection from $\N$ to $\Q$ and $\iota\colon\Bool\to\N$ a definable monomorphism. Let $\varphi\colon (\N \to \Q) \to \Bool$ and $f  \colon  \N \to \Q$ be as above. 
+Let $\eta\colon \N\to\Q$ be a definable bijection from $\N$ to $\Q$ and $\iota\colon\Bool\to\N$ a definable monomorphism, e.g. $\iota(\true)=0$, $\iota(\false)=1$. Let $\varphi\colon (\N \to \Q) \to \Bool$ and $f  \colon  \N \to \Q$ be as in the statement of Lemma~\ref{lem:lcratseq}. 
 Define $\varphi'\colon (\N\to\N)\to\N$ by $\varphi'\,f=\iota(\varphi(\eta\,f))$. By local continuity at type $(\N\to\N)\to\N$, there exists $n:\N$ such that for all definable sequences $g'\colon\N\to\N$ satisfying $(\forall i\leq n,\, \vdash (\eta^{-1}\circ f)\,i = g'\,i)$, we have that $\,\vdash\varphi'\,(\eta^{-1}\circ f) } = \varphi'\,g'$. Now suppose that some definable function $g\colon(\N\to\Q)\to\Bool$ is
 such that $(\forall i\leq n,\, \vdash f\,i = g\,i)$. Then we also have that $(\forall i\leq n,\, \vdash (\eta^{-1}\circ f)\,i = (\eta^{-1}\circ g)\,i)$ and hence that $\vdash\varphi'\,(\eta^{-1}\circ f) } = \varphi'\,(\eta^{-1}\circ g)$, 
 that is $\vdash(\iota\circ \varphi)\,f } = (\iota\circ \varphi)\,g$, by definition of $\varphi'$. Since $\iota$ is mono, we then have $\vdash \varphi\,f=\varphi\,g$, as expected.
@@ -414,17 +462,17 @@ that is $\vdash(\iota\circ \varphi)\,f } = (\iota\circ \varphi)\,g$, by definiti
 \end{proposition}
 \begin{proof}
 Suppose for the sake of contradiction that $(\R,\class\dotph, \sound)$ is a definable quotient of the setoid $(\R_0,\sim)$. The function $\class\dotph\colon \R_0\to\R$ is a split epi, as it has a right inverse $\emb$, and hence by propositions~\ref{prop:RZdiscrete} and~\ref{prop:splitepidiscrete}, the set $\R$ is discrete. By exactness of the quotient,  we have that $\class{\vec 0} \neq \class{\vec 1}$ where $\vec 0$ and $\vec 1$ are  elements of $\R_0$ representing the Cauchy sequences $\lambda x.0$ and $\lambda x.1$, respectively. By discreteness of $\R$, there exists a definable function $P:\R\to\Bool$
-such that $\vdash P\class{\vec 0}\neq P\class{\vec 1 }$. It follows that the  function $P^\prime:\R_0\to\Bool$ defined by $P^\prime\,s = P\class{s}$ has the property that $\vdash P^\prime\,\vec0\neq P^\prime\,\vec 1$ and that $P^\prime$ is closed under $\sim$. By local continuity at type $(\N\to\Q)\to\Bool$ (Lemma~\ref{lem:lcratseq}), there is a number $n_P$  such that, for all definable sequences $f\colon\N\to\Q$, 
+such that $\vdash P\class{\vec 0}\neq P\class{\vec 1 }$. It follows that the  function $P^\prime:\R_0\to\Bool$ defined by $P^\prime\,s = P\class{s}$ has the property that $\vdash P^\prime\,\vec0\neq P^\prime\,\vec 1$ and that $P^\prime$ is closed under $\sim$. By local continuity at type $(\N\to\Q)\to\Bool$ (Lemma~\ref{lem:lcratseq}) and by proof irrelevance in the second component of the pairs in $\R_0$, there is a number $n_P$  such that, for all definable sequences $f\colon\N\to\Q$, 
 \[
 \left(\forall i\leq n_P,\, \vdash f\,i = 0_\Q\right)\text{ entails } P^\prime \, f = P^\prime\,(\pi_0\,\vec0).
 \] 
 Define $g\,i=\text{if } i\leq n \text{ then } 0_\Q \text{ else } 1_\Q$, such that $P^\prime g =P^\prime \vec 0$ by local continuity. However $g \sim \vec 1$ and hence $P^\prime\,g=P^\prime\,\vec 1$, which contradicts $P^\prime\,\vec 1 \neq P^\prime\,\vec 0$.
-\todo{Remove abuses of notation and refine local continuity to Cauchy sequences.}
+
 \end{proof}
 
 It seems that all sets definable in ordinary type theory~(using only the set formers $\Pi$, $\Sigma$, $=$, finite sets, $W$, see e.g.~\cite{nordstrom1990programming}) are discrete. This observation shows that the reals are not  definable as an exact quotient in ordinary type theory while Proposition~\ref{prop:Rnotdiscrete} shows that reals are not a definable  quotient in any extension of ordinary type theory, as long as local continuity is admissible.
 
-\todo{See whether we can use the same counter for different classes of theorems.}
+
 
 \begin{corollary}
 $\R$ is not a definable quotient of $\R_0$.
@@ -433,9 +481,13 @@ $\R$ is not a definable quotient of $\R_0$.
 Directly follows from Propositions~\ref{prop:Rnotdiscrete} and~\ref{prop:splitepidiscrete}.
 \end{proof}
 
+
 \bibliographystyle{plain}
 \bibliography{biblio}
 \end{document}
+
+
+
 
 
 
