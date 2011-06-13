@@ -56,7 +56,7 @@
 \DeclareMathOperator{\Bijection}{Bijection}
 \DeclareMathOperator{\true}{true}
 \DeclareMathOperator{\false}{false}
-\DeclareMathOperator{\order}{order}
+\DeclareMathOperator{\sort}{sort}
 \newcommand{\eqqm}{\overset{\text{\tiny ?}}{=}}
 \newcommand{\sep}{\mathrel{\sharp}}
 \renewcommand{\equiv}{=}
@@ -346,18 +346,18 @@ For instance, the operator $\min : (\N \to \N) \to (\N\to\N) \to (\N \to \N)$ ca
 
 \subsubsection*{Finite multisets}
 
-As in the case of unordered pairs, the construction of a definable quotient over the setoid of multisets $(\List A,\sim)$ as defined in Section~~\ref{sec:setoids:examples} depends on the choice of $A$.  We again require an order $A\to A \to \Prop$ to define the set of finite multisets of elements of $A$ as
+As in the case of unordered pairs, the construction of a definable quotient over the setoid of multisets $(\List A,\sim)$ defined in Section~~\ref{sec:setoids:examples} depends on the choice of $A$.  We again require an order $A\to A \to \Prop$ to define the set of finite multisets of elements of $A$ as
 \[
 Q = \set{(m , s) : \List A\mid  \forall i,j:\Fin\,m \cdot i\leq j\implies s\,i \leq s\,j}
 \]
-and an ordering function $\order: \List A \to \List A$ which allows to define
+and an sorting function $\sort: \List A \to \List A$ from which we define
 \[
-\class{(m,s)] = (m,\order s)}.
+\class{(m,s)} = (m,\sort s).
 \]
-Notice that the function $\order$ can be defined from the functions $\min$ and $\max : A \to A \to A$ used in the previous example about unordered pairs. However, we use a more direct method in our continued exploration of the case where $A$ is the set $\N\to\N$ of natural sequences.  
+Notice that the function $\sort$ can be defined from the functions $\min$ and $\max : A \to A \to A$ used in the previous example about unordered pairs. However, we use a more direct method in our exploration of the case where $A$ is the set $\N\to\N$ of natural sequences. At first glance, it might seem counterintuitive that one can constructively sort sequences of infinite natural sequences and thus define a quotient of the setoids of multisets of natural sequences. 
 
 \begin{description}
-\item[Example : $A=\N\to\N$] \hfill\\
+\item[$A=\N\to\N$] \hfill\\
 First we define a family of preorders $\set{{\leq_k}}_{k:\N}$ 
 on sequences of natural numbers by requesting that $u\leq_k v$ 
 if and only if  the finite sequence $[u_0,\dots, u_k]$ comes before the finite sequence $[v_0,\dots, v_k]$ in the lexicographic order. Writing $u \leq_k v $ for (\leq) \,k\,u\,v$ :  
@@ -371,25 +371,40 @@ if and only if  the finite sequence $[u_0,\dots, u_k]$ comes before the finite s
 Notice that if $u<_k v$ for some $k$ then $u<_l v$ for all $l$ greater than $k$. 
 
 Now, given a finite sequence of natural sequences $\varphi:\Fin m\to (\N\to\N)$, we can order it using any algorithm
-\[\order_{m,k} :(\Fin m \to (\N\to\N)) \to (\Fin m \to (\N\to\N))\] 
+\[\sort_{m,k} :(\Fin m \to (\N\to\N)) \to (\Fin m \to (\N\to\N))\] 
 which sorts $m$ sequences according to the preorder $\leq_k$.
 We are then able to define :\begin{align*}
 \class{(m,\varphi)} &= (m,\psi)\\
-&\text{where $\psi\,i\,j = (\order_{m,j}\,\varphi)\,i\,j$,}
+&\text{where $\psi\,i\,j = (\sort_{m,j}\,\varphi)\,i\,j$,}
 \end{align*}
 so that the finite sequence  $[\psi\,0,\dots,\psi\,(m-1)]$ thus defined is the finite sequence $[\varphi\,0,\dots,\varphi\,(m-1)]$ ordered in lexicographic order. The key point justifying that claim is that 
 \begin{equation}\label{eq:ms:order}
-(\order_{m, j}\,\varphi)\,i\,k=(\order^\ast_{m}\,\varphi)\,i\,k
+(\sort_{m, j}\,\varphi)\,i\,k=(\sort^\ast_{m}\,\varphi)\,i\,k
 \end{equation}
-for all $i:\Fin m$ and all $k\leq j$ where $\order^\ast_m\,\varphi$ is the finite sequence whose elements are the functions $\varphi\,i:\N\to\N$ ordered in full lexicographical order --- we do not assume $\order^\ast_m$ to be definable a priori although it is as a consequence of the definability of $\order_{m,j}$.
+for all $i:\Fin m$ and all $k\leq j$ where $\sort^\ast_m\,\varphi$ is the finite sequence whose elements are the functions $\varphi\,i:\N\to\N$ ordered in full lexicographical order --- we do not assume $\sort^\ast_m$ to be definable a priori although it is as a consequence of the definability of $\sort_{m,j}$.
 We omit further details of the proof,  the intuition drawn from the case of unordered pairs above being more interesting. 
  
-%Suppose that Equation~\ref{eq:ms:order} is not correct. Take $i_0$ to be the smallest $i$ for which it fails for some $j$ and $k$. Then take $k_0$ to be the smallest $k$ for which $(\order_{m, j}\,\varphi)\,i_0\,k\neq(\order^\ast_{m}\,\varphi)\,i_0\,k$.
+%Suppose that Equation~\ref{eq:ms:order} is not correct. Take $i_0$ to be the smallest $i$ for which it fails for some $j$ and $k$. Then take $k_0$ to be the smallest $k$ for which $(\sort_{m, j}\,\varphi)\,i_0\,k\neq(\sort^\ast_{m}\,\varphi)\,i_0\,k$.
 \end{description}
 
 \subsubsection*{Finite sets}
 
+We define a family $\set{\varphi_i:\N\to\N}_{i:\N}$ of natural sequences with the property that any finite sequence $[x_0,\dots,x_k]$ of natural numbers is a prefix of some $\varphi_i$. A possible idea to define such a family is to request that the sequences $\varphi_{2i}$ of even index are those starting with $0$ while the others are in turn split into those starting with $1$ a... \todo{CONTINUE HERE}
 
+\noindent
+\begin{array}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\varphi_{0} & \varphi_{1} & \varphi_{2} & \varphi_{3} & \varphi_{4} & \varphi_{5} & \varphi_{6} & \varphi_{7} & \varphi_{8} & \varphi_{9} & \varphi_{10} & \varphi_{11} & \varphi_{12} & \varphi_{13} & \varphi_{14} & \varphi_{15} & \varphi_{16} & \varphi_{17} & \varphi_{18} & \varphi_{19} & \varphi_{20}\\
+\hline
+0 & 1 & 0 & 2 & 0 & 1 & 0 & 3 & 0 & 1 & 0 & 2 & 0 & 1 & 0 & 4 & 0 & 1 & 0 & 2 & 0\\
+0 & 0 & 1 & 0 & 0 & 1 & 2 & 0 & 0 & 0 & 1 & 1 & 0 & 2 & 3 & 0 & 0 & 0 & 1 & 0 & 0\\
+0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 2 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 1\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+\vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots\\
+\hline
+\end{array}
 \section{Undefinable quotients}
 However there are interesting setoid specifications for which it is impossible to construct a definable quotient in type theory. Examples include the real numbers and the partiality monad described in Section~\ref{sec:setoids:examples}.
 To prove that these are indeed undefinable quotients, we first establish some properties of type theory in a classical metatheory.
@@ -493,6 +508,7 @@ Directly follows from Propositions~\ref{prop:Rnotdiscrete} and~\ref{prop:splitep
 \bibliographystyle{plain}
 \bibliography{biblio}
 \end{document}
+
 
 
 
