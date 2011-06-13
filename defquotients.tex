@@ -144,7 +144,7 @@ Given a set $A$ , the finite multisets of elements in $A$ is the setoid $(\List 
 \List A &= \Sigma n:\N.\Fin\,n\to A\\
 (m,f)\sim(n,g) &= \exists \varphi : \Fin\,m \to \Fin\,n \cdot\ \Bijection\,\varphi \land g\circ\varphi = f
 \end{align*}
-Notice that if $(m,g)\sim(n,g)$ then $m=n$ is provable in type theory. 
+Notice that $(m,g)\sim(n,g)\implies m=n$ is provable in type theory. 
 \subsubsection*{Finite sets}
 Given a set $A$, the finite sets of elements in $A$ is the setoid $(\List A,{\sim})$ where two lists are equivalent if{f} they contain the same elements.
 \begin{align*}
@@ -309,11 +309,15 @@ Note that the greatest common divisor function ($\gcd$) is definable in type the
 \subsubsection*{Unordered pairs}
 
 The construction of a definable quotient over the setoids of unordered pairs $(A\times A,\sim)$ as defined in Section~~\ref{sec:setoids:examples} depends on the choice of $A$. In general we
-require a partial order $\leq : A \to A \to \Prop$ together with functions:
+require an order $\leq : A \to A \to \Prop$ together with functions:
 \begin{align*}
 \min, \max : A \to A \to A
 \end{align*}
-calculating the binary minimum/maximum. We define $Q = \set{(a , b) \mid  a \leq b}$ and
+calculating the binary minimum and maximum for that order. This allows us to  define 
+\[
+Q = \set{(a , b) \mid  a \leq b}
+\]
+and
 \[ [(a,b)] = (\min a\, b, \max a \,b).\]
 Clearly $[(a,b)] \sim (a,b)$ and if $a\leq b$ then $[(a,b)]=(a,b)$. Both facts follow from
  the properties of $\min$ and $\max$. We consider two cases:
@@ -342,40 +346,43 @@ For instance, the operator $\min : (\N \to \N) \to (\N\to\N) \to (\N \to \N)$ ca
 
 \subsubsection*{Finite multisets}
 
-Finite multisets can be viewed as a generalization of unordered pairs and again, the construction of a definable quotient over the setoids of unordered pairs $(\List A,\sim)$ as defined in Section~~\ref{sec:setoids:examples} depends on the choice of $A$. 
-
-We define $Q = \set{(m , s) \mid  \forall i,j:\Fin\,m, i\leq j\implies s\,i \leq s\,j}$ and
-\[ [(m,s)] = (m,\order_m.\]
-Clearly $[(a,b)] \sim (a,b)$ and if $a\leq b$ then $[(a,b)]=(a,b)$. Both facts follow from
- the properties of $\min$ and $\max$. We consider two cases:
+As in the case of unordered pairs, the construction of a definable quotient over the setoid of multisets $(\List A,\sim)$ as defined in Section~~\ref{sec:setoids:examples} depends on the choice of $A$.  We again require an order $A\to A \to \Prop$ to define the set of finite multisets of elements of $A$ as
+\[
+Q = \set{(m , s) : \List A\mid  \forall i,j:\Fin\,m \cdot i\leq j\implies s\,i \leq s\,j}
+\]
+and an ordering function $\order: \List A \to \List A$ which allows to define
+\[
+\class{(m,s)] = (m,\order s)}.
+\]
+Notice that the function $\order$ can be defined from the functions $\min$ and $\max : A \to A \to A$ used in the previous example about unordered pairs. However, we use a more direct method in our continued exploration of the case where $A$ is the set $\N\to\N$ of natural sequences.  
 
 \begin{description}
-\item[$A=\N\to\N$] \hfill\\
-First we define a family of orders $\set{{\leq_n}}_{n:\N}$ 
-on sequences of natural numbers where $f\leq_n g$ 
-if and only if $[f_0,\dots, f_n]$ comes before $[g_0,\dots, g_n]$ in the lexicographic order: 
+\item[Example : $A=\N\to\N$] \hfill\\
+First we define a family of preorders $\set{{\leq_k}}_{k:\N}$ 
+on sequences of natural numbers by requesting that $u\leq_k v$ 
+if and only if  the finite sequence $[u_0,\dots, u_k]$ comes before the finite sequence $[v_0,\dots, v_k]$ in the lexicographic order. Writing $u \leq_k v $ for (\leq) \,k\,u\,v$ :  
 
 
 \begin{align*}
 &{{-}\leq_{-}{-}} : \N\to (\N\to\N) \to (\N\to\N)\to \Bool\\
-&{f\leq_n g} =  f\,i\leq g\,i \\
-&\text{\phantom{$f\leq_n g =$} where }i =\min\set{i:\N\mid i>n\lor f\,i\neq g\,i}.
+&{u\leq_k v} =  u_i\leq v_i \\
+&\text{\phantom{$f\leq_n g =$} where }i =\min\set{i:\N\mid i>k\lor u_i\neq v_i}.
 \end{align*}
-Notice that if $f<_n g$ for some $n$ then $f<_m g$ for all $m$ greater than $n$. 
+Notice that if $u<_k v$ for some $k$ then $u<_l v$ for all $l$ greater than $k$. 
 
-Now, given a finite set of natural sequences $\varphi:\Fin m\to (\N\to\N)$, we can order it using any algorithm
-\[\order_{m,n} :(\Fin m \to (\N\to\N)) \to (\Fin m \to (\N\to\N))\] 
-which sorts $m$ sequences according to the order $\leq_n$.
-\begin{align*}
+Now, given a finite sequence of natural sequences $\varphi:\Fin m\to (\N\to\N)$, we can order it using any algorithm
+\[\order_{m,k} :(\Fin m \to (\N\to\N)) \to (\Fin m \to (\N\to\N))\] 
+which sorts $m$ sequences according to the preorder $\leq_k$.
+We are then able to define :\begin{align*}
 \class{(m,\varphi)} &= (m,\psi)\\
-&\text{where $\psi\,i\,j = (\order_{m,j}\,\varphi)\,i\,j$}\\
+&\text{where $\psi\,i\,j = (\order_{m,j}\,\varphi)\,i\,j$,}
 \end{align*}
-The key point to show the correctness of this algorithm is that 
+so that the finite sequence  $[\psi\,0,\dots,\psi\,(m-1)]$ thus defined is the finite sequence $[\varphi\,0,\dots,\varphi\,(m-1)]$ ordered in lexicographic order. The key point justifying that claim is that 
 \begin{equation}\label{eq:ms:order}
 (\order_{m, j}\,\varphi)\,i\,k=(\order^\ast_{m}\,\varphi)\,i\,k
 \end{equation}
 for all $i:\Fin m$ and all $k\leq j$ where $\order^\ast_m\,\varphi$ is the finite sequence whose elements are the functions $\varphi\,i:\N\to\N$ ordered in full lexicographical order --- we do not assume $\order^\ast_m$ to be definable a priori although it is as a consequence of the definability of $\order_{m,j}$.
-We omit the proof, which is too technical and not very enlightening, believing that intuition drawn from the case of unordered pairs above is more interesting. 
+We omit further details of the proof,  the intuition drawn from the case of unordered pairs above being more interesting. 
  
 %Suppose that Equation~\ref{eq:ms:order} is not correct. Take $i_0$ to be the smallest $i$ for which it fails for some $j$ and $k$. Then take $k_0$ to be the smallest $k$ for which $(\order_{m, j}\,\varphi)\,i_0\,k\neq(\order^\ast_{m}\,\varphi)\,i_0\,k$.
 \end{description}
@@ -394,6 +401,7 @@ We write $\vdash a : A$ if $a : A$ is derivable in the type theory under conside
 entails that $a$ and $b$ are separable.
 \end{enumerate}
 \end{definition}
+
 \begin{proposition}\label{prop:NtoNdiscrete}
 The set $\N\to\N$ is discrete.
 \end{proposition}
