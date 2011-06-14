@@ -83,17 +83,17 @@ School of Computer Science, University of Nottingham, Ningbo Campus, 199 Taikang
 \maketitle
 
 \begin{abstract}
-  In Type Theory, a quotient set is a set representing a setoid,
-  categorically this corresponds to the concept of an exact
+  In Type Theory, a quotient set is a set representing a setoid.
+  Categorically, this corresponds to the concept of an exact
   coequalizer. In the present paper we consider the case of a
   \emph{definable quotients}, where the quotient set arises as the
-  codomain of a normalisation function --- this corresponds to the
+  codomain of a normalization function --- this corresponds to the
   notion of a split coequalizer.  We give a number of examples of
   definable quotients and notice that it is preferable to use the
   setoid structure when reasoning about the quotient set. We also show
   that there are examples where setoids cannot be represented in
   ordinary Type Theory such as the real numbers or the partiality
-  monad under the assumption that local continuity is admissable in
+  monad under the assumption that local continuity is admissible in
   Type Theory.
 \end{abstract}
 
@@ -152,7 +152,7 @@ Given a set $A$ , the finite multisets of elements in $A$ is the setoid $(\List 
 \List A &= \Sigma n:\N.\Fin\,n\to A\\
 (m,f)\sim(n,g) &= \exists \varphi : \Fin\,m \to \Fin\,n \cdot\ \Bijection\,\varphi \land g\circ\varphi = f
 \end{align*}
-Notice that $(m,g)\sim(n,g)\implies m=n$ is provable in type theory. 
+Notice that $(m,g)\sim(n,g)\implies m=n$ is provable in type theory.
 \subsubsection*{Finite sets}
 Given a set $A$, the finite sets of elements in $A$ is the setoid $(\List A,{\sim})$ where two lists are equivalent if{f} they contain the same elements.
 \begin{align*}
@@ -186,7 +186,7 @@ that is \[\sound\colon (a,b : A) \to a\sim b \to [a] = [b],\]
 \end{enumerate}
 Such a prequotient is a \emph{quotient} if  we also have\begin{enumerate}
 \setcounter{enumi}{3}
-\item \label{enum:elim}   
+\item \label{enum:elim}
 for any $B\colon A\to\Set$, an eliminator $\qelim_B: Q\to\Set$
  \begin{align*}
  \qelim_B\colon &(f\colon (a:A) \to B\,\class a) \\
@@ -321,7 +321,7 @@ require an order $\leq : A \to A \to \Prop$ together with functions:
 \begin{align*}
 \min, \max : A \to A \to A
 \end{align*}
-calculating the binary minimum and maximum for that order. This allows us to  define 
+calculating the binary minimum and maximum for that order. This allows us to  define
 \[
 Q = \set{(a , b) \mid  a \leq b}
 \]
@@ -362,13 +362,13 @@ and an sorting function $\sort: \List A \to \List A$ from which we define
 \[
 \class{(m,s)} = (m,\sort s).
 \]
-Notice that the function $\sort$ can be defined from the functions $\min$ and $\max : A \to A \to A$ used in the previous example about unordered pairs. However, we use a more direct method in our exploration of the case where $A$ is the set $\N\to\N$ of natural sequences. At first glance, it might seem counterintuitive that one can constructively sort sequences of infinite natural sequences and thus define a quotient of the setoids of multisets of natural sequences. 
+Notice that the function $\sort$ can be defined from the functions $\min$ and $\max : A \to A \to A$ used in the previous example about unordered pairs. However, we use a more direct method in our exploration of the case where $A$ is the set $\N\to\N$ of natural sequences. At first glance, it might seem counterintuitive that one can constructively sort sequences of infinite natural sequences and thus define a quotient of the setoids of multisets of natural sequences.
 
 \begin{description}
 \item[$A=\N\to\N$] \hfill\\
-First we define a family of preorders $\set{{\leq_k}}_{k:\N}$ 
-on sequences of natural numbers by requesting that $u\leq_k v$ 
-if and only if  the finite sequence $[u_0,\dots, u_k]$ comes before the finite sequence $[v_0,\dots, v_k]$ in the lexicographic order. Writing $u \leq_k v $ for (\leq) \,k\,u\,v$ :  
+First we define a family of preorders $\set{{\leq_k}}_{k:\N}$
+on sequences of natural numbers by requesting that $u\leq_k v$
+if and only if  the finite sequence $[u_0,\dots, u_k]$ comes before the finite sequence $[v_0,\dots, v_k]$ in the lexicographic order. Writing $u \leq_k v $ for $(\leq) \,k\,u\,v$ :
 
 
 \begin{align*}
@@ -376,22 +376,22 @@ if and only if  the finite sequence $[u_0,\dots, u_k]$ comes before the finite s
 &{u\leq_k v} =  u_i\leq v_i \\
 &\text{\phantom{$f\leq_n g =$} where }i =\min\set{i:\N\mid i>k\lor u_i\neq v_i}.
 \end{align*}
-Notice that if $u<_k v$ for some $k$ then $u<_l v$ for all $l$ greater than $k$. 
+Notice that if $u<_k v$ for some $k$ then $u<_l v$ for all $l$ greater than $k$.
 
 Now, given a finite sequence of natural sequences $\varphi:\Fin m\to (\N\to\N)$, we can order it using any algorithm
-\[\sort_{m,k} :(\Fin m \to (\N\to\N)) \to (\Fin m \to (\N\to\N))\] 
+\[\sort_{m,k} :(\Fin m \to (\N\to\N)) \to (\Fin m \to (\N\to\N))\]
 which sorts $m$ sequences according to the preorder $\leq_k$.
 We are then able to define :\begin{align*}
 \class{(m,\varphi)} &= (m,\psi)\\
 &\text{where $\psi\,i\,j = (\sort_{m,j}\,\varphi)\,i\,j$,}
 \end{align*}
-so that the finite sequence  $[\psi\,0,\dots,\psi\,(m-1)]$ thus defined is the finite sequence $[\varphi\,0,\dots,\varphi\,(m-1)]$ ordered in lexicographic order. The key point justifying that claim is that 
+so that the finite sequence  $[\psi\,0,\dots,\psi\,(m-1)]$ thus defined is the finite sequence $[\varphi\,0,\dots,\varphi\,(m-1)]$ ordered in lexicographic order. The key point justifying that claim is that
 \begin{equation}\label{eq:ms:order}
 (\sort_{m, j}\,\varphi)\,i\,k=(\sort^\ast_{m}\,\varphi)\,i\,k
 \end{equation}
 for all $i:\Fin m$ and all $k\leq j$ where $\sort^\ast_m\,\varphi$ is the finite sequence whose elements are the functions $\varphi\,i:\N\to\N$ ordered in full lexicographical order --- we do not assume $\sort^\ast_m$ to be definable a priori although it is as a consequence of the definability of $\sort_{m,j}$.
-We omit further details of the proof,  the intuition drawn from the case of unordered pairs above being more interesting. 
- 
+We omit further details of the proof,  the intuition drawn from the case of unordered pairs above being more interesting.
+
 %Suppose that Equation~\ref{eq:ms:order} is not correct. Take $i_0$ to be the smallest $i$ for which it fails for some $j$ and $k$. Then take $k_0$ to be the smallest $k$ for which $(\sort_{m, j}\,\varphi)\,i_0\,k\neq(\sort^\ast_{m}\,\varphi)\,i_0\,k$.
 \end{description}
 
@@ -400,7 +400,7 @@ We omit further details of the proof,  the intuition drawn from the case of unor
 We define a family $\set{\varphi_i:\N\to\N}_{i:\N}$ of natural sequences with the property that any finite sequence $[x_0,\dots,x_k]$ of natural numbers is a prefix of some $\varphi_i$. A possible idea to define such a family is to request that the sequences $\varphi_{2i}$ of even index are those starting with $0$ while the others are in turn split into those starting with $1$ a... \todo{CONTINUE HERE}
 
 \noindent
-\begin{array}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\[\begin{array}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
 \hline
 \varphi_{0} & \varphi_{1} & \varphi_{2} & \varphi_{3} & \varphi_{4} & \varphi_{5} & \varphi_{6} & \varphi_{7} & \varphi_{8} & \varphi_{9} & \varphi_{10} & \varphi_{11} & \varphi_{12} & \varphi_{13} & \varphi_{14} & \varphi_{15} & \varphi_{16} & \varphi_{17} & \varphi_{18} & \varphi_{19} & \varphi_{20}\\
 \hline
@@ -412,7 +412,7 @@ We define a family $\set{\varphi_i:\N\to\N}_{i:\N}$ of natural sequences with th
 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
 \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots\\
 \hline
-\end{array}
+\end{array}\]
 \section{Undefinable quotients}
 However there are interesting setoid specifications for which it is impossible to construct a definable quotient in type theory. Examples include the real numbers and the partiality monad described in Section~\ref{sec:setoids:examples}.
 To prove that these are indeed undefinable quotients, we first establish some properties of type theory in a classical metatheory.
@@ -467,7 +467,7 @@ To show that any set $\R$ which is a definable quotient of the setoid $(\R_0,\si
    &\text{we have that }{\,\vdash \varphi\, f} = \varphi\, g.
 \end{align*}
 \end{definition}
-Local continuity expresses the fact that, to compute $\varphi\,f$, the reduction relation defining the operational semantics of type theory only inspects finitely many terms of the input sequence $f$. We have stated local continuity in its perhaps simplest form, at a particular type. However, we conjecture that it can be expressed and proved at all types. Whatever the case, it is easily shown that local continuity at type $(\N\to\N)\to\N$  entails local continuity at some other types, in particular at type $(\N\to\Q)\to\Bool$, which we next use to show that the set $\R$ is not a definable quotient of the setoid $(\R_0,\sim) $ described in Section~\ref{sec:setoids:examples}$.
+Local continuity expresses the fact that, to compute $\varphi\,f$, the reduction relation defining the operational semantics of type theory only inspects finitely many terms of the input sequence $f$. We have stated local continuity in its perhaps simplest form, at a particular type. However, we conjecture that it can be expressed and proved at all types. Whatever the case, it is easily shown that local continuity at type $(\N\to\N)\to\N$  entails local continuity at some other types, in particular at type $(\N\to\Q)\to\Bool$, which we next use to show that the set $\R$ is not a definable quotient of the setoid $(\R_0,\sim)$ described in Section~\ref{sec:setoids:examples}.
 
 \begin{lemma}(local continuity for tests on rational sequences)
 \label{lem:lcratseq}
@@ -480,23 +480,23 @@ In the presence of local continuity as in Definition~\ref{def:localcontinuity}, 
    &\fad\text{sequences } g  \colon  \N \to \Q \text{ satisfying } (\forall i\leq n,\, \vdash f\,i = g\,i),\\
    &\text{we have that }{\,\vdash \varphi\, f} = \varphi\, g.
 \end{align*}
-\end{lemma} 
+\end{lemma}
 \begin{proof}
-Let $\eta\colon \N\to\Q$ be a definable bijection from $\N$ to $\Q$ and $\iota\colon\Bool\to\N$ a definable monomorphism, e.g. $\iota(\true)=0$, $\iota(\false)=1$. Let $\varphi\colon (\N \to \Q) \to \Bool$ and $f  \colon  \N \to \Q$ be as in the statement of Lemma~\ref{lem:lcratseq}. 
-Define $\varphi'\colon (\N\to\N)\to\N$ by $\varphi'\,f=\iota(\varphi(\eta\,f))$. By local continuity at type $(\N\to\N)\to\N$, there exists $n:\N$ such that for all definable sequences $g'\colon\N\to\N$ satisfying $(\forall i\leq n,\, \vdash (\eta^{-1}\circ f)\,i = g'\,i)$, we have that $\,\vdash\varphi'\,(\eta^{-1}\circ f) } = \varphi'\,g'$. Now suppose that some definable function $g\colon(\N\to\Q)\to\Bool$ is
-such that $(\forall i\leq n,\, \vdash f\,i = g\,i)$. Then we also have that $(\forall i\leq n,\, \vdash (\eta^{-1}\circ f)\,i = (\eta^{-1}\circ g)\,i)$ and hence that $\vdash\varphi'\,(\eta^{-1}\circ f) } = \varphi'\,(\eta^{-1}\circ g)$, 
-that is $\vdash(\iota\circ \varphi)\,f } = (\iota\circ \varphi)\,g$, by definition of $\varphi'$. Since $\iota$ is mono, we then have $\vdash \varphi\,f=\varphi\,g$, as expected.
+Let $\eta\colon \N\to\Q$ be a definable bijection from $\N$ to $\Q$ and $\iota\colon\Bool\to\N$ a definable monomorphism, e.g. $\iota(\true)=0$, $\iota(\false)=1$. Let $\varphi\colon (\N \to \Q) \to \Bool$ and $f  \colon  \N \to \Q$ be as in the statement of Lemma~\ref{lem:lcratseq}.
+Define $\varphi'\colon (\N\to\N)\to\N$ by $\varphi'\,f=\iota(\varphi(\eta\,f))$. By local continuity at type $(\N\to\N)\to\N$, there exists $n:\N$ such that for all definable sequences $g'\colon\N\to\N$ satisfying $(\forall i\leq n,\, \vdash (\eta^{-1}\circ f)\,i = g'\,i)$, we have that $\,\vdash\varphi'\,(\eta^{-1}\circ f) = \varphi'\,g'$. Now suppose that some definable function $g\colon(\N\to\Q)\to\Bool$ is
+such that $(\forall i\leq n,\, \vdash f\,i = g\,i)$. Then we also have that $(\forall i\leq n,\, \vdash (\eta^{-1}\circ f)\,i = (\eta^{-1}\circ g)\,i)$ and hence that $\vdash\varphi'\,(\eta^{-1}\circ f) = \varphi'\,(\eta^{-1}\circ g)$,
+that is $\vdash(\iota\circ \varphi)\,f = (\iota\circ \varphi)\,g$, by definition of $\varphi'$. Since $\iota$ is mono, we then have $\vdash \varphi\,f=\varphi\,g$, as expected.
 \end{proof}
 
 
-\begin{proposition}\label{prop:Rnotdiscrete} In the presence of local continuity, the set $\R$ is not a definable quotient of the setoid $(\R_0,\sim).
+\begin{proposition}\label{prop:Rnotdiscrete} In the presence of local continuity, the set $\R$ is not a definable quotient of the setoid $(\R_0,\sim)$.
 \end{proposition}
 \begin{proof}
 Suppose for the sake of contradiction that $(\R,\class\dotph, \sound)$ is a definable quotient of the setoid $(\R_0,\sim)$. The function $\class\dotph\colon \R_0\to\R$ is a split epi, as it has a right inverse $\emb$, and hence by propositions~\ref{prop:RZdiscrete} and~\ref{prop:splitepidiscrete}, the set $\R$ is discrete. By exactness of the quotient,  we have that $\class{\vec 0} \neq \class{\vec 1}$ where $\vec 0$ and $\vec 1$ are  elements of $\R_0$ representing the Cauchy sequences $\lambda x.0$ and $\lambda x.1$, respectively. By discreteness of $\R$, there exists a definable function $P:\R\to\Bool$
-such that $\vdash P\class{\vec 0}\neq P\class{\vec 1 }$. It follows that the  function $P^\prime:\R_0\to\Bool$ defined by $P^\prime\,s = P\class{s}$ has the property that $\vdash P^\prime\,\vec0\neq P^\prime\,\vec 1$ and that $P^\prime$ is closed under $\sim$. By local continuity at type $(\N\to\Q)\to\Bool$ (Lemma~\ref{lem:lcratseq}) and by proof irrelevance in the second component of the pairs in $\R_0$, there is a number $n_P$  such that, for all definable sequences $f\colon\N\to\Q$, 
+such that $\vdash P\class{\vec 0}\neq P\class{\vec 1 }$. It follows that the  function $P^\prime:\R_0\to\Bool$ defined by $P^\prime\,s = P\class{s}$ has the property that $\vdash P^\prime\,\vec0\neq P^\prime\,\vec 1$ and that $P^\prime$ is closed under $\sim$. By local continuity at type $(\N\to\Q)\to\Bool$ (Lemma~\ref{lem:lcratseq}) and by proof irrelevance in the second component of the pairs in $\R_0$, there is a number $n_P$  such that, for all definable sequences $f\colon\N\to\Q$,
 \[
 \left(\forall i\leq n_P,\, \vdash f\,i = 0_\Q\right)\text{ entails } P^\prime \, f = P^\prime\,(\pi_0\,\vec0).
-\] 
+\]
 Define $g\,i=\text{if } i\leq n \text{ then } 0_\Q \text{ else } 1_\Q$, such that $P^\prime g =P^\prime \vec 0$ by local continuity. However $g \sim \vec 1$ and hence $P^\prime\,g=P^\prime\,\vec 1$, which contradicts $P^\prime\,\vec 1 \neq P^\prime\,\vec 0$.
 
 \end{proof}
@@ -516,6 +516,7 @@ Directly follows from Propositions~\ref{prop:Rnotdiscrete} and~\ref{prop:splitep
 \bibliographystyle{plain}
 \bibliography{biblio}
 \end{document}
+
 
 
 
