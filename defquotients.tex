@@ -397,9 +397,12 @@ We omit further details of the proof,  the intuition drawn from the case of unor
 
 \subsubsection*{Finite sets}
 
-We define a family $\set{\varphi_i:\N\to\N}_{i:\N}$ of natural sequences with the property that any finite sequence $[x_0,\dots,x_k]$ of natural numbers is a prefix of some $\varphi_i$. A possible idea to define such a family is to request that the sequences $\varphi_{2i}$ of even index are those starting with $0$ while the others are in turn split into those starting with $1$ a... \todo{CONTINUE HERE}
+\todo{Beginning of this subsection} 
+We define a family $\set{\varphi_i:\N\to\N}_{i:\N}$ of natural sequences with the property that any finite sequence $[x_0,\dots,x_k]$ of natural numbers is a prefix of some $\varphi_i$. One idea to define such a family is to request that the sequences $\varphi_{2i}$ at even indices are those starting with $0$ while the others are in turn split into  those starting with $1$ (the $\varphi_{2i+1+2k}$, i.e. every other sequence of odd index) and the remaining sequences, starting with at least $2$, etc. For each subfamily of sequences starting with the same prefix of length $n$, we define the $(n+1)^{\text{th}}$ term in the same manner.
+Table~\ref{tab:phi} shows the prefix of the first 21 sequences.
 
 \noindent
+\begin{table}\label{tab:phi}
 \[\begin{array}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
 \hline
 \varphi_{0} & \varphi_{1} & \varphi_{2} & \varphi_{3} & \varphi_{4} & \varphi_{5} & \varphi_{6} & \varphi_{7} & \varphi_{8} & \varphi_{9} & \varphi_{10} & \varphi_{11} & \varphi_{12} & \varphi_{13} & \varphi_{14} & \varphi_{15} & \varphi_{16} & \varphi_{17} & \varphi_{18} & \varphi_{19} & \varphi_{20}\\
@@ -413,6 +416,50 @@ We define a family $\set{\varphi_i:\N\to\N}_{i:\N}$ of natural sequences with th
 \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots\\
 \hline
 \end{array}\]
+\caption{Prefixes of $\varphi_0$ to $\varphi_{20}$}
+\end{table}
+
+We give a precise definition in Haskell : \todo{choose one or two  versions only}
+
+
+
+\subsubsection{First version}
+\begin{verbatim}
+    phi i j              = sequences !! i !! j
+    
+    sequences            = repeat 0 : (tail (startWithAtLeast 0))
+    
+    startWithAtLeast n   = interleave (startWith n) 
+                                      (startWithAtLeast (n+1))
+    startWith n          = map (n:) sequences
+    interleave (x:xs) ys = x : interleave ys xs
+\end{verbatim}
+
+\subsubsection{Second version}
+\begin{verbatim}
+    phi = startWithAtLeast 0
+    
+    startWithAtLeast n = interleave (startWith n) 
+                                    (startWithAtLeast (n+1))
+    
+    startWith        n i 0     = n
+    startWith        n i (j+1) = phi i j
+    
+    interleave fs gs 0     = fs 0 
+    interleave fs gs (i+1) = interleave gs (fs . (+1)) i
+\end{verbatim}
+
+\subsubsection{Third version}
+\begin{verbatim}
+    phi i 0     | even i = 0 
+                | odd  i = phi (i `div` 2)  0 + 1
+                
+    phi i (j+1) | even i = phi (i `div` 2) j
+                | odd  i = phi (i `div` 2) (j+1)    
+\end{verbatim}
+
+
+
 \section{Undefinable quotients}
 However there are interesting setoid specifications for which it is impossible to construct a definable quotient in type theory. Examples include the real numbers and the partiality monad described in Section~\ref{sec:setoids:examples}.
 To prove that these are indeed undefinable quotients, we first establish some properties of type theory in a classical metatheory.
@@ -516,6 +563,7 @@ Directly follows from Propositions~\ref{prop:Rnotdiscrete} and~\ref{prop:splitep
 \bibliographystyle{plain}
 \bibliography{biblio}
 \end{document}
+
 
 
 
