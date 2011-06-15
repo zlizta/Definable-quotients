@@ -123,6 +123,7 @@ We write $\Prop$ for the type of sets with at most one inhabitant.
 
 \todo{We implicitly coerce elements of a subset with elements of the underlying set.}
 
+\todo{Very important message: why it is important to consider definable quotients and not just the set. E.g. associativity of +Z is horrendous with the quotient whereas fairly easy with the setoid.}
 \section{Setoids}\label{sec:setoids}
 \begin{definition}
 A setoid $(A,\sim)$ is a set $A$ equipped with an equivalence relation ${\,\sim\,}\colon A \to A \to \Prop$.
@@ -222,7 +223,11 @@ A prequotient $(Q,\class\dotph,\sound)$ with
 \item an induction principle $$\qind_P\colon ((a\colon A)\to P \,\class a)\to ((q\colon Q)\to P\,q)$$
 \end{enumerate}
 gives rise to a quotient $(Q,\class\dotph,\sound,\qelim,\qelimbeta)$.
+\todo{make reverse direction explicit}.
 \end{proposition}
+\begin{proof}
+\todo{Write proof or state that it has been formalised in the introduction. }
+\end{proof}
 This is reminiscent of the fact that dependent elimination for the natural numbers can be constructed from non-dependent elimination and a induction principle.
 
 The characterization in Proposition~\ref{prop:nlifteq} was given as a definition of quotients in~\cite{hofmann1995thesis}.
@@ -327,7 +332,7 @@ Q = \set{(a , b) \mid  a \leq b}
 \]
 and
 \[ [(a,b)] = (\min a\, b, \max a \,b).\]
-Soundness is obviously satisfied. An embedding of $Q$ into  $A\times A$ is simply the first projection --- for recall that an element in $Q$ is of the form $((a,b),p)$ where $p$ is a proof that $a\leq b$ :
+Soundness is obviously satisfied. An embedding of $Q$ into  $A\times A$ is simply the first projection --- for recall that an element in $Q$ is of the form $((a,b),p)$ where $p$ is a proof that $a\leq b$ (see Section~\ref{sec:introduction}) :
 \begin{align*}
 \emb &: Q \to A\times A\\
 \emb &= \pi_0
@@ -336,13 +341,15 @@ from which completeness and stability as stated in Definition~\ref{def:defquotie
  the properties of $\min$ and $\max$. 
 Thus $(Q,\class\dotph)$ gives rise to a definable quotient.
 
-We consider two examples, one where $A=\N$ and the other where $A=\N\to\N$:
+We consider three examples in which  $A$ is taken to be the set $\N$, $\N\to\N$ and $(\N\to\N)\to\N$ respectively :
 \begin{description}
 \item[$A = \N$] \hfill
 
 We use the standard ordering $\leq : \N \to \N \to \Prop$ and exploit
 that it is constructively total $\forall m ,n\cdot m \leq n \lor n \leq m$ to define $\min$ and
 $\max$.
+
+\bigskip
 \item[$A=\N\to\N$] \hfill\\
 We use the lexicographic ordering ${<},{\leq}:(\N \to \N) \to (\N\to\N)\to\Prop$
 \begin{align*}
@@ -357,7 +364,7 @@ For instance, the operator $\min : (\N \to \N) \to (\N\to\N) \to (\N \to \N)$ ca
                  &\text{let}\,i = \min \{ j \leq n \mid f\,j \not= g\,j \}\\
                  &\text{in }\text{if}\, f\,i< g\,i\,\text{ then } f\,n \text{ else } g\,n
 \end{align*}
-Notice that both the definition of $i$ and the test $f\,i< g\,i$ do not depend on $n$ but only on $f$ and $g$. 
+Notice that both the definition of $i$ and the test $f\,i< g\,i$ do not depend on $n$ but only on $f$ and $g$.  Thus, in the case where $f$ and $g$ are different, $\min\,f\,g$ consistently returns the same function $f$ or $g$, whichever is the smallest in lexicographical order. In the case where the two functions $f$ and $g$ are equal, then the second branch of the top level if\dots then\dots else\dots is never chosen.
 
 \bigskip
 \item[$A=(\N\to\N)\to\N$] \hfill\\
@@ -375,22 +382,22 @@ natural numbers is the prefix of $\varphi_i$ for some $i$  in the sense that $\v
                  &\text{let}\,i = \min \{ i : \N\mid f\,\varphi_ i \not= g\,\varphi_ i \}\\
                  &\text{in }\text{if}\, f\,\varphi_ i< g\,\varphi_ i\,\text{ then } f\,u \text{ else } g\,u.
 \end{align*}
-Notice as previously that both the definition of $i$ and the test $f\,\varphi_i < g\,\varphi_ i$ do not depend on $u$ but only on $f$ and $g$. Under the assumption that local continuity holds, we know that if $f\,u\not=g\,u$ then there must exist some $\varphi_i$, sharing a long enough prefix with $u$, such that $f\,\varphi_ i \not= g\,\varphi_ i$.    
+Notice as previously that both the definition of $i$ and the test $f\,\varphi_i < g\,\varphi_ i$ do not depend on $u$ but only on $f$ and $g$. Under the assumption that local continuity holds~(see Definition~\ref{def:localcontinuity} below \todo{explicit reference. Also, we need LC internally. Footnote on this??? Topic for future work: relation to axiom of choice and well orderedness}), we know that if $f\,u\not=g\,u$ then there must exist some $\varphi_i$, sharing a long enough prefix with $u$, such that $f\,\varphi_ i \not= g\,\varphi_ i$.    
 \end{description}
 
 
 \subsubsection*{Finite multisets}
 
-As in the case of unordered pairs, the construction of a definable quotient over the setoid of multisets $(\List A,\sim)$ defined in Section~~\ref{sec:setoids:examples} depends on the choice of $A$.  We again require an order $A\to A \to \Prop$ to define the set of finite multisets of elements of $A$ as
+As in the case of unordered pairs, the construction of a definable quotient over the setoid of multisets $(\List A,\sim)$ defined in Section~\ref{sec:setoids:examples} depends on the choice of $A$.  We again require an order $A\to A \to \Prop$ to define the set of finite multisets of elements of $A$ as
 \[
 Q = \set{(m , s) : \List A\mid  \forall i,j:\Fin\,m \cdot i\leq j\implies s\,i \leq s\,j}
 \]
-and an sorting function $\sort: \List A \to \List A$ from which we define
+and a sorting function $\sort: \List A \to \List A$ from which we define
 \[
 \class{(m,s)} = (m,\sort s).
 \]
-Notice that the function $\sort$ can be defined from the functions $\min$ and $\max : A \to A \to A$ used in the previous example about unordered pairs. However, we use a more direct method in our exploration of the case where $A$ is the set $\N\to\N$ of natural sequences. At first glance, it might seem counterintuitive that one can constructively sort sequences of infinite natural sequences and thus define a quotient of the setoids of multisets of natural sequences.
-
+Notice that the function $\sort$ can be defined from the functions $\min$ and $\max : A \to A \to A$ used in the previous example about unordered pairs. However, we use a more direct method in our exploration of the case where $A$ is the set $\N\to\N$ of natural sequences. At first glance, it might seem counterintuitive that one can constructively sort sequences of infinite natural sequences and thus obtain a definable quotient of the setoids of multisets of natural sequences.
+As with unordered pairs, the first projection defines an embedding from $Q$ to $\List A$ which clearly gives rise to a definable quotient. 
 \begin{description}
 \item[$A=\N\to\N$] \hfill\\
 First we define a family of preorders $\set{{\leq_k}}_{k:\N}$
@@ -423,15 +430,14 @@ We omit further details of the proof,  the intuition drawn from the case of unor
 
 \bigskip
 \item[$A=(\N\to\N)\to\N$] \hfill\\
-\todo{Beginning and end of this subsection if we want to keep it.} 
 
-?
+
 
 \end{description}
 
 \subsubsection*{Finite sets}
 \begin{description}
-\item[$A=\N\to\N$]
+\item[$A=\N\to\N$] \todo{Seems that we can define a prequotient but not the embedding.}
 
 \end{description}
 
