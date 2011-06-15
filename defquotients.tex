@@ -99,6 +99,73 @@ School of Computer Science, University of Nottingham, Ningbo Campus, 199 Taikang
 
 \section{Introduction}\label{sec:introduction}
 
+In Intensional Type Theory quotient types are unavailable and we use
+setoids instead. Setoids are just sets together with an equivalence
+relation. However, the disadvantage of using setoids is that we have
+now to lift any set-based operation on setoids. E.g. we need lists as
+an ooperation on setoids and not just on sets. Moreover, setoids are
+not safe in the sense that any consument of a setoid may access the
+underlying representation. One way out is to use a Type Theory which
+supports genuine quotients such as the forthcoming Epigram 2 system. 
+However, in many cases this is not necessary because the quotient is
+actually definable. This is the subject of the current paper.
+
+An example is the case of integers. We can define integers as a
+setoid, namely as the setoid given by pairs of natural numbers 
+$\Z_0=\N\times\N$, where the equivalence relation identifies pairs
+representing the same difference $(a,b)\sim(c,d)$ if{f} $a+d=c+b$.
+However, as it is well known, using a setoid here is unnecessary, we
+can use a set, namely $\N+\N$ where the first injection represents the
+positive numbers including $0$ whereas the second injection represents
+the proper negative numbers. We can now define operations like
+addition and multiplication and show algebraic properties,
+i.e. verifying that the structure is a ring. However, this is
+unnecessarily complicated and uses many unnecessary case
+distinctions. E.g. try to prove associativity within this setting!
+It is easier to define the operations on the setoid and the required
+algebraic properties are direct consequences of the semiring structure
+of the natural numbers. 
+
+As a consequence we suggest it is worthwhile to use both the setoid
+and the associated set, but to use the setoid structure to define
+operations on the quotient set and to reason about it. In the present
+paper we introduce the formal framework to do this, i.e. we define
+what is a quotient, and what is a definable quotient and show the
+equivalence of alternative definitions. We also vefify that quotients
+correspond precisely to the notion of coequalizers, and that an
+additional condition, exactness, can equivalently expressed in Type
+Theory or in category theory. We present a number of examples for
+definable quotients which are the base of a library of definable
+quotients. 
+
+However, not all setoids can be represented as definable
+quotients. Under the (reasonable) assumption of local continuity we
+show that the real numbers are not a definable quotient. Another
+important example is the partiality monad. These counterexample
+suggest that it is will pay off to move to a type theory where all
+quotient types exist. In this context our work can be seen as an
+exploration of the use of quotients within the settings of Intensional
+Type Theory.
+
+\subsection{Type Theory basics}
+\label{sec:type-theory-basics}
+
+We use standard type theoretic notation, inspired by Agda. We write $(x : A)
+\to B$ for dependent function types ($\Pi$-types) and $\Sigma x:A.B$
+for dependent product types $\Sigma$-types. We assume that strictly
+positive inductive (and coinductive types) such as natural numbers
+$\N$ and lists $\List$ are definable. We write $\Set$ for the
+universe of small sets. Indeed, all our definitions are universe
+polymorphic and could have been taken place in any (larger) universe. 
+
+
+\subsection{Related Work}
+\label{sec:related-work}
+
+
+
+
+
 \todo{Which type theory is used. Meaning of $=$. Meaning of $\Prop$. Meaning of  extensionality (eliminator (99 paper) or axiom?).}
 
 \subsection{Notation}
