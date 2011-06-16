@@ -103,7 +103,7 @@ In Intensional Type Theory quotient types are unavailable and we use
 setoids instead. Setoids are just sets together with an equivalence
 relation. However, the disadvantage of using setoids is that we have
 now to lift any set-based operation on setoids. E.g. we need lists as
-an ooperation on setoids and not just on sets. Moreover, setoids are
+an operation on setoids and not just on sets. Moreover, setoids are
 not safe in the sense that any consument of a setoid may access the
 underlying representation. One way out is to use a Type Theory which
 supports genuine quotients such as the forthcoming Epigram 2 system. 
@@ -131,7 +131,7 @@ and the associated set, but to use the setoid structure to define
 operations on the quotient set and to reason about it. In the present
 paper we introduce the formal framework to do this, i.e. we define
 what is a quotient, and what is a definable quotient and show the
-equivalence of alternative definitions. We also vefify that quotients
+equivalence of alternative definitions. We also verify that quotients
 correspond precisely to the notion of coequalizers, and that an
 additional condition, exactness, can equivalently expressed in Type
 Theory or in category theory. We present a number of examples for
@@ -150,13 +150,40 @@ Type Theory.
 \subsection{Type Theory basics}
 \label{sec:type-theory-basics}
 
-We use standard type theoretic notation, inspired by Agda. We write $(x : A)
-\to B$ for dependent function types ($\Pi$-types) and $\Sigma x:A.B$
-for dependent product types $\Sigma$-types. We assume that strictly
-positive inductive (and coinductive types) such as natural numbers
-$\N$ and lists $\List$ are definable. We write $\Set$ for the
-universe of small sets. Indeed, all our definitions are universe
-polymorphic and could have been taken place in any (larger) universe. 
+We use standard type theoretic notation, inspired by Agda. We write
+$(x : A) \to B$ for dependent function types ($\Pi$-types) and $\Sigma
+x:A.B$ for dependent product types ($\Sigma$-types). We assume that
+strictly positive inductive (and coinductive types) such as natural
+numbers $\N$, boolean $\Bool$, disjoint union $A + B$ and lists
+$\List\,A$ are defined. We also use the family of finite sets $\Fin :
+\N \to Set$ with $\Fin\,n = \{ 0 , 1, \dots, n-1\}$ which can be
+inductively generated from $0 : \Fin\,n+1$ and $+1 : Fin\,n \to
+\Fin\,(n+1) $. We write $\Set$ for the universe of small sets. Indeed,
+all our definitions are universe polymorphic and could have taken
+place in any (larger) universe.  We write $\Prop$ for the subuniverse
+of propositions that is sets which (extensionally) have at most one
+inhabitant. We assume that $\Prop$ contains the equality type (denoted
+as $a = b : \Prop$ for any $a,b : A : \Set$ \footnote{This choice
+  rules out any higher dimensional interpretation of equality. We plan
+  to revisit this issue in the future and investigate proof-relevant
+  quotients.}  and is closed under universal ($\forall$) and
+existential ($\exists$) quantification. While $\forall$ exactly
+corresponds to a $\Pi$-type, $\exists$ is the squashing of the
+corresponding $\Sigma$-type.  $\Prop$ is also closed under conjunction
+$\wedge$ which is interpreted as a $\Sigma$-type where both components
+are propositional (and can be dependent) while $P \vee Q = \exists
+b:\Bool.\mathrm{if}\,b\,\mathrm{then}\,P\mathrm{else}\,Q$.  Subset
+comprehension over a predicate is interpreted as the corresponding
+$\Sigma$-type, i.e. $\set{a:A\mid P\,a}=\Sigma a:A \dotop P$. Due to
+proof irrelevance the projection $\set{a:A\mid P\,a} \to A$ is an
+injection and we will omit it if it is obvious from the context. We
+also omit implicit arguments and to improve readability we will even
+omit the declaration of implicitly quantified arguments, assuming that
+the human reader unlike a machine can reconstruct those. We use
+heterogeneous equality as a shorthand, that is if $b : B\, a, b' :
+B\,a'$ and $p : b = b'$ we write $b \simeq_{p} b'$ for
+$\subst\,B\,p\,b \equiv b'$.
+
 
 
 \subsection{Related Work}
@@ -168,14 +195,6 @@ polymorphic and could have been taken place in any (larger) universe.
 
 \todo{Which type theory is used. Meaning of $=$. Meaning of $\Prop$. Meaning of  extensionality (eliminator (99 paper) or axiom?).}
 
-\subsection{Notation}
-We keep obvious quantifications implicit.
-
-Given $B : A \to \Set$, $b : B\,a$, $b' : B\,a'$ and $p : a\equiv a'$, we write $b \simeq_{p} b'$ for $\subst\,B\,p\,b \equiv b'$.
-We write $\Prop$ for the type of sets with at most one inhabitant.
-
-\todo{Meaning of ``definable''; functions are total}
-
 
 
 \todo{explain $\simeq_{\sound\,p}$}
@@ -184,13 +203,7 @@ We write $\Prop$ for the type of sets with at most one inhabitant.
 
 \todo{logical symbols in Prop}
 
-\todo{State and explain proof irrelevance}
 
-\todo{Define subsets as sigma types.  For $A:\Set$ and $P\colon A\to\Prop$, we defined the subset of elements of $A$ satisfying $P$, written $\set{a:A\mid P\,a}$, as \[\set{a:A\mid P\,a}=\Sigma a:A \dotop P\]}
-
-\todo{We implicitly coerce elements of a subset with elements of the underlying set.}
-
-\todo{Very important message: why it is important to consider definable quotients and not just the set. E.g. associativity of +Z is horrendous with the quotient whereas fairly easy with the setoid.}
 \section{Setoids}\label{sec:setoids}
 \begin{definition}
 A setoid $(A,\sim)$ is a set $A$ equipped with an equivalence relation ${\,\sim\,}\colon A \to A \to \Prop$.
