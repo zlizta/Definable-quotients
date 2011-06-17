@@ -182,26 +182,18 @@ omit the declaration of implicitly quantified arguments, assuming that
 the human reader unlike a machine can reconstruct those. We use
 heterogeneous equality as a shorthand, that is if $b : B\, a, b' :
 B\,a'$ and $p : b = b'$ we write $b \simeq_{p} b'$ for
-$\subst\,B\,p\,b \equiv b'$.
-
-
+$\subst\,B\,p\,b \equiv b'$. Most of our example do not require
+functional extensionality, but if we do we assume that is present in
+form of an uninterpreted constant $ext$, which is justified by
+Hofmann's observation that extensional Type Theory is a conservative
+extension of this theory \cite{Hofmann}. Alternatively we can eliminate $ext$ as
+suggested in \cite{alti:lics99} which can then also be extended to
+quotient types.
 
 \subsection{Related Work}
 \label{sec:related-work}
 
 
-
-
-
-\todo{Which type theory is used. Meaning of $=$. Meaning of $\Prop$. Meaning of  extensionality (eliminator (99 paper) or axiom?).}
-
-
-
-\todo{explain $\simeq_{\sound\,p}$}
-
-\todo{define $\Fin$ and Bijection}
-
-\todo{logical symbols in Prop}
 
 
 \section{Setoids}\label{sec:setoids}
