@@ -1,3 +1,647 @@
+%&latex
+\documentclass[envcountsame]{llncs}
+
+\usepackage{color}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{xypic}
+
+% Editing and debugging
+\hfuzz 0.1pt
+\overfullrule=15pt
+\brokenpenalty=10000
+\newcommand{\todo}[1]{\textcolor{red}{TO~DO:~#1}}
+
+\newtheorem{assumption}[theorem]{Assumption}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newcommand{\dotph}{\,\cdot\,} % dot place holder as ub [.]
+\newcommand{\dotop}{\mathrel{.}}
+\providecommand{\abs}  [1]{\lvert#1\rvert}
+\providecommand{\norm} [1]{\lVert#1\rVert}
+\providecommand{\class}[1]{[#1]}
+\providecommand{\set}  [1]{\left\{#1\right\}}
+\providecommand{\dlift}[1]{\widehat{#1}}
+
+\DeclareMathOperator{\Prop}{\mathbf{Prop}}
+\DeclareMathOperator{\Set}{\mathbf{Set}}
+\DeclareMathOperator{\Bool}{Bool}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\sound}{sound}
+\DeclareMathOperator{\qelimbeta}{qelim-\beta}
+\DeclareMathOperator{\qind}{qind}
+\DeclareMathOperator{\exact}{exact}
+\DeclareMathOperator{\subst}{subst}
+\DeclareMathOperator{\emb}{emb}
+\DeclareMathOperator{\complete}{complete}
+\DeclareMathOperator{\stable}{stable}
+\DeclareMathOperator{\List}{List}
+\DeclareMathOperator{\Fin}{Fin}
+\DeclareMathOperator{\now}{now}
+\DeclareMathOperator{\later}{later}
+\DeclareMathOperator{\nowequal}{now_\sqsubseteq}
+\DeclareMathOperator{\laterequal}{later_\sqsubseteq}
+\DeclareMathOperator{\laterleft}{later_{left}}
+\DeclareMathOperator{\inl}{inl}
+\DeclareMathOperator{\inr}{inr}
+\DeclareMathOperator{\qelim}{qelim}
+\DeclareMathOperator{\lift}{lift}
+\DeclareMathOperator{\LC}{LC}
+\DeclareMathOperator{\liftbeta}{lift-\beta}
+\DeclareMathOperator{\Bijection}{Bijection}
+\DeclareMathOperator{\true}{true}
+\DeclareMathOperator{\false}{false}
+\DeclareMathOperator{\sort}{sort}
+\newcommand{\eqqm}{\overset{\text{\tiny ?}}{=}}
+\newcommand{\sep}{\mathrel{\sharp}}
+\renewcommand{\equiv}{=}
+
+\newcommand{\fad}{\text{for all definable }}
+
+% For xy matrices
+\newcommand{\pullbackcorner}[1][dr]{\save*!/#1-1.2pc/#1:(-1,1)@^{|-}\restore}
+\newcommand{\pushoutcorner} [1][dr]{\save*!/#1+1.2pc/#1:(1,-1)@^{|-}\restore}
+
+% FRONTMATTER
+\title{Definable Quotients in Type Theory}
+\author{Thorsten Altenkirch     \inst{1}
+   \and Thomas   Anberr\'{e}e   \inst{2}
+   \and Nuo      Li             \inst{2}}
+\institute{
+School of Computer Science, University of Nottingham, Jubilee Campus, Wollaton Road, Nottingham, NG8 1BB, UK
+\and
+School of Computer Science, University of Nottingham, Ningbo Campus, 199 Taikang East Road, Ningbo, 315100, China}
+% END FRONTMATTER
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+  In Type Theory, a quotient set is a set representing a setoid.
+  Categorically, this corresponds to the concept of an exact
+  coequalizer. In the present paper we consider the case of a
+  \emph{definable quotients}, where the quotient set arises as the
+  codomain of a normalization function --- this corresponds to the
+  notion of a split coequalizer.  We give a number of examples of
+  definable quotients and notice that it is preferable to use the
+  setoid structure when reasoning about the quotient set. We also show
+  that there are examples where setoids cannot be represented in
+  ordinary Type Theory such as the real numbers or the partiality
+  monad under the assumption that local continuity is admissible in
+  Type Theory.
+\end{abstract}
+
+\section{Introduction}\label{sec:introduction}
+
+\(s = \varphi\times2^{3}\)
+\todo{Which type theory is used. Meaning of $=$. Meaning of $\Prop$. Meaning of  extensionality (eliminator (99 paper) or axiom?).}
+
+\subsection{Notation}
+We keep obvious quantifications implicit.
+
+Given $B : A \to \Set$, $b : B\,a$, $b' : B\,a'$ and $p : a\equiv a'$, we write $b \simeq_{p} b'$ for $\subst\,B\,p\,b \equiv b'$.
+We write $\Prop$ for the type of sets with at most one inhabitant.
+
+\todo{Meaning of ``definable''; functions are total}
+
+
+
+\todo{explain $\simeq_{\sound\,p}$}
+
+\todo{define $\Fin$ and Bijection}
+
+\todo{logical symbols in Prop}
+
+\todo{State and explain proof irrelevance}
+
+\todo{Define subsets as sigma types.  For $A:\Set$ and $P\colon A\to\Prop$, we defined the subset of elements of $A$ satisfying $P$, written $\set{a:A\mid P\,a}$, as \[\set{a:A\mid P\,a}=\Sigma a:A \dotop P\]}
+
+\todo{We implicitly coerce elements of a subset with elements of the underlying set.}
+
+\todo{Very important message: why it is important to consider definable quotients and not just the set. E.g. associativity of +Z is horrendous with the quotient whereas fairly easy with the setoid.}
+\section{Setoids}\label{sec:setoids}
+\begin{definition}
+A setoid $(A,\sim)$ is a set $A$ equipped with an equivalence relation ${\,\sim\,}\colon A \to A \to \Prop$.
+\end{definition}
+\subsection{Examples}\label{sec:setoids:examples}
+\subsubsection*{Integers}
+The integers can be viewed as the setoids $(\Z_0=\N\times\N,\sim)$ where $(a,b)\sim(c,d)$ if{f} $a+d=c+b$ reflecting the idea that $(a,b)$ represents the integer $a-b$.
+\subsubsection*{Rational numbers}
+The rational numbers can in turn be defined as $(\Z\times\N,\sim)$ where $(x,m)\sim(y,n)$ if{f} $x\times(n+1)=y\times(m+1)$, reflecting that $(x,m)$ represents the quotient $\frac {x}{m+1}$.
+
+
+\subsubsection*{The real numbers}
+
+The real numbers can then be defined as $(\R_0,\sim)$ where $\R_0$ is the set of Cauchy sequences and two sequences are equivalent if{f} their pointwise difference converges to $0$.
+\begin{align*}
+\R_0&=\set{s : \N\to\Q \mid \forall\varepsilon :\Q,\varepsilon>0\to\exists m:\N, \forall i:\N, i>m\to |s\,i - s\, m|<\varepsilon}\\
+r\sim s &= \forall\varepsilon :\Q,\varepsilon>0\to\exists m:\N, \forall i:\N, i>m\to |r\,i - s\,i|<\varepsilon
+\end{align*}
+
+\subsubsection*{Unordered pairs}
+Given a set $A$, the unordered pairs of elements of $A$ is the setoid $(A\times A,\sim)$ where
+$(a,b)\sim(b,a)$.
+
+\subsubsection*{Finite multisets}
+Given a set $A$ , the finite multisets of elements in $A$ is the setoid $(\List A,\sim)$ where two lists are equivalent if{f} one is the permutation of the other.
+\begin{align*}
+\List A &= \Sigma n:\N.\Fin\,n\to A\\
+(m,f)\sim(n,g) &= \exists \varphi : \Fin\,m \to \Fin\,n \cdot\ \Bijection\,\varphi \land g\circ\varphi = f
+\end{align*}
+Notice that $(m,g)\sim(n,g)\implies m=n$ is provable in type theory.
+\subsubsection*{Finite sets}
+Given a set $A$, the finite sets of elements in $A$ is the setoid $(\List A,{\sim})$ where two lists are equivalent if{f} they contain the same elements.
+\begin{align*}
+(m,f)\subseteq(n,g) &= \exists \varphi : \Fin\,m \to \Fin\,n \cdot  g\circ\varphi = f  \\
+(m,f)\sim(n,g)&= (m,f)\subseteq(n,g) \wedge (n,g)\subseteq(m,f)
+\end{align*}
+For example the lists $[1,2,1]$ and $[1,2]$ are equivalent and both represent the set $\set{1,2}$.
+\subsubsection*{Partiality monad}
+Given a set $A$, the set of partial computations over $A$ is given by $(A_{\bot_0},{\sim})$ where $A_{\bot_0}$ is the set of delayed computations over $A$  and $\sim$ is a weak bisimilarity ignoring finite delays. Using the notation for mixed inductive coinductive  definitions from~\cite{danielsson2010mpc}, where we mark coinductive occurrences of a datatype by using $\infty$, we define $A_{\bot_0} : \Set$ and the relations $\sqsubseteq:A_{\bot_0}\to A_{\bot_0} \to \Prop$ by the following constructors:
+\begin{align*}
+\now  &: A \to A_{\bot_0}\\
+\later &: \infty A_{\bot_0} \to  A_{\bot_0}\\
+\nowequal &: \now\, a \sqsubseteq \now\,a'\\
+\laterequal &: \infty(d \sqsubseteq d') \to \later\,d \sqsubseteq \later\,d'\\
+\laterleft &: d\sqsubseteq d' \to \later\,d \sqsubseteq d'
+\end{align*}
+and we define $d\sim d'= d\sqsubseteq d' \wedge d'\sqsubseteq d$ .
+
+\section{Quotients and coequalizers}\label{sec:quotients}
+
+\begin{definition}[prequotient, quotient, exact quotient]
+\label{def:quotient}
+
+\noindent
+Given a setoid $(A,\sim)$,  a \emph{prequotient} $(Q,\class\dotph,\sound)$ over that setoid consists in
+\begin{enumerate}
+\item \label{enum:Q} a set $Q$,
+\item \label{enum:box}a function $\class\dotph\colon A \to Q$,
+\item \label{enum:sound} a proof $\sound$ that  the function $\class\dotph$ is compatible with the relation $\sim$,
+that is \[\sound\colon (a,b : A) \to a\sim b \to [a] = [b],\]
+\end{enumerate}
+Such a prequotient is a \emph{quotient} if  we also have\begin{enumerate}
+\setcounter{enumi}{3}
+\item \label{enum:elim}
+for any $B\colon A\to\Set$, an eliminator $\qelim_B: Q\to\Set$
+ \begin{align*}
+ \qelim_B\colon &(f\colon (a:A) \to B\,\class a) \\
+        {\to}\, &((p:a\sim b) \to f\,a \simeq_{\sound\,p}f\,b)\\
+        {\to}\, &((q:Q) \to B\,q)
+ \end{align*}
+such that $\qelimbeta\colon \qelim_B f \,p\,\class a\equiv f a$.
+
+\end{enumerate}
+Finally, such a quotient is \emph{exact} if additionally
+we have
+a proof\begin{enumerate}
+\setcounter{enumi}{4}
+\item $\exact :(\forall a,b : A) \to  \class a \equiv \class b \to a \sim b$.
+
+\end{enumerate}
+\end{definition}
+
+There are two special cases of the eliminator \ref{enum:elim}. One is if $B$ is not dependent,
+ \[\lift\colon (f\colon A \to B) \to (\forall a,b\cdot a\sim b \to f\,a \equiv f\,b) \to (Q \to B)\]
+and the other is if $B$ is a predicate, i.e. $B : Q\to \Prop$, in which case we get an induction principle:
+\[\qind \colon((a\colon A)\to B \,\class a)\to ((q\colon Q)\to B\,q)\]
+since the condition $((p:a\sim b) \to f\,a \simeq_{\sound\,p}f\,b) $  of  the eliminator is trivially satisfied.
+On the other hand, these two special cases are sufficient to recover the eliminator :
+
+
+\begin{proposition}\label{prop:nlifteq}
+A prequotient $(Q,\class\dotph,\sound)$ with
+
+\begin{enumerate}
+\item a non-dependent eliminator $$\lift_B\colon (f\colon A \to B) \to (\forall a,b\cdot a\sim b \to f\,a \equiv f\,b) \to (Q \to B)$$ for any $B\colon\Set$,
+\item a $\beta$-law $$\liftbeta : \lift_B f \,p\,\class a\equiv f a,$$
+\item an induction principle $$\qind_P\colon ((a\colon A)\to P \,\class a)\to ((q\colon Q)\to P\,q)$$
+\end{enumerate}
+gives rise to a quotient $(Q,\class\dotph,\sound,\qelim,\qelimbeta)$.
+\todo{make reverse direction explicit}.
+\end{proposition}
+\begin{proof}
+\todo{Write proof or state that it has been formalised in the introduction. }
+\end{proof}
+This is reminiscent of the fact that dependent elimination for the natural numbers can be constructed from non-dependent elimination and a induction principle.
+
+The characterization in Proposition~\ref{prop:nlifteq} was given as a definition of quotients in~\cite{hofmann1995thesis}.
+
+
+Quotients correspond to coequalizers. We remind the reader of the definition of coequalizers in a category.
+
+\begin{definition}
+Given two morphisms $g,h : S\to A$, a \emph{coequalizer} of $g$ and $h$ is a morphism $\class\dotph:A\to Q$ such that for any $f:A\to X$ satisfying $f \circ g = f \circ h$, there exists a unique $\dlift f$ such that
+\[\xymatrix{
+S\ar@<0.5ex>[r]^g\ar@<-0.5ex>[r]_h& A\ar[r]^{\class\dotph}\ar[dr]_{f} & Q\ar@{-->}[d]^{\dlift f}\\
+&&X
+}\]
+A coequalizer is \emph{exact} if
+\[\xymatrix{
+S\pullbackcorner\ar[r]^g\ar[d]_h & A\ar[d]^{\class\dotph} \\
+A\ar[r]_{\class\dotph} & Q
+}\]
+and it is \emph{split} if the morphism $\class\dotph$ is a split epi, that is if it has a right inverse $\emb : Q \to A$.
+\end{definition}
+
+We observe that there is an exact correspondence between quotients and coequalizers:
+\begin{proposition}\hfill
+\begin{enumerate}
+\item $Q$ is the quotient on $(S,\sim)$ where $s\sim s'$ if and only if $g\,s=h\,s'$.
+This quotient is exact if{f} the coequalizer is exact.
+\item Let $R$ be $\Sigma a,a':A,a\sim a'$ and $\pi_0,\pi_1 : R\to A$ the projection functions. The quotient for $(R,\sim)$ is then the coequalizer for those projections and it is exact if and only if the coequalizer is exact.
+\[\xymatrix{
+R\ar@<0.5ex>[r]^{\pi_0}\ar@<-0.5ex>[r]_{\pi_1}& A\ar[r]^{\class\dotph}\ar[dr]_{f} & Q\ar@{-->}[d]^{\dlift f}\\
+&&X
+}\]
+where $\dlift f=\lift f p$ and $p \colon \forall a,b\cdot a\sim b \to f\,a \equiv f\,b$ follows from $f \circ \pi_0 = f \circ \pi_1$.
+\end{enumerate}
+\end{proposition}
+
+\section{Definable quotients}\label{sec:defquotients}
+
+We now consider a general construction which allows us to construct quotients in type theory.
+
+\begin{definition}\label{def:defquotients}
+A \emph{definable quotient} is a prequotient $(Q, \class{\dotph}, \sound)$ on a setoid $(A,\sim)$ along with
+\begin{align*}
+\emb &: Q \to A\\
+\complete &: (a : A) \to \emb {\class a} \sim a\\
+\stable &: (q:Q) \to \class{\emb\,q} \equiv q\\
+\end{align*}
+\end{definition}
+
+\begin{proposition}\label{prop:definableimpliesexact}
+All definable quotients are exact quotients.
+\end{proposition}
+\begin{proof}
+
+Given $(f\colon A \to B)$ and $p : a\sim b \to f\,a \equiv f\,b$, define $\lift f\, p \,q = f (\emb\,q)$ from which we get $\lift f \,(p : a \sim b)\,\class a\equiv f(\emb\,\class a)\equiv f\,a$ because $\emb\,\class a\sim a$ by completeness and $f$ respects $\sim$ by $p$.
+
+To derive $\qind$, let $f:(a\colon A)\to B\,\class a$ and $q:Q$. Since $ \class{\emb\,q} \equiv q$ by stability, hence from $f (\emb\,q):B\,\class{\emb\,q}$ we can derive a proof of $B\,q$.
+
+It follows from Proposition~\ref{prop:nlifteq} that this defines a quotient.
+
+Finally, from $\class a \equiv \class b$
+we obtain by completeness that $a\sim\emb(\class a)\equiv\emb(\class b)\sim b$ and hence $a\sim b$. That is, the quotient is exact.
+\end{proof}
+
+
+\subsection{Examples}\label{sec:dquotients:examples}
+
+\subsubsection*{The integers}
+Define $\Z =\N + \N $ and
+
+\begin{align*}
+\class{(a,0)} &= \inl\,a\\
+\class{(a+1,b+1)} &= \class{(a,b)}\\
+\class{(0,b+1)} &= \inr\,b\\\\
+\emb (\inl a) &= (a,0)\\
+\emb (\inr b) &= (0,b+1)\\
+\end{align*}
+The fact that this gives rise to a definable quotient has been verified in Agda~\cite{nuo2010report}.
+ One could of course just use that $\Z=\N + \N$ and define the operations on $\Z$ directly. However, seeing  $\Z$ as a quotient is helpful in proving properties of those operations and reflects the usual mathematical definition of the integers. E.g., to define $+$, we define
+\[(a,b){+_0}(a', b')= (a+a',b+b')\]
+on $\Z_0$ and show that it respects $\sim$. Then by lifting $+_0$, we get $+$ on $\Z$, thus avoiding a rather incomprehensible case analysis. This becomes even more relevant when showing other properties such as distributivity of multiplication over addition~\cite{nuo2010report}.
+
+\subsubsection*{The rational numbers}
+
+Define $\Q = \set{(x,m):\Z\times\N \,|\, \gcd\, x\,  (m+1) = 1}$ and
+\begin{align*}
+\class{(x,m)}&=\left(\frac{x}{d},\frac{m+1}{d}-1\right) \text{ where } d = \gcd\,x \,(m+1)\\
+\emb \,(x,m) &= (x,m)
+\end{align*}
+Note that the greatest common divisor function ($\gcd$) is definable in type theory. Completeness comes from the fact that, for any common divisor $d$ of $x$ and $m+1$, it is provable that $\left(\frac x d,\frac {m+1} d-1\right)\sim\left(x,m\right)$ because $\frac x d \times (m+1) = x\times(\frac {m+1} d - 1+1)$.  Stability holds because whenever $d=\gcd\, x\, (m+1) = 1$, we have $\left(\frac{x}{d},\frac{m+1}{d}-1\right)=(x,m)$.
+
+
+\subsubsection*{Unordered pairs}
+
+The construction of a definable quotient over the setoids of unordered pairs $(A\times A,\sim)$ as defined in Section~~\ref{sec:setoids:examples} depends on the choice of $A$. In general we
+require an order $\leq : A \to A \to \Prop$ together with functions:
+\begin{align*}
+\min, \max : A \to A \to A
+\end{align*}
+calculating the binary minimum and maximum for that order. This allows us to  define
+\[
+Q = \set{(a , b) \mid  a \leq b}
+\]
+and
+\[ [(a,b)] = (\min a\, b, \max a \,b).\]
+Soundness is obviously satisfied. An embedding of $Q$ into  $A\times A$ is simply the first projection --- for recall that an element in $Q$ is of the form $((a,b),p)$ where $p$ is a proof that $a\leq b$ (see Section~\ref{sec:introduction}) :
+\begin{align*}
+\emb &: Q \to A\times A\\
+\emb &= \pi_0
+\end{align*}
+from which completeness and stability as stated in Definition~\ref{def:defquotients} clearly ensue : $[(a,b)] \sim (a,b)$ and if $a\leq b$ then $[(a,b)]=(a,b)$. Both facts follow from
+ the properties of $\min$ and $\max$. 
+Thus $(Q,\class\dotph)$ gives rise to a definable quotient.
+
+We consider three examples in which  $A$ is taken to be the set $\N$, $\N\to\N$ and $(\N\to\N)\to\N$ respectively :
+\begin{description}
+\item[$A = \N$] \hfill
+
+We use the standard ordering $\leq : \N \to \N \to \Prop$ and exploit
+that it is constructively total $\forall m ,n\cdot m \leq n \lor n \leq m$ to define $\min$ and
+$\max$.
+
+\bigskip
+\item[$A=\N\to\N$] \hfill\\
+We use the lexicographic ordering ${<},{\leq}:(\N \to \N) \to (\N\to\N)\to\Prop$
+\begin{align*}
+f < g & = \exists m:\N \cdot f m < g n \wedge \forall i<m\cdot f\,i = g \,i\\
+f \leq g &= f < g \vee f=g
+\end{align*}
+While this order is not constructively total, in the sense that one cannot define a test to decide whether $f<g$, it is still possible to define $\min$ and $\max$.
+For instance, the operator $\min : (\N \to \N) \to (\N\to\N) \to (\N \to \N)$ can be defined as :
+\begin{align*}
+ \min\,f\,g\,n =\,&\text{if $f \,n$ = $g\,n$ then $f n$}\\
+                 &\text{else }\\
+                 &\text{let}\,i = \min \{ j \leq n \mid f\,j \not= g\,j \}\\
+                 &\text{in }\text{if}\, f\,i< g\,i\,\text{ then } f\,n \text{ else } g\,n
+\end{align*}
+Notice that both the definition of $i$ and the test $f\,i< g\,i$ do not depend on $n$ but only on $f$ and $g$.  Thus, in the case where $f$ and $g$ are different, $\min\,f\,g$ consistently returns the same function $f$ or $g$, whichever is the smallest in lexicographical order. In the case where the two functions $f$ and $g$ are equal, then the second branch of the top level if\dots then\dots else\dots is never chosen.
+
+\bigskip
+\item[$A=(\N\to\N)\to\N$] \hfill\\
+The general idea to define the operator $\min$ is the same as in the case where $A=\N\to\N$. Let $\varphi : \N \to (\N\to\N)$ be an enumeration of natural sequences such that any finite sequence $[x_0,\dots,x_k]$ of
+natural numbers is the prefix of $\varphi_i$ for some $i$  in the sense that $\varphi_i \,0 = x_0$, \dots, $\varphi_i\,k = x_k$ (see appendix for a definition of $\varphi$).
+We define : 
+\begin{align*}
+ \min\,f\,g\,u =\,&\text{if $f \,u$ = $g\,u$ then $f u$}\\
+                 &\text{else }\\
+                 &\text{let}\,i = \min \{ i : \N\mid f\,\varphi_ i \not= g\,\varphi_ i \}\\
+                 &\text{in }\text{if}\, f\,\varphi_ i< g\,\varphi_ i\,\text{ then } f\,u \text{ else } g\,u.
+\end{align*}
+Notice as previously that both the definition of $i$ and the test $f\,\varphi_i < g\,\varphi_ i$ do not depend on $u$ but only on $f$ and $g$. Under the assumption that local continuity holds~(see Definition~\ref{def:localcontinuity} below), we know that if $f\,u\not=g\,u$ then there must exist some $\varphi_i$, sharing a long enough prefix with $u$, such that $f\,\varphi_ i \not= g\,\varphi_ i$. However, if one works in a type theory where type checking is decidable, local continuity needs to be derivable and not just admissible for the system to accept the above definition. As an alternative, one may  postulate
+\begin{align*}
+&\text{local\_continuity}:\\
+&\forall f,g: (\N\to\N)\to\N\\
+&\to(\exists u:\N\to\N\,.\,f\,u\neq g\,u)\\
+&\to (\exists n:\N \quad \forall v:\N\to\N\quad(\forall i\leq n\,.\,v_i= u_i\implies f\,v\neq g\,v))  
+\end{align*}
+   
+\end{description}
+\todo{More details on this? Topic for future work: relation to axiom of choice and well orderedness.}
+
+\subsubsection*{Finite multisets}
+
+As in the case of unordered pairs, the construction of a definable quotient over the setoid of multisets $(\List A,\sim)$ defined in Section~\ref{sec:setoids:examples} depends on the choice of $A$.  We again require an order $A\to A \to \Prop$ to define the set of finite multisets of elements of $A$ as
+\[
+Q = \set{(m , s) : \List A\mid  \forall i,j:\Fin\,m \cdot i\leq j\implies s\,i \leq s\,j}
+\]
+and a sorting function $\sort: \List A \to \List A$ from which we define
+\[
+\class{(m,s)} = (m,\sort s).
+\]
+Notice that the function $\sort$ can be defined from the functions $\min$ and $\max : A \to A \to A$ used in the previous example about unordered pairs. However, we use a more direct method in our exploration of the case where $A$ is the set $\N\to\N$ of natural sequences. At first glance, it might seem counterintuitive that one can constructively sort sequences of infinite natural sequences and thus obtain a definable quotient of the setoids of multisets of natural sequences.
+As with unordered pairs, the first projection defines an embedding from $Q$ to $\List A$ which clearly gives rise to a definable quotient. 
+\begin{description}
+\item[$A=\N\to\N$] \hfill\\
+First we define a family of preorders $\set{{\leq_k}}_{k:\N}$
+on sequences of natural numbers by requesting that $u\leq_k v$
+if and only if  the finite sequence $[u_0,\dots, u_k]$ comes before the finite sequence $[v_0,\dots, v_k]$ in the lexicographic order. Writing $u \leq_k v $ for $(\leq) \,k\,u\,v$ :
+
+
+\begin{align*}
+&{{-}\leq_{-}{-}} : \N\to (\N\to\N) \to (\N\to\N)\to \Bool\\
+&{u\leq_k v} =  u_i\leq v_i \\
+&\text{\phantom{$f\leq_n g =$} where }i =\min\set{i:\N\mid i>k\lor u_i\neq v_i}.
+\end{align*}
+Notice that if $u<_k v$ for some $k$ then $u<_l v$ for all $l$ greater than $k$.
+
+Now, given a finite sequence of natural sequences $\varphi:\Fin m\to (\N\to\N)$, we can order it using any algorithm
+\[\sort_{m,k} :(\Fin m \to (\N\to\N)) \to (\Fin m \to (\N\to\N))\]
+which sorts $m$ sequences according to the preorder $\leq_k$.
+We are then able to define :\begin{align*}
+\class{(m,\varphi)} &= (m,\psi)\\
+&\text{where $\psi\,i\,j = (\sort_{m,j}\,\varphi)\,i\,j$,}
+\end{align*}
+so that the finite sequence  $[\psi\,0,\dots,\psi\,(m-1)]$ thus defined is the finite sequence $[\varphi\,0,\dots,\varphi\,(m-1)]$ ordered in lexicographic order. The key point justifying that claim is that
+\begin{equation}\label{eq:ms:order}
+(\sort_{m, j}\,\varphi)\,i\,k=(\sort^\ast_{m}\,\varphi)\,i\,k
+\end{equation}
+for all $i:\Fin m$ and all $k\leq j$ where $\sort^\ast_m\,\varphi$ is the finite sequence whose elements are the functions $\varphi\,i:\N\to\N$ ordered in full lexicographical order --- we do not assume $\sort^\ast_m$ to be definable a priori although it is as a consequence of the definability of $\sort_{m,j}$.
+We omit further details of the proof,  the intuition drawn from the case of unordered pairs above being more interesting.
+
+%Suppose that Equation~\ref{eq:ms:order} is not correct. Take $i_0$ to be the smallest $i$ for which it fails for some $j$ and $k$. Then take $k_0$ to be the smallest $k$ for which $(\sort_{m, j}\,\varphi)\,i_0\,k\neq(\sort^\ast_{m}\,\varphi)\,i_0\,k$.
+
+\bigskip
+\item[$A=(\N\to\N)\to\N$] \hfill\\
+\begin{align*}
+&{{-}\leq_{-}{-}} : \N\to ((\N\to\N)\to\N) \to ((\N\to\N)\to\N)\to \Bool\\
+&{f\leq_k g} =  f\,\varphi_i\leq g\,\varphi_i \\
+&\text{\phantom{$f\leq_n g =$} where }i =\min\set{i:\N\mid i>k\lor u_i\neq v_i}.
+\end{align*}
+
+
+\end{description}
+
+\subsubsection*{Finite sets}
+\begin{description}
+\item[$A=\N\to\N$] \todo{Seems that we can define a prequotient but not the embedding.}
+
+\end{description}
+
+
+
+
+\section{Undefinable quotients}
+However there are interesting setoid specifications for which it is impossible to construct a definable quotient in type theory. Examples include the real numbers and the partiality monad described in Section~\ref{sec:setoids:examples}.
+To prove that these are indeed undefinable quotients, we first establish some properties of type theory in a classical metatheory.
+We write $\vdash a : A$ if $a : A$ is derivable in the type theory under consideration. In case that $\vdash P : \Prop$, we simply  write $\vdash P$ to indicate that there is a proof $p$ of $P$ which is derivable, that is $\vdash p : P$.
+\begin{definition}[separable elements, discrete sets]\hfill
+\begin{enumerate}
+\item Two elements $a$ and $b$ of a definable set are \emph{separable}, written $a \sep b$, if there exists a definable test $P\colon A\to \Bool$ such that $\vdash P\,a \neq P\,b$.
+\item A definable set $A$ is \emph{discrete} whenever $\vdash a, b :A$ and   $\vdash a\not= b$
+entails that $a$ and $b$ are separable.
+\end{enumerate}
+\end{definition}
+
+\begin{proposition}\label{prop:NtoNdiscrete}
+The set $\N\to\N$ is discrete.
+\end{proposition}
+\begin{proof}
+Assume $\vdash f, g\colon \N \to \N$ and $\vdash f\neq g$. By soundness, $f$ and $g$ must denote different functions and hence there is a natural number $i$ such that $\vdash f\,i\neq g\,i$. Hence we can define $P\,h = {h\,i} \eqqm {f\,i}$ where ${\eqqm}\colon \N\to\N\to\Bool$ is a decision procedure for equality on $\N$.
+\end{proof}
+
+Note that we have used classical reasoning in the proof of Proposition~\ref{prop:NtoNdiscrete}. However, we do not think it is necessary because it should be possible to extract the witness $i$ from the proof that $f\neq g$.
+
+\begin{proposition}\label{prop:splitepidiscrete}
+Assume $ e\colon A\to B$ is a definable split~epi.  If $A$ is discrete then $B$ is discrete.
+\end{proposition}
+\begin{proof}
+Let $\vdash s\colon B\to A$ such that $\vdash e \circ s=\id_B$ and let $\vdash b\neq b'\colon B$. Then $\vdash s\,b\neq s\,b'$ because  $s$ is a right inverse of $e$ :
+\begin{align*}
+&\vdash s\,b = s\,b'\to (e\circ s)\, b = (e\circ s)\,b'&\text{by congruence}  \\
+&\vdash s\,b = s\,b'\to \id_B\, b = \id_B\,b'&e\circ s = \id_B  \\
+&\vdash s\,b = s\,b'\to b = b'&\text{by definition of $\id_B$}\\
+&\vdash s\,b = s\,b'\to \bot&\text{by modus ponens with $b=b'\to\bot.$}\\
+\end{align*}Hence there exists $\vdash P\colon A\to\Bool$ such that $\vdash P\,(s\,b)\neq P\,(s\,b')$, because $A$ is discrete, and  $\vdash P'\colon B\to\Bool$ defined by $P' = P\circ s$ provably separates $b$ and $b'$.
+Therefore $B$ is discrete.
+\end{proof}
+
+\begin{proposition}\label{prop:RZdiscrete}
+ $\R_0$ is discrete.
+\end{proposition}
+\begin{proof}
+Left to the reader as it is essentially the same as the proof for Proposition~\ref{prop:NtoNdiscrete}.
+\end{proof}
+To show that any set $\R$ which is a definable quotient of the setoid $(\R_0,\sim)$ given earlier in~\ref{sec:setoids:examples} is not discrete, we need
+
+
+\begin{definition}[local continuity]\label{def:localcontinuity}
+\emph{Local continuity} at type $(\N \to \N) \to \N$ is the property that
+\begin{align*}
+   &\fad\text{functions }\varphi : (\N \to \N) \to \N,\\
+   &\fad\text{sequences }f : \N \to \N,\\
+   &\text{there exists }  n:\N\text{ such that }\\
+   &\fad\text{sequences } g : \N \to \N \text{ satisfying } (\forall i\leq n,\, \vdash f\,i = g\,i),\\
+   &\text{we have that }{\,\vdash \varphi\, f} = \varphi\, g.
+\end{align*}
+\end{definition}
+Local continuity expresses the fact that, to compute $\varphi\,f$, the reduction relation defining the operational semantics of type theory only inspects finitely many terms of the input sequence $f$. We have stated local continuity in its perhaps simplest form, at a particular type. However, we conjecture that it can be expressed and proved at all types. Whatever the case, it is easily shown that local continuity at type $(\N\to\N)\to\N$  entails local continuity at some other types, in particular at type $(\N\to\Q)\to\Bool$, which we next use to show that the set $\R$ is not a definable quotient of the setoid $(\R_0,\sim)$ described in Section~\ref{sec:setoids:examples}.
+
+\begin{lemma}(local continuity for tests on rational sequences)
+\label{lem:lcratseq}
+
+In the presence of local continuity as in Definition~\ref{def:localcontinuity}, the following property holds :
+\begin{align*}
+   &\fad\text{functions }\varphi \colon (\N \to \Q) \to \Bool,\\
+   &\fad\text{sequences }f  \colon  \N \to \Q,\\
+   &\text{there exists }  n:\N\text{ such that }\\
+   &\fad\text{sequences } g  \colon  \N \to \Q \text{ satisfying } (\forall i\leq n,\, \vdash f\,i = g\,i),\\
+   &\text{we have that }{\,\vdash \varphi\, f} = \varphi\, g.
+\end{align*}
+\end{lemma}
+\begin{proof}
+Let $\eta\colon \N\to\Q$ be a definable bijection from $\N$ to $\Q$ and $\iota\colon\Bool\to\N$ a definable monomorphism, e.g. $\iota(\true)=0$, $\iota(\false)=1$. Let $\varphi\colon (\N \to \Q) \to \Bool$ and $f  \colon  \N \to \Q$ be as in the statement of Lemma~\ref{lem:lcratseq}.
+Define $\varphi'\colon (\N\to\N)\to\N$ by $\varphi'\,f=\iota(\varphi(\eta\,f))$. By local continuity at type $(\N\to\N)\to\N$, there exists $n:\N$ such that for all definable sequences $g'\colon\N\to\N$ satisfying $(\forall i\leq n,\, \vdash (\eta^{-1}\circ f)\,i = g'\,i)$, we have that $\,\vdash\varphi'\,(\eta^{-1}\circ f) = \varphi'\,g'$. Now suppose that some definable function $g\colon(\N\to\Q)\to\Bool$ is
+such that $(\forall i\leq n,\, \vdash f\,i = g\,i)$. Then we also have that $(\forall i\leq n,\, \vdash (\eta^{-1}\circ f)\,i = (\eta^{-1}\circ g)\,i)$ and hence that $\vdash\varphi'\,(\eta^{-1}\circ f) = \varphi'\,(\eta^{-1}\circ g)$,
+that is $\vdash(\iota\circ \varphi)\,f = (\iota\circ \varphi)\,g$, by definition of $\varphi'$. Since $\iota$ is mono, we then have $\vdash \varphi\,f=\varphi\,g$, as expected.
+\end{proof}
+
+
+\begin{proposition}\label{prop:Rnotdiscrete} In the presence of local continuity, the set $\R$ is not a definable quotient of the setoid $(\R_0,\sim)$.
+\end{proposition}
+\begin{proof}
+Suppose for the sake of contradiction that $(\R,\class\dotph, \sound)$ is a definable quotient of the setoid $(\R_0,\sim)$. The function $\class\dotph\colon \R_0\to\R$ is a split epi, as it has a right inverse $\emb$, and hence by propositions~\ref{prop:RZdiscrete} and~\ref{prop:splitepidiscrete}, the set $\R$ is discrete. By exactness of the quotient,  we have that $\class{\vec 0} \neq \class{\vec 1}$ where $\vec 0$ and $\vec 1$ are  elements of $\R_0$ representing the Cauchy sequences $\lambda x.0$ and $\lambda x.1$, respectively. By discreteness of $\R$, there exists a definable function $P:\R\to\Bool$
+such that $\vdash P\class{\vec 0}\neq P\class{\vec 1 }$. It follows that the  function $P^\prime:\R_0\to\Bool$ defined by $P^\prime\,s = P\class{s}$ has the property that $\vdash P^\prime\,\vec0\neq P^\prime\,\vec 1$ and that $P^\prime$ is closed under $\sim$. By local continuity at type $(\N\to\Q)\to\Bool$ (Lemma~\ref{lem:lcratseq}) and by proof irrelevance in the second component of the pairs in $\R_0$, there is a number $n_P$  such that, for all definable sequences $f\colon\N\to\Q$,
+\[
+\left(\forall i\leq n_P,\, \vdash f\,i = 0_\Q\right)\text{ entails } P^\prime \, f = P^\prime\,(\pi_0\,\vec0).
+\]
+Define $g\,i=\text{if } i\leq n \text{ then } 0_\Q \text{ else } 1_\Q$, such that $P^\prime g =P^\prime \vec 0$ by local continuity. However $g \sim \vec 1$ and hence $P^\prime\,g=P^\prime\,\vec 1$, which contradicts $P^\prime\,\vec 1 \neq P^\prime\,\vec 0$.
+
+\end{proof}
+
+It seems that all sets definable in ordinary type theory~(using only the set formers $\Pi$, $\Sigma$, $=$, finite sets, $W$, see e.g.~\cite{nordstrom1990programming}) are discrete. This observation shows that the reals are not  definable as an exact quotient in ordinary type theory while Proposition~\ref{prop:Rnotdiscrete} shows that reals are not a definable  quotient in any extension of ordinary type theory, as long as local continuity is admissible.
+
+
+
+\begin{corollary}
+$\R$ is not a definable quotient of $\R_0$.
+\end{corollary}
+\begin{proof}
+Directly follows from Propositions~\ref{prop:Rnotdiscrete} and~\ref{prop:splitepidiscrete}.
+\end{proof}
+
+
+\bibliographystyle{plain}
+\bibliography{biblio}
+
+\appendix
+\section{Definition of $\varphi$}
+We define a family $\set{\varphi_i:\N\to\N}_{i:\N}$ of natural sequences with the property that any finite sequence $[x_0,\dots,x_k]$ of natural numbers is a prefix of some $\varphi_i$. One idea to define such a family is to request that the sequences $\varphi_{2i}$ at even indices are those starting with $0$ while the others are in turn split into  those starting with $1$ (the $\varphi_{2i+1+2k}$, i.e. every other sequence of odd index) and the remaining sequences, starting with at least $2$, etc. For each subfamily of sequences starting with the same prefix of length $n$, we define the $(n+1)^{\text{th}}$ term in the same manner.
+Table~\ref{tab:phi} shows the prefix of the first 21 sequences.
+
+\noindent
+\begin{table}\label{tab:phi}
+\[\begin{array}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\varphi_{0} & \varphi_{1} & \varphi_{2} & \varphi_{3} & \varphi_{4} & \varphi_{5} & \varphi_{6} & \varphi_{7} & \varphi_{8} & \varphi_{9} & \varphi_{10} & \varphi_{11} & \varphi_{12} & \varphi_{13} & \varphi_{14} & \varphi_{15} & \varphi_{16} & \varphi_{17} & \varphi_{18} & \varphi_{19} & \varphi_{20}\\
+\hline
+0 & 1 & 0 & 2 & 0 & 1 & 0 & 3 & 0 & 1 & 0 & 2 & 0 & 1 & 0 & 4 & 0 & 1 & 0 & 2 & 0\\
+0 & 0 & 1 & 0 & 0 & 1 & 2 & 0 & 0 & 0 & 1 & 1 & 0 & 2 & 3 & 0 & 0 & 0 & 1 & 0 & 0\\
+0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 2 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 1\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+\vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots\\
+\hline
+\end{array}\]
+\caption{Prefixes of $\varphi_0$ to $\varphi_{20}$}
+\end{table}
+
+Here are complete definitions written in the programming language Haskell : \todo{perhaps choose one or two  versions only}
+
+
+
+\subsubsection{First version}
+We first define the the infinite list \texttt{sequences} infinite list of natural numbers and turn it into a function in two arguments using the Haskell function \verb+!!+ which returns an element of a given list at a given index.
+\begin{verbatim}
+    phi i j              = sequences !! i !! j
+    
+    sequences            = [0,0..]
+                           : (tail (startWithAtLeast 0))
+    
+    startWithAtLeast n   = interleave (startWith n) 
+                                      (startWithAtLeast (n+1))
+    startWith n          = map (n:) sequences
+    interleave (x:xs) ys = x : interleave ys xs
+\end{verbatim}
+
+\subsubsection{Second version} This is simply a translation of the previous definition where natural sequences are represented as functions $\N\to\N$ directly instead of lists.\begin{verbatim}
+    phi = startWithAtLeast 0
+    
+    startWithAtLeast n = interleave (startWith n) 
+                                    (startWithAtLeast (n+1))
+    
+    startWith        n i 0     = n
+    startWith        n i (j+1) = phi i j
+    
+    interleave fs gs 0     = fs 0 
+    interleave fs gs (i+1) = interleave gs (fs . (+1)) i
+\end{verbatim}
+
+\subsubsection{Third version} A perhaps more direct definition, but less self-explanatory.
+\begin{verbatim}
+    phi i 0     | even i = 0 
+                | odd  i = phi (i `div` 2)  0 + 1
+                
+    phi i (j+1) | even i = phi (i `div` 2) j
+                | odd  i = phi (i `div` 2) (j+1)    
+\end{verbatim}
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=======
 % &latex
 \documentclass[envcountsame]{llncs}
 
@@ -189,6 +833,34 @@ $\subst\,B\,p\,b \equiv b'$.
 \label{sec:related-work}
 
 
+
+
+
+\todo{Which type theory is used. Meaning of $=$. Meaning of $\Prop$. Meaning of  extensionality (eliminator (99 paper) or axiom?).}
+
+\subsection{Notation}
+We keep obvious quantifications implicit.
+
+Given $B : A \to \Set$, $b : B\,a$, $b' : B\,a'$ and $p : a\equiv a'$, we write $b \simeq_{p} b'$ for $\subst\,B\,p\,b \equiv b'$.
+We write $\Prop$ for the type of sets with at most one inhabitant.
+
+\todo{Meaning of ``definable''; functions are total}
+
+
+
+\todo{explain $\simeq_{\sound\,p}$}
+
+\todo{define $\Fin$ and Bijection}
+
+\todo{logical symbols in Prop}
+
+\todo{State and explain proof irrelevance}
+
+\todo{Define subsets as sigma types.  For $A:\Set$ and $P\colon A\to\Prop$, we defined the subset of elements of $A$ satisfying $P$, written $\set{a:A\mid P\,a}$, as \[\set{a:A\mid P\,a}=\Sigma a:A \dotop P\]}
+
+\todo{We implicitly coerce elements of a subset with elements of the underlying set.}
+
+\todo{Very important message: why it is important to consider definable quotients and not just the set. E.g. associativity of +Z is horrendous with the quotient whereas fairly easy with the setoid.}
 \section{Setoids}\label{sec:setoids}
 \begin{definition}
 A setoid $(A,\sim)$ is a set $A$ equipped with an equivalence relation ${\,\sim\,}\colon A \to A \to \Prop$.
