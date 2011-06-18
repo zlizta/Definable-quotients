@@ -6,7 +6,7 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{xypic}
-
+\usepackage{mylhstex}
 \input{prooftree}
 
 \newcommand{\ru}[2]{\vspace{1ex}
@@ -131,7 +131,7 @@ necessary because the quotient is actually definable. This is the
 subject of the current paper.
 
 An example is the case of integers. We can define integers as a
-setoid, namely as the setoid given by pairs of natural numbers 
+setoid, namely as the setoid given by pairs of natural numbers
 $\Z_0=\N\times\N$, where the equivalence relation identifies pairs
 representing the same difference, that is  $(a,b)\sim(c,d)$ if{f} $a+d=c+b$.
 However, as it is well known, using a setoid here is unnecessary; we
@@ -144,7 +144,7 @@ unnecessarily complicated and uses many unnecessary case
 distinctions. E.g. try to prove associativity within this setting!
 It is easier to define the operations on the setoid and the required
 algebraic properties are direct consequences of the semiring structure
-of the natural numbers. 
+of the natural numbers.
 
 Hence we propose to use both the setoid
 and the associated set, but to use the setoid structure to define
@@ -155,7 +155,7 @@ correspond precisely to the notion of coequalizers, and that an
 additional condition, exactness, can equivalently be expressed in Type
 Theory or in category theory. We present a number of examples for
 definable quotients which are the base of a library of definable
-quotients. 
+quotients.
 
 However, not all setoids can be represented as definable
 quotients. Under the (reasonable) assumption of local continuity, we
@@ -226,13 +226,13 @@ in NuPRL (an extensional Type Theory).
 \label{sec:main-results}
 
 We develop the notion of a definable quotient within an existing
-intensional type theory instead of an extension by a new type former. 
+intensional type theory instead of an extension by a new type former.
 This enables us to formally verify a number of basic results in Agda
 (see appendix), such as the relation between exact quotients,
 coequalizers and definable quotients. We give a number of examples for
 definable quotients, some which might seem surprising such as the presentation
 of multisets over higher order types. Finally, we show that certain
-quotient types are not definable quotients in our sense. 
+quotient types are not definable quotients in our sense.
 
 \section{Setoids}\label{sec:setoids}
 
@@ -289,7 +289,7 @@ where $\infty$ indicates a coinductive premise --- categorically this is
 the terminal coalgebra of $F\,X = A + X$. We inductively define the
 relation $- \downarrow - : A_{\bot_0} \to A \to \Prop$ with the idea
 that $d \downarrow a$ means that the computation $d$ terminates with
-$a$, by the following rules: 
+$a$, by the following rules:
 \[ \ax{\now\,a \downarrow a}
 \qquad
 \ru{d \downarrow a}{\later\,d \downarrow a}
@@ -346,13 +346,12 @@ a proof\begin{enumerate}
 \end{enumerate}
 \end{definition}
 
-There are two special cases of the eliminator \ref{enum:elim}. One is if $B$ is not dependent,
+There are two special cases of the eliminator $\qelim_B$ described in item~\ref{enum:elim}. One is if $B$ is not dependent,
  \[\lift\colon (f\colon A \to B) \to (\forall a,b\cdot a\sim b \to f\,a \equiv f\,b) \to (Q \to B)\]
 and the other is if $B$ is a predicate, i.e. $B : Q\to \Prop$, in which case we get an induction principle:
-\[\qind \colon((a\colon A)\to B \,\class a)\to ((q\colon Q)\to B\,q)\]
+\[\qind \colon((a: A)\to B \,\class a)\to ((q : Q)\to B\,q)\]
 since the condition $((p:a\sim b) \to f\,a \simeq_{\sound\,p}f\,b) $  of  the eliminator is trivially satisfied.
-On the other hand, these two special cases are sufficient to recover the eliminator :
-
+These two special cases are in fact sufficient to recover the eliminator, which is reminiscent of the fact that dependent elimination for the natural numbers can be constructed from non-dependent elimination and an induction principle.
 
 \begin{proposition}\label{prop:nlifteq}
 A prequotient $(Q,\class\dotph,\sound)$ with
@@ -363,19 +362,13 @@ A prequotient $(Q,\class\dotph,\sound)$ with
 \item an induction principle $$\qind_P\colon ((a\colon A)\to P \,\class a)\to ((q\colon Q)\to P\,q)$$
 \end{enumerate}
 gives rise to a quotient $(Q,\class\dotph,\sound,\qelim,\qelimbeta)$.
-\todo{make reverse direction explicit}.
 \end{proposition}
-\begin{proof}
-\todo{Write proof or state that it has been formalised in the introduction. }
-\end{proof}
-This is reminiscent of the fact that dependent elimination for the natural numbers can be constructed from non-dependent elimination and a induction principle.
+We refer to Appendix~\ref{app:agda:setoids} for a formal proof of Proposition~\ref{prop:nlifteq} and its converse. The characterization in Proposition~\ref{prop:nlifteq} was given as a definition of quotients in~\cite{hofmann1995thesis}.
 
-The characterization in Proposition~\ref{prop:nlifteq} was given as a definition of quotients in~\cite{hofmann1995thesis}.
+\bigskip
 
-
-Quotients correspond to coequalizers. We remind the reader of the definition of coequalizers in a category.
-
-\begin{definition}
+Quotients correspond to coequalizers in category theory. Let us recall the definition.
+\begin{definition}\label{def:coequalizer}
 Given two morphisms $g,h : S\to A$, a \emph{coequalizer} of $g$ and $h$ is a morphism $\class\dotph:A\to Q$ such that for any $f:A\to X$ satisfying $f \circ g = f \circ h$, there exists a unique $\dlift f$ such that
 \[\xymatrix{
 S\ar@<0.5ex>[r]^g\ar@<-0.5ex>[r]_h& A\ar[r]^{\class\dotph}\ar[dr]_{f} & Q\ar@{-->}[d]^{\dlift f}\\
@@ -390,7 +383,7 @@ and it is \emph{split} if the morphism $\class\dotph$ is a split epi, that is if
 \end{definition}
 
 We observe that there is an exact correspondence between quotients and coequalizers:
-\begin{proposition}\hfill
+\begin{proposition} In the context of Definition~\ref{def:coequalizer} above :
 \begin{enumerate}
 \item $Q$ is the quotient on $(S,\sim)$ where $s\sim s'$ if and only if $g\,s=h\,s'$.
 This quotient is exact if{f} the coequalizer is exact.
@@ -416,8 +409,8 @@ A \emph{definable quotient} is a prequotient $(Q, \class{\dotph}, \sound)$ on a 
 \end{align*}
 \end{definition}
 
-This is exactly the specification of a $\class{-}$ being a
-normalisation function wrt to $\emb$ (e.g. see \cite{txa:jtait}).
+This is exactly the specification of  $\class{-}$ as a
+normalisation function with respect to to $\emb$ (see \cite{txa:jtait}).
 
 \begin{proposition}\label{prop:definableimpliesexact}
 All definable quotients are exact quotients.
@@ -484,7 +477,7 @@ Soundness is obviously satisfied. An embedding of $Q$ into  $A\times A$ is simpl
 \emb &= \pi_0
 \end{align*}
 from which completeness and stability as stated in Definition~\ref{def:defquotients} clearly ensue : $[(a,b)] \sim (a,b)$ and if $a\leq b$ then $[(a,b)]=(a,b)$. Both facts follow from
- the properties of $\min$ and $\max$. 
+ the properties of $\min$ and $\max$.
 Thus $(Q,\class\dotph)$ gives rise to a definable quotient.
 
 We consider three examples in which  $A$ is taken to be the set $\N$, $\N\to\N$ and $(\N\to\N)\to\N$ respectively :
@@ -516,7 +509,7 @@ Notice that both the definition of $i$ and the test $f\,i< g\,i$ do not depend o
 \item[$A=(\N\to\N)\to\N$] \hfill\\
 The general idea to define the operator $\min$ is the same as in the case where $A=\N\to\N$. Let $\varphi : \N \to (\N\to\N)$ be an enumeration of natural sequences such that any finite sequence $[x_0,\dots,x_k]$ of
 natural numbers is the prefix of $\varphi_i$ for some $i$  in the sense that $\varphi_i \,0 = x_0$, \dots, $\varphi_i\,k = x_k$ (see appendix for a definition of $\varphi$).
-We define : 
+We define :
 \begin{align*}
  \min\,f\,g\,u =\,&\text{if $f \,u$ = $g\,u$ then $f u$}\\
                  &\text{else }\\
@@ -528,9 +521,9 @@ Notice as previously that both the definition of $i$ and the test $f\,\varphi_i 
 &\text{local\_continuity}:\\
 &\forall f,g: (\N\to\N)\to\N\\
 &\to(\exists u:\N\to\N\,.\,f\,u\neq g\,u)\\
-&\to (\exists n:\N \quad \forall v:\N\to\N\quad(\forall i\leq n\,.\,v_i= u_i\implies f\,v\neq g\,v))  
+&\to (\exists n:\N \quad \forall v:\N\to\N\quad(\forall i\leq n\,.\,v_i= u_i\implies f\,v\neq g\,v))
 \end{align*}
-   
+
 \end{description}
 \todo{More details on this? Topic for future work: relation to axiom of choice and well orderedness.}
 
@@ -545,7 +538,7 @@ and a sorting function $\sort: \List A \to \List A$ from which we define
 \class{(m,s)} = (m,\sort s).
 \]
 Notice that the function $\sort$ can be defined from the functions $\min$ and $\max : A \to A \to A$ used in the previous example about unordered pairs. However, we use a more direct method in our exploration of the case where $A$ is the set $\N\to\N$ of natural sequences. At first glance, it might seem counterintuitive that one can constructively sort sequences of infinite natural sequences and thus obtain a definable quotient of the setoids of multisets of natural sequences.
-As with unordered pairs, the first projection defines an embedding from $Q$ to $\List A$ which clearly gives rise to a definable quotient. 
+As with unordered pairs, the first projection defines an embedding from $Q$ to $\List A$ which clearly gives rise to a definable quotient.
 \begin{description}
 \item[$A=\N\to\N$] \hfill\\
 First we define a family of preorders $\set{{\leq_k}}_{k:\N}$
@@ -672,10 +665,10 @@ that is $\vdash(\iota\circ \varphi)\,f = (\iota\circ \varphi)\,g$, by definition
 \end{proof}
 
 
-\begin{proposition}\label{prop:Rnotdiscrete} In the presence of local continuity, the set $\R$ is not a definable quotient of the setoid $(\R_0,\sim)$.
+\begin{proposition}\label{prop:Rnotdiscrete} In the presence of local continuity, no set $R$ is a definable quotient of the setoid $(\R_0,\sim)$.
 \end{proposition}
 \begin{proof}
-Suppose for the sake of contradiction that $(\R,\class\dotph, \sound)$ is a definable quotient of the setoid $(\R_0,\sim)$. The function $\class\dotph\colon \R_0\to\R$ is a split epi, as it has a right inverse $\emb$, and hence by propositions~\ref{prop:RZdiscrete} and~\ref{prop:splitepidiscrete}, the set $\R$ is discrete. By exactness of the quotient,  we have that $\class{\vec 0} \neq \class{\vec 1}$ where $\vec 0$ and $\vec 1$ are  elements of $\R_0$ representing the Cauchy sequences $\lambda x.0$ and $\lambda x.1$, respectively. By discreteness of $\R$, there exists a definable function $P:\R\to\Bool$
+Suppose for the sake of contradiction that $(R,\class\dotph, \sound)$ is a definable quotient of the setoid $(\R_0,\sim)$. The function $\class\dotph\colon \R_0\to R$ is a split epi, as it has a right inverse $\emb$, and hence by propositions~\ref{prop:RZdiscrete} and~\ref{prop:splitepidiscrete}, the set $R$ is discrete. By exactness of the quotient,  we have that $\class{\vec 0} \neq \class{\vec 1}$ where $\vec 0$ and $\vec 1$ are  elements of $\R_0$ representing the Cauchy sequences $\lambda x.0$ and $\lambda x.1$, respectively. By discreteness of $R$, there exists a definable function $P:R\to\Bool$
 such that $\vdash P\class{\vec 0}\neq P\class{\vec 1 }$. It follows that the  function $P^\prime:\R_0\to\Bool$ defined by $P^\prime\,s = P\class{s}$ has the property that $\vdash P^\prime\,\vec0\neq P^\prime\,\vec 1$ and that $P^\prime$ is closed under $\sim$. By local continuity at type $(\N\to\Q)\to\Bool$ (Lemma~\ref{lem:lcratseq}) and by proof irrelevance in the second component of the pairs in $\R_0$, there is a number $n_P$  such that, for all definable sequences $f\colon\N\to\Q$,
 \[
 \left(\forall i\leq n_P,\, \vdash f\,i = 0_\Q\right)\text{ entails } P^\prime \, f = P^\prime\,(\pi_0\,\vec0).
@@ -717,7 +710,7 @@ propositional family. It seems interesting, especially in the
 context of higher dimensional type theory, to consider
 non-propositional quotients, e.g. the quotient of a set by a
 groupoid. An example for a definable quotient of this kind would be
-the quotient of a non-canonical notion of finite sets by isomorphism. 
+the quotient of a non-canonical notion of finite sets by isomorphism.
 
 \bibliographystyle{plain}
 \bibliography{biblio,alti}
@@ -755,11 +748,11 @@ Here are complete definitions written in the programming language Haskell : \tod
 We first define the the infinite list \texttt{sequences} infinite list of natural numbers and turn it into a function in two arguments using the Haskell function \verb+!!+ which returns an element of a given list at a given index.
 \begin{verbatim}
     phi i j              = sequences !! i !! j
-    
+
     sequences            = [0,0..]
                            : (tail (startWithAtLeast 0))
-    
-    startWithAtLeast n   = interleave (startWith n) 
+
+    startWithAtLeast n   = interleave (startWith n)
                                       (startWithAtLeast (n+1))
     startWith n          = map (n:) sequences
     interleave (x:xs) ys = x : interleave ys xs
@@ -767,24 +760,24 @@ We first define the the infinite list \texttt{sequences} infinite list of natura
 
 \subsubsection{Second version} This is simply a translation of the previous definition where natural sequences are represented as functions $\N\to\N$ directly instead of lists.\begin{verbatim}
     phi = startWithAtLeast 0
-    
-    startWithAtLeast n = interleave (startWith n) 
+
+    startWithAtLeast n = interleave (startWith n)
                                     (startWithAtLeast (n+1))
-    
+
     startWith        n i 0     = n
     startWith        n i (j+1) = phi i j
-    
-    interleave fs gs 0     = fs 0 
+
+    interleave fs gs 0     = fs 0
     interleave fs gs (i+1) = interleave gs (fs . (+1)) i
 \end{verbatim}
 
 \subsubsection{Third version} A perhaps more direct definition, but less self-explanatory.
 \begin{verbatim}
-    phi i 0     | even i = 0 
+    phi i 0     | even i = 0
                 | odd  i = phi (i `div` 2)  0 + 1
-                
+
     phi i (j+1) | even i = phi (i `div` 2) j
-                | odd  i = phi (i `div` 2) (j+1)    
+                | odd  i = phi (i `div` 2) (j+1)
 \end{verbatim}
 
 \end{document}
