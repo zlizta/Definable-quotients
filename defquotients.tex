@@ -75,6 +75,8 @@
 \DeclareMathOperator{\true}{true}
 \DeclareMathOperator{\false}{false}
 \DeclareMathOperator{\sort}{sort}
+\DeclareMathOperator{\length}{length}
+\DeclareMathOperator{\nub}{nub}
 \newcommand{\eqqm}{\overset{\text{\tiny ?}}{=}}
 \newcommand{\sep}{\mathrel{\sharp}}
 \renewcommand{\equiv}{=}
@@ -567,24 +569,25 @@ so that the finite sequence  $[\psi\,0,\dots,\psi\,(m-1)]$ thus defined is the f
 for all $i:\Fin m$ and all $k\leq j$ where $\sort^\ast_m\,\varphi$ is the finite sequence whose elements are the functions $\varphi\,i:\N\to\N$ ordered in full lexicographical order --- we do not assume $\sort^\ast_m$ to be definable a priori although it is as a consequence of the definability of $\sort_{m,j}$.
 We omit further details of the proof,  the intuition drawn from the case of unordered pairs above being more interesting.
 
-%Suppose that Equation~\ref{eq:ms:order} is not correct. Take $i_0$ to be the smallest $i$ for which it fails for some $j$ and $k$. Then take $k_0$ to be the smallest $k$ for which $(\sort_{m, j}\,\varphi)\,i_0\,k\neq(\sort^\ast_{m}\,\varphi)\,i_0\,k$.
 
 \bigskip
 \item[$A=(\N\to\N)\to\N$] \hfill\\
+This example will be the subject of a separate paper as its formalization is quite involved.
+
+
+\end{description}
+
+\subsubsection*{Finite sets}\hfill\\
+
+For types $A$ over which equality is decidable,  the set of finite subsets of $A$ can easily be defined as a quotient of the setoid of finite sets $(\List A, \sim)$ considered in Section~\ref{sec:setoids:examples}:
 \begin{align*}
-&{{-}\leq_{-}{-}} : \N\to ((\N\to\N)\to\N) \to ((\N\to\N)\to\N)\to \Bool\\
-&{f\leq_k g} =  f\,\varphi_i\leq g\,\varphi_i \\
-&\text{\phantom{$f\leq_n g =$} where }i =\min\set{i:\N\mid i>k\lor u_i\neq v_i}.
+Q &= \set{(m , s) : \List A\mid  \forall i,j:\Fin\,m \cdot i\leq j\implies s\,i < s\,j}\\
+\class{(m,as)} &=\nub(\sort\,as)
 \end{align*}
+where $\nub:\List\,A\to\List\,A$ takes advantage of the decidability of equality on $A$ to remove duplicates in a list.
 
+However, there is no hope to define   $\class\dotph : \List\,A \to Q$ when equality on $A$ is not decidable, as  $a=b$ is equivalent to $\length\,[(a,b)] = 1$, which is decidable.
 
-\end{description}
-
-\subsubsection*{Finite sets}
-\begin{description}
-\item[$A=\N\to\N$] \todo{Seems that we can define a prequotient but not the embedding.}
-
-\end{description}
 
 
 
@@ -734,7 +737,7 @@ Table~\ref{tab:phi} shows the prefix of the first 21 sequences.
 \caption{Prefixes of $\varphi_0$ to $\varphi_{20}$}
 \end{table}
 
-Here are complete definitions written in the programming language Haskell. The first version is perhaps the easiest to understand but is given in terms of lists. The second version is a direct translation of the former in the language of functions directly. Finally, the third version is more direct and perhaps easier to read for some people. 
+Here are complete definitions written in the programming language Haskell. The first version is perhaps the easiest to understand but is given in terms of lists. The second version is a direct translation of the former in the language of functions directly. Finally, the third version is more direct and perhaps easier to read for some people.
 
 
 \input{SeqEnum}
