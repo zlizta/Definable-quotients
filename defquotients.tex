@@ -185,7 +185,7 @@ $\subst\,B\,p\,b \equiv b'$. Most of our example do not require
 functional extensionality, but if we do we assume that is present in
 form of an uninterpreted constant $ext$, which is justified by
 Hofmann's observation that extensional Type Theory is a conservative
-extension of this theory \cite{Hofmann}. Alternatively we can eliminate $ext$ as
+extension of this theory~\cite{hofmann1995thesis}. Alternatively we can eliminate $ext$ as
 suggested in \cite{alti:lics99} which can then also be extended to
 quotient types.
 
@@ -204,6 +204,7 @@ We keep obvious quantifications implicit.
 \begin{definition}
 A setoid $(A,\sim)$ is a set $A$ equipped with an equivalence relation ${\,\sim\,}\colon A \to A \to \Prop$.
 \end{definition}
+\todo{words}
 \subsection{Examples}\label{sec:setoids:examples}
 \subsubsection*{Integers}
 The integers can be viewed as the setoids $(\Z_0=\N\times\N,\sim)$ where $(a,b)\sim(c,d)$ if{f} $a+d=c+b$ reflecting the idea that $(a,b)$ represents the integer $a-b$.
@@ -630,6 +631,8 @@ Directly follows from Propositions~\ref{prop:Rnotdiscrete} and~\ref{prop:splitep
 \bibliography{biblio}
 
 \appendix
+
+\todo{Put in a different lhs2latex file which we input here if possible}
 \section{Definition of $\varphi$}
 We define a family $\set{\varphi_i:\N\to\N}_{i:\N}$ of natural sequences with the property that any finite sequence $[x_0,\dots,x_k]$ of natural numbers is a prefix of some $\varphi_i$. One idea to define such a family is to request that the sequences $\varphi_{2i}$ at even indices are those starting with $0$ while the others are in turn split into  those starting with $1$ (the $\varphi_{2i+1+2k}$, i.e. every other sequence of odd index) and the remaining sequences, starting with at least $2$, etc. For each subfamily of sequences starting with the same prefix of length $n$, we define the $(n+1)^{\text{th}}$ term in the same manner.
 Table~\ref{tab:phi} shows the prefix of the first 21 sequences.
