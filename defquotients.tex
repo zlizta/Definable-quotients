@@ -363,7 +363,7 @@ A prequotient $(Q,\class\dotph,\sound)$ with
 \end{enumerate}
 gives rise to a quotient $(Q,\class\dotph,\sound,\qelim,\qelimbeta)$.
 \end{proposition}
-We refer to Appendix~\ref{app:agda:setoids} for a formal proof of Proposition~\ref{prop:nlifteq} and its converse. The characterization in Proposition~\ref{prop:nlifteq} was given as a definition of quotients in~\cite{hofmann1995thesis}.
+We refer to Appendix~\ref{app:agda:quotients} for a formal proof of Proposition~\ref{prop:nlifteq} and its converse. The characterization in Proposition~\ref{prop:nlifteq} was given as a definition of quotients in~\cite{hofmann1995thesis}.
 
 \bigskip
 
@@ -508,7 +508,7 @@ Notice that both the definition of $i$ and the test $f\,i< g\,i$ do not depend o
 \bigskip
 \item[$A=(\N\to\N)\to\N$] \hfill\\
 The general idea to define the operator $\min$ is the same as in the case where $A=\N\to\N$. Let $\varphi : \N \to (\N\to\N)$ be an enumeration of natural sequences such that any finite sequence $[x_0,\dots,x_k]$ of
-natural numbers is the prefix of $\varphi_i$ for some $i$  in the sense that $\varphi_i \,0 = x_0$, \dots, $\varphi_i\,k = x_k$ (see appendix for a definition of $\varphi$).
+natural numbers is the prefix of $\varphi_i$ for some $i$  in the sense that $\varphi_i \,0 = x_0$, \dots, $\varphi_i\,k = x_k$ (see Appendix~\ref{app:haskell:phi} for a definition of $\varphi$).
 We define :
 \begin{align*}
  \min\,f\,g\,u =\,&\text{if $f \,u$ = $g\,u$ then $f u$}\\
@@ -717,9 +717,11 @@ the quotient of a non-canonical notion of finite sets by isomorphism.
 
 \appendix
 
-\todo{Put in a different lhs2latex file which we input here if possible}
-\section{Definition of $\varphi$}
-We define a family $\set{\varphi_i:\N\to\N}_{i:\N}$ of natural sequences with the property that any finite sequence $[x_0,\dots,x_k]$ of natural numbers is a prefix of some $\varphi_i$. One idea to define such a family is to request that the sequences $\varphi_{2i}$ at even indices are those starting with $0$ while the others are in turn split into  those starting with $1$ (the $\varphi_{2i+1+2k}$, i.e. every other sequence of odd index) and the remaining sequences, starting with at least $2$, etc. For each subfamily of sequences starting with the same prefix of length $n$, we define the $(n+1)^{\text{th}}$ term in the same manner.
+\section{Formalization in Agda}\label{app:agda:quotients}
+\todo{Nuo: please put the code we revised on Friday here by including  file using an input command.}
+
+\section{Definition of the enumeration $\varphi$ of natural sequences}\label{app:haskell:phi}
+We define a family $\set{\varphi_i:\N\to\N}_{i:\N}$ of natural sequences with the property that any finite sequence $[x_0,\dots,x_k]$ of natural numbers is a prefix of some $\varphi_i$, which we need in some of our examples. Furthermore, although not strictly needed here, these sequences are pairwise distinct. One idea to define such a family is to request that the sequences $\varphi_{2i}$ at even indices are those starting with $0$ while the others are in turn split into  those starting with $1$ (the $\varphi_{2i+1+2k}$, i.e. every other sequence of odd index) and the remaining sequences, starting with at least $2$, etc. For each subfamily of sequences starting with the same prefix of length $n$, we define the $(n+1)^{\text{th}}$ term in the same manner.
 Table~\ref{tab:phi} shows the prefix of the first 21 sequences.
 
 \noindent
@@ -740,45 +742,12 @@ Table~\ref{tab:phi} shows the prefix of the first 21 sequences.
 \caption{Prefixes of $\varphi_0$ to $\varphi_{20}$}
 \end{table}
 
-Here are complete definitions written in the programming language Haskell : \todo{perhaps choose one or two  versions only}
+Here are complete definitions written in the programming language Haskell. The first version is perhaps the easiest to understand but is given in terms of lists. The second version is a direct translation of the former in the language of functions directly. Finally, the third version is more direct and perhaps easier to read for some people. 
 
 
+\input{SeqEnum}
 
-\subsubsection{First version}
-We first define the the infinite list \texttt{sequences} infinite list of natural numbers and turn it into a function in two arguments using the Haskell function \verb+!!+ which returns an element of a given list at a given index.
-\begin{verbatim}
-    phi i j              = sequences !! i !! j
-
-    sequences            = [0,0..]
-                           : (tail (startWithAtLeast 0))
-
-    startWithAtLeast n   = interleave (startWith n)
-                                      (startWithAtLeast (n+1))
-    startWith n          = map (n:) sequences
-    interleave (x:xs) ys = x : interleave ys xs
-\end{verbatim}
-
-\subsubsection{Second version} This is simply a translation of the previous definition where natural sequences are represented as functions $\N\to\N$ directly instead of lists.\begin{verbatim}
-    phi = startWithAtLeast 0
-
-    startWithAtLeast n = interleave (startWith n)
-                                    (startWithAtLeast (n+1))
-
-    startWith        n i 0     = n
-    startWith        n i (j+1) = phi i j
-
-    interleave fs gs 0     = fs 0
-    interleave fs gs (i+1) = interleave gs (fs . (+1)) i
-\end{verbatim}
-
-\subsubsection{Third version} A perhaps more direct definition, but less self-explanatory.
-\begin{verbatim}
-    phi i 0     | even i = 0
-                | odd  i = phi (i `div` 2)  0 + 1
-
-    phi i (j+1) | even i = phi (i `div` 2) j
-                | odd  i = phi (i `div` 2) (j+1)
-\end{verbatim}
 
 \end{document}
+
 
