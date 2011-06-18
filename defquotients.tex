@@ -643,7 +643,7 @@ To show that any set $\R$ which is a definable quotient of the setoid $(\R_0,\si
    &\text{we have that }{\,\vdash \varphi\, f} = \varphi\, g.
 \end{align*}
 \end{definition}
-Local continuity expresses the fact that, to compute $\varphi\,f$, the reduction relation defining the operational semantics of type theory only inspects finitely many terms of the input sequence $f$. We have stated local continuity in its perhaps simplest form, at a particular type. However, we conjecture that it can be expressed and proved at all types. Whatever the case, it is easily shown that local continuity at type $(\N\to\N)\to\N$  entails local continuity at some other types, in particular at type $(\N\to\Q)\to\Bool$, which we next use to show that the set $\R$ is not a definable quotient of the setoid $(\R_0,\sim)$ described in Section~\ref{sec:setoids:examples}.
+Local continuity expresses the fact that, to compute $\varphi\,f$, the reduction relation defining the operational semantics of type theory only inspects finitely many terms of the input sequence $f$. We have stated local continuity in its perhaps simplest form, at a particular type. However, we conjecture that it can be expressed and proved at all types. Whatever the case, it is easily shown that local continuity at type $(\N\to\N)\to\N$  entails local continuity at some other types, in particular at type $(\N\to\Q)\to\Bool$, which we next use to show that no set is a definable quotient of the setoid $(\R_0,\sim)$ described in Section~\ref{sec:setoids:examples}.
 
 \begin{lemma}(local continuity for tests on rational sequences)
 \label{lem:lcratseq}
@@ -679,14 +679,6 @@ Define $g\,i=\text{if } i\leq n \text{ then } 0_\Q \text{ else } 1_\Q$, such tha
 
 It seems that all sets definable in ordinary type theory~(using only the set formers $\Pi$, $\Sigma$, $=$, finite sets, $W$, see e.g.~\cite{nordstrom1990programming}) are discrete. This observation shows that the reals are not  definable as an exact quotient in ordinary type theory while Proposition~\ref{prop:Rnotdiscrete} shows that reals are not a definable  quotient in any extension of ordinary type theory, as long as local continuity is admissible.
 
-
-
-\begin{corollary}
-$\R$ is not a definable quotient of $\R_0$.
-\end{corollary}
-\begin{proof}
-Directly follows from Propositions~\ref{prop:Rnotdiscrete} and~\ref{prop:splitepidiscrete}.
-\end{proof}
 
 \section{Conclusions}
 \label{sec:conclusions}
