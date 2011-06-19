@@ -1,5 +1,11 @@
 % &latex
 \documentclass[envcountsame]{llncs}
+% Editing and debugging
+\hfuzz 0.1pt
+\overfullrule=15pt
+\brokenpenalty=10000
+\newcommand{\todo}[1]%{}%{\textcolor{red}{TO~DO:~#1}}
+
 
 \usepackage{color}
 \usepackage{amsmath}
@@ -47,11 +53,7 @@
 
 
 
-% Editing and debugging
-\hfuzz 0.1pt
-\overfullrule=15pt
-\brokenpenalty=10000
-\newcommand{\todo}[1]{\textcolor{red}{TO~DO:~#1}}
+
 
 \newtheorem{assumption}[theorem]{Assumption}
 
