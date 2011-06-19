@@ -6,9 +6,31 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{xypic}
-\usepackage{mylhstex}
-\input{prooftree}
+\usepackage{Appendix/mylhstex}
 
+
+
+% Used for Agda prettty printing with lhs2tex --agda (with the %include agda.fmt directive)
+\RequirePackage[T1]{fontenc}
+\RequirePackage[utf8x]{inputenc}
+\RequirePackage{ucs}
+\RequirePackage{amsfonts}
+\providecommand\mathbbm{\mathbb}
+\usepackage[utf8x]{inputenc}
+\usepackage{ucs}
+\usepackage{cite}
+\usepackage{MnSymbol}
+\DeclareUnicodeCharacter{"03BB}{\ensuremath{\lambda}}
+\DeclareUnicodeCharacter{"03A3}{\ensuremath{\Sigma}}
+\DeclareUnicodeCharacter{"03B2}{\ensuremath{\beta}}
+\DeclareUnicodeCharacter{"03C8}{\ensuremath{\psi}}
+\DeclareUnicodeCharacter{"231C}{\ensuremath{\ulcorner}}
+\DeclareUnicodeCharacter{"231D}{\ensuremath{\urcorner}}
+\DeclareUnicodeCharacter{"25B6}{\ensuremath{\filledmedtriangleright}}
+%
+
+% Proof trees (Paul Taylor's package)
+\input{prooftree}
 \newcommand{\ru}[2]{\vspace{1ex}
 \begin{prooftree}
 #1 \justifies #2
@@ -21,6 +43,8 @@
 \end{prooftree}\vspace{1ex}}
 \newcommand{\Ax}[2]{
 \Ru{}{#1}{#2} }
+%
+
 
 
 % Editing and debugging
@@ -315,7 +339,7 @@ We define the termination order ${\sqsubseteq} : A_{\bot_0}\to A_{\bot_0}
 
 We define what an (exact) quotient over a setoid is and relate this to
 an alternative definition given by Hofmann and to the categorical
-definition. All the concepts have been formalized in Agda (see appendix).
+definition. All the concepts have been formalized in Agda (see Appendix~\ref{app:agda:quotients}).
 
 \begin{definition}[prequotient, quotient, exact quotient]
 \label{def:quotient}
@@ -714,7 +738,8 @@ the quotient of a non-canonical notion of finite sets by isomorphism.
 \appendix
 
 \section{Formalization in Agda}\label{app:agda:quotients}
-\todo{Nuo: please put the code we revised on Friday here by including  file using an input command.}
+\input{Appendix/AgdaQuotients}
+
 
 \section{Definition of the enumeration $\varphi$ of natural sequences}\label{app:haskell:phi}
 We define a family $\set{\varphi_i:\N\to\N}_{i:\N}$ of natural sequences with the property that any finite sequence $[x_0,\dots,x_k]$ of natural numbers is a prefix of some $\varphi_i$, which we need in some of our examples. Furthermore, although not strictly needed here, these sequences are pairwise distinct. One idea to define such a family is to request that the sequences $\varphi_{2i}$ at even indices are those starting with $0$ while the others are in turn split into  those starting with $1$ (the $\varphi_{2i+1+2k}$, i.e. every other sequence of odd index) and the remaining sequences, starting with at least $2$, etc. For each subfamily of sequences starting with the same prefix of length $n$, we define the $(n+1)^{\text{th}}$ term in the same manner.
@@ -741,8 +766,9 @@ Table~\ref{tab:phi} shows the prefix of the first 21 sequences.
 Here are complete definitions written in the programming language Haskell. The first version is perhaps the easiest to understand but is given in terms of lists. The second version is a direct translation of the former in the language of functions directly. Finally, the third version is more direct and perhaps easier to read for some people.
 
 
-\input{SeqEnum}
+\input{Appendix/SeqEnum}
 
 \end{document}
+
 
 
