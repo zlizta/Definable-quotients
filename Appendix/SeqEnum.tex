@@ -272,7 +272,7 @@
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{phi}{}\<[22]%
 \>[22]{}\mathbin{::}\Conid{Int}\to (\Conid{Int}\to \Conid{Int}){}\<[E]%
-\\
+\\[\blanklineskip]%
 \>[B]{}\Varid{phi}\;\Varid{i}\;\Varid{j}{}\<[22]%
 \>[22]{}\mathrel{=}\Varid{sequences}\mathbin{!!}\Varid{i}\mathbin{!!}\Varid{j}{}\<[E]%
 \\[\blanklineskip]%
@@ -282,12 +282,12 @@
 \>[B]{}\Varid{startWithAtLeast}\;\Varid{n}{}\<[22]%
 \>[22]{}\mathrel{=}\Varid{interleave}\;{}\<[36]%
 \>[36]{}(\Varid{startWith}\;\Varid{n})\;{}\<[E]%
-\\
+\\[\blanklineskip]%
 \>[36]{}(\Varid{startWithAtLeast}\;(\Varid{n}\mathbin{+}\mathrm{1})){}\<[E]%
-\\
+\\[\blanklineskip]%
 \>[B]{}\Varid{startWith}\;\Varid{n}{}\<[22]%
 \>[22]{}\mathrel{=}\Varid{map}\;(\Varid{n}\mathbin{:})\;\Varid{sequences}{}\<[E]%
-\\
+\\[\blanklineskip]%
 \>[B]{}\Varid{interleave}\;(\Varid{x}\mathbin{:}\Varid{xs})\;\Varid{ys}\mathrel{=}\Varid{x}\mathbin{:}\Varid{interleave}\;\Varid{ys}\;\Varid{xs}{}\<[E]%
 \ColumnHook
 \end{hscode}\resethooks
@@ -296,32 +296,44 @@
 
 \begin{hscode}\SaveRestoreHook
 \column{B}{@{}>{\hspre}l<{\hspost}@{}}%
-\column{18}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{28}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{41}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{phi}{}\<[28]%
 \>[28]{}\mathbin{::}\Conid{Int}\to (\Conid{Int}\to \Conid{Int}){}\<[E]%
-\\
+\\[\blanklineskip]%
 \>[B]{}\Varid{phi}{}\<[28]%
 \>[28]{}\mathrel{=}\Varid{startWithAtLeast}\;\mathrm{0}{}\<[E]%
 \\[\blanklineskip]%
 \>[B]{}\Varid{startWithAtLeast}\;\Varid{n}{}\<[28]%
 \>[28]{}\mathrel{=}\Varid{interleave}\;(\Varid{startWith}\;\Varid{n})\;{}\<[E]%
-\\
+\\[\blanklineskip]%
 \>[28]{}\hsindent{13}{}\<[41]%
 \>[41]{}(\Varid{startWithAtLeast}\;(\Varid{n}\mathbin{+}\mathrm{1})){}\<[E]%
-\\[\blanklineskip]%
+\ColumnHook
+\end{hscode}\resethooks
+
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{18}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{28}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{startWith}\;{}\<[18]%
 \>[18]{}\Varid{n}\;\Varid{i}\;\mathrm{0}{}\<[28]%
 \>[28]{}\mathrel{=}\Varid{n}{}\<[E]%
-\\
+\\[\blanklineskip]%
 \>[B]{}\Varid{startWith}\;{}\<[18]%
 \>[18]{}\Varid{n}\;\Varid{i}\;(\Varid{j}\mathbin{+}\mathrm{1})\mathrel{=}\Varid{phi}\;\Varid{i}\;\Varid{j}{}\<[E]%
-\\[\blanklineskip]%
+\ColumnHook
+\end{hscode}\resethooks
+
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{28}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{interleave}\;\Varid{fs}\;\Varid{gs}\;\mathrm{0}{}\<[28]%
 \>[28]{}\mathrel{=}\Varid{fs}\;\mathrm{0}{}\<[E]%
-\\
+\\[\blanklineskip]%
 \>[B]{}\Varid{interleave}\;\Varid{fs}\;\Varid{gs}\;(\Varid{i}\mathbin{+}\mathrm{1}){}\<[28]%
 \>[28]{}\mathrel{=}\Varid{interleave}\;\Varid{gs}\;(\Varid{fs}\mathbin{\circ}(\mathbin{+}\mathrm{1}))\;\Varid{i}{}\<[E]%
 \ColumnHook
@@ -339,19 +351,19 @@
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
 \>[B]{}\Varid{phi}{}\<[22]%
 \>[22]{}\mathbin{::}\Conid{Int}\to (\Conid{Int}\to \Conid{Int}){}\<[E]%
-\\
+\\[\blanklineskip]%
 \>[B]{}\Varid{phi}\;\Varid{i}\;\mathrm{0}{}\<[13]%
 \>[13]{}\mid \Varid{even}\;\Varid{i}\mathrel{=}{}\<[25]%
 \>[25]{}\mathrm{0}{}\<[E]%
-\\
+\\[\blanklineskip]%
 \>[13]{}\mid \Varid{odd}\;{}\<[20]%
 \>[20]{}\Varid{i}\mathrel{=}{}\<[25]%
 \>[25]{}\Varid{phi}\;(\Varid{i}\mathbin{\Varid{`div`}}\mathrm{2})\;{}\<[42]%
 \>[42]{}\mathrm{0}\mathbin{+}\mathrm{1}{}\<[E]%
-\\
+\\[\blanklineskip]%
 \>[B]{}\Varid{phi}\;\Varid{i}\;(\Varid{j}\mathbin{+}\mathrm{1})\mid \Varid{even}\;\Varid{i}\mathrel{=}{}\<[25]%
 \>[25]{}\Varid{phi}\;(\Varid{i}\mathbin{\Varid{`div`}}\mathrm{2})\;\Varid{j}{}\<[E]%
-\\
+\\[\blanklineskip]%
 \>[B]{}\hsindent{13}{}\<[13]%
 \>[13]{}\mid \Varid{odd}\;{}\<[20]%
 \>[20]{}\Varid{i}\mathrel{=}{}\<[25]%
