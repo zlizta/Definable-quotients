@@ -184,7 +184,7 @@ the family of finite sets $\Fin : \N \to \Set$ with $\Fin\,n = \{ 0 ,
 the universe of small sets. Indeed, all our definitions are universe
 polymorphic and could have taken place in any (larger) universe.  We
 write $\Prop$ for the subuniverse of propositions that are sets which
-(extensionally) have at most one inhabitant. We assume that $\Prop$
+(extensionally) have at most one inhabitant (proof-irrelevance). We assume that $\Prop$
 contains the equality type $a = b : \Prop$ for any $a,b : A : \Set$\footnote{This choice rules out any higher dimensional interpretation
 of equality. We plan to revisit this issue in the future and
 investigate proof-relevant quotients.}  and is closed under
@@ -204,7 +204,7 @@ declaration of implicitly quantified arguments, assuming that the
 human reader, unlike a machine, can reconstruct those. Given elements $b : B\,a$ and $b' : B\,a'$ with a proof $p : a = a'$,
 we write $b \simeq_{p} b'$ for  the \emph{heterogeneous equality} $\subst\,B\,p\,b \equiv b'$. Most of
 our examples do not require functional extensionality, but if we do we
-assume that it is present in form of an uninterpreted constant $\Ext$,
+assume that it is present in form of an uninterpreted constant $\Ext : (x : A) \to f\,x = g\,x \to f = g$,
 which is justified by Hofmann's observation that extensional Type
 Theory is a conservative extension of the theory considered in the present paper~\cite{hofmann1995thesis}. Alternatively we can eliminate $\Ext$ as suggested in
 \cite{alti:lics99} which can then also be extended to quotient types.
@@ -217,12 +217,13 @@ Theory is a conservative extension of the theory considered in the present paper
 Quotient types were introduced by Mendler in
 \cite{mendler1990quotient} and subsequently investigated in Hofmann's
 PhD \cite{hofmann1995thesis}. An extensive investigation of setoids
-can be found in \cite{barthe2003setoids}. Maetti considers extensions of both
-intensional and extensional Type Theory by quotient types
-\cite{maietti1999effective}. Courtieu considers an extension of CIC (an intensional
-type theory) by \emph{normalized types} corresponding to our definable
-quotients. Nogin describes a modular implementation of quotient types
-in NuPRL (an extensional Type Theory).
+can be found in \cite{barthe2003setoids}. Maetti considers extensions
+of both intensional and extensional Type Theory by quotient types
+\cite{maietti1999effective}. Courtieu considers an extension of CIC
+(an intensional type theory) by \emph{normalized types} corresponding
+to our definable quotients \cite{courtieulcs01}. Nogin describes a
+modular implementation of quotient types in NuPRL (an extensional Type
+Theory) \cite{Nogin02quotienttypes}.
 
 \subsection{Main results}
 \label{sec:main-results}
