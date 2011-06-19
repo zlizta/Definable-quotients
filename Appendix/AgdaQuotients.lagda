@@ -1,24 +1,10 @@
-\documentclass[a4paper,12pt]{article}
+
 \def\textmu{}
 %include agda.fmt
 
-\usepackage[utf8x]{inputenc}
-\usepackage{ucs}
-\usepackage{cite}
-\usepackage{MnSymbol}
-
-\DeclareUnicodeCharacter{"03BB}{\ensuremath{\lambda}}
-\DeclareUnicodeCharacter{"03A3}{\ensuremath{\Sigma}}
-\DeclareUnicodeCharacter{"03B2}{\ensuremath{\beta}}
-\DeclareUnicodeCharacter{"03C8}{\ensuremath{\psi}}
-\DeclareUnicodeCharacter{"231C}{\ensuremath{\ulcorner}}
-\DeclareUnicodeCharacter{"231D}{\ensuremath{\urcorner}}
-\DeclareUnicodeCharacter{"25B6}{\ensuremath{\filledmedtriangleright}}
 
 
-\begin{document}
 
-\section{Appendix}
 
 \begin{code}
 
@@ -331,4 +317,3 @@ QuD→QuH' {S} = Qu→QuH ∘ QuD→Qu
 \end{code}
 
 
-\end{document}
