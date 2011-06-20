@@ -163,7 +163,7 @@ instead. Setoids are just sets together with an equivalence
 relation. However, the disadvantage of using setoids is that we have
 now to lift any set-based operation on setoids. E.g. we need lists as
 an operation on setoids and not just on sets. Moreover, setoids are
-not safe in the sense that any consument of a setoid may access the
+not safe in the sense that any consumer of a setoid may access the
 underlying representation. One way out is to use a Type Theory which
 supports genuine quotients such as the forthcoming Epigram 2 system (based on
 \cite{alti:ott-conf}).  However, in many cases this is not
@@ -180,8 +180,8 @@ positive numbers including $0$ whereas the second injection represents
 the proper negative numbers. We can now define operations like
 addition and multiplication and show algebraic properties,
 such as verifying that the structure is a ring. However, this is
-unnecessarily complicated and uses many unnecessary case
-distinctions. E.g. try to prove associativity within this setting!
+quite complicated and uses many unnecessary case
+distinctions. E.g. try to prove distributivity within this setting!
 It is easier to define the operations on the setoid and the required
 algebraic properties are direct consequences of the semiring structure
 of the natural numbers.
@@ -190,7 +190,7 @@ Hence we propose to use both the setoid
 and the associated set, but to use the setoid structure to define
 operations on the quotient set and to reason about it. In the present
 paper we introduce the formal framework to do this, i.e. we give the definitions of  quotient as well as definable quotients and show the
-equivalence of alternative definitions. We also verify that quotients
+equivalence of alternative definitions of quotients. We also verify that quotients
 correspond precisely to the notion of coequalizers, and that an
 additional condition, exactness, can equivalently be expressed in Type
 Theory or in category theory. We present a number of examples for
@@ -219,13 +219,14 @@ disjoint union $A + B$ and lists $\List\,A$ are defined. We also use
 the family of finite sets $\Fin : \N \to \Set$ with $\Fin\,n = \{ 0 ,
 1, \dots, n-1\}$ which can be inductively generated from $0 :
 \Fin\,(n+1)$ and $+1 : \Fin\,n \to \Fin\,(n+1) $. We write $\Set$ for
-the universe of small sets. Indeed, all our definitions are universe
-polymorphic and could have taken place in any (larger) universe.  We
+the universe of small sets.%  Indeed, all our definitions are universe
+% polymorphic and could have taken place in any (larger) universe.  
+We
 write $\Prop$ for the subuniverse of propositions that are sets which
 (extensionally) have at most one inhabitant (proof-irrelevance). We assume that $\Prop$
-contains the equality type $a = b : \Prop$ for any $a,b : A : \Set$\footnote{This choice rules out any higher dimensional interpretation
-of equality. We plan to revisit this issue in the future and
-investigate proof-relevant quotients.}  and is closed under
+contains the equality type $a = b : \Prop$ for any $a,b : A : \Set$
+\footnote{This is consistent with Voevodsky's univalence interpretation of type theory \cite{voevodsky}, if one identify sets with types whose h-level is 2.}  
+and is closed under
 universal ($\forall$) and existential ($\exists$)
 quantification. While $\forall$ exactly corresponds to a $\Pi$-type,
 $\exists$ is the squashing \cite{mendler1990quotient} of the
@@ -245,7 +246,8 @@ our examples do not require functional extensionality, but if we do we
 assume that it is present in form of an uninterpreted constant $\Ext : (x : A) \to f\,x = g\,x \to f = g$,
 which is justified by Hofmann's observation that extensional Type
 Theory is a conservative extension of the theory considered in the present paper~\cite{hofmann1995thesis}. Alternatively we can eliminate $\Ext$ as suggested in
-\cite{alti:lics99} which can then also be extended to quotient types.
+\cite{alti:lics99}. 
+% which can then also be extended to quotient types.
 
 %\todo{Bijection to be defined elsewhere}
 
@@ -301,7 +303,7 @@ r\sim s &= \forall\varepsilon :\Q,\varepsilon>0\to\exists m:\N, \forall i:\N, i>
 
 \subsubsection*{Unordered pairs}
 Given a set $A$, the unordered pairs of elements of $A$ is the setoid $(A\times A,\sim)$ where
-$(a,b)\sim(b,a)$.
+$\sim$ is reflexive and $(a,b)\sim(b,a)$.
 
 \subsubsection*{Finite multisets}
 Given a set $A$ , the finite multisets of elements in $A$ is the setoid $(\List A,\sim)$ where two lists are equivalent if{f} one is the permutation of the other.
@@ -309,7 +311,7 @@ Given a set $A$ , the finite multisets of elements in $A$ is the setoid $(\List 
 \List A &= \Sigma n:\N.\Fin\,n\to A\\
 (m,f)\sim(n,g) &= \exists \varphi : \Fin\,m \to \Fin\,n \cdot\ \Bijection\,\varphi \land g\circ\varphi = f
 \end{align*}
-Notice that $(m,g)\sim(n,g)\implies m=n$ is provable in type theory, based on the definition of $\Bijection : (A\to B)\to \Prop$ which we omit here.
+Notice that $(m,g)\sim(n,f)\implies m=n$ is provable in type theory, based on the definition of $\Bijection : (A\to B)\to \Prop$ which we omit here.
 
 \subsubsection*{Finite sets}
 Given a set $A$, the finite sets of elements in $A$ is the setoid $(\List A,{\sim})$ where two lists are equivalent if{f} they contain the same elements :\begin{align*}
@@ -338,6 +340,7 @@ $a$, by the following rules:
 We define the termination order ${\sqsubseteq} : A_{\bot_0}\to A_{\bot_0}
 \to \Prop$ as $d \sqsubseteq d' = \forall a:A . d \downarrow a \to d'
 \downarrow a$ and $d\sim d'= d\sqsubseteq d' \wedge d'\sqsubseteq d$ .
+See \cite{capretta:2005}.
 
 %  Using the notation for mixed inductive coinductive  definitions from~\cite{danielsson2010mpc}, where we mark coinductive occurrences of a datatype by using $\infty$, we define $A_{\bot_0} : \Set$ and the relations $\sqsubseteq:A_{\bot_0}\to A_{\bot_0} \to \Prop$ by the following constructors:
 % \begin{align*}
@@ -719,6 +722,8 @@ Define $g\,i=\text{if } i\leq n \text{ then } 0_\Q \text{ else } 1_\Q$, such tha
 
 \end{proof}
 
+Using very similar reasoning it can be shown that $\N_\bot$ is not definable either.
+
 It seems that all sets definable in ordinary type theory~(using only the set formers $\Pi$, $\Sigma$, $=$, finite sets, $W$, see e.g.~\cite{nordstrom1990programming}) are discrete. This observation shows that the reals are not  definable as an exact quotient in ordinary type theory while Proposition~\ref{prop:Rnotdiscrete} shows that reals are not a definable  quotient in any extension of ordinary type theory, as long as local continuity is admissible.
 
 
@@ -741,7 +746,7 @@ while the notion of a definable quotient is useful, we would also like
 to be able to use quotient sets which do not fall in this category.
 In the present work we have only covered the notion of a quotient by a
 propositional family. It seems interesting, especially in the
-context of higher dimensional type theory, to consider
+context of higher dimensional type theory inspired by Voevodsky's proposal \cite{voevodsky}, to consider
 non-propositional quotients, e.g. the quotient of a set by a
 groupoid. An example for a definable quotient of this kind would be
 the quotient of a non-canonical notion of finite sets by isomorphism.
