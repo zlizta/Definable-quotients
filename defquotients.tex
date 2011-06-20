@@ -357,13 +357,13 @@ that is \[\sound\colon (a,b : A) \to a\sim b \to [a] = [b],\]
 Such a prequotient is a \emph{quotient} if  we also have\begin{enumerate}
 \setcounter{enumi}{3}
 \item \label{enum:elim}
-for any $B\colon A\to\Set$, an eliminator $\qelim_B: Q\to\Set$
+for any $B\colon Q\to\Set$, an eliminator
  \begin{align*}
- \qelim_B\colon &(f\colon (a:A) \to B\,\class a) \\
+ \qelim_B\,\,:\,\,\,&(f\colon (a:A) \to B\,\class a) \\
         {\to}\, &((p:a\sim b) \to f\,a \simeq_{\sound\,p}f\,b)\\
         {\to}\, &((q:Q) \to B\,q)
  \end{align*}
-such that $\qelimbeta\colon \qelim_B f \,p\,\class a\equiv f a$.
+such that $\qelimbeta : \qelim_B\,f \,p\,\class a\equiv f\,a$.
 
 \end{enumerate}
 Finally, such a quotient is \emph{exact} if additionally
@@ -387,7 +387,7 @@ A prequotient $(Q,\class\dotph,\sound)$ with
 
 \begin{enumerate}
 \item a non-dependent eliminator $$\lift_B\colon (f\colon A \to B) \to (\forall a,b\cdot a\sim b \to f\,a \equiv f\,b) \to (Q \to B)$$ for any $B\colon\Set$,
-\item a $\beta$-law $$\liftbeta : \lift_B f \,p\,\class a\equiv f a,$$
+\item a $\beta$-law $$\liftbeta  : \lift_B f \,p\,\class a\equiv f\,a,$$
 \item an induction principle $$\qind_P\colon ((a\colon A)\to P \,\class a)\to ((q\colon Q)\to P\,q)$$
 \end{enumerate}
 gives rise to a quotient $(Q,\class\dotph,\sound,\qelim,\qelimbeta)$.
