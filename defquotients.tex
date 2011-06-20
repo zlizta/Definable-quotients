@@ -25,7 +25,19 @@
 \usepackage[utf8x]{inputenc}
 \usepackage{ucs}
 \usepackage{cite}
+
+
+% ---------
+% save and then undefine the conflicting command \vec
+% we need \makeatletter because \@undefined uses the special @ character.
+\newcommand{\mydummy}{}                % change if you need 
+\makeatletter
+\let\vec\mydummy                       % make \vec do same as \mydummy
+\let\vec\@undefined                    % undefine \proof
+\makeatother
 \usepackage{MnSymbol}
+% ---------
+
 \DeclareUnicodeCharacter{"03BB}{\ensuremath{\lambda}}
 \DeclareUnicodeCharacter{"03A3}{\ensuremath{\Sigma}}
 \DeclareUnicodeCharacter{"03B2}{\ensuremath{\beta}}
@@ -242,20 +254,20 @@ Theory is a conservative extension of the theory considered in the present paper
 
 Quotient types were introduced by Mendler in
 \cite{mendler1990quotient} and subsequently investigated in Hofmann's
-PhD \cite{hofmann1995thesis}. An extensive investigation of setoids
-can be found in \cite{barthe2003setoids}. Maetti considers extensions
+PhD dissertation~\cite{hofmann1995thesis}. An extensive investigation of setoids
+can be found in~\cite{barthe2003setoids}. Maetti considers extensions
 of both intensional and extensional Type Theory by quotient types
 \cite{maietti1999effective}. Courtieu considers an extension of CIC
 (an intensional type theory) by \emph{normalized types} corresponding
-to our definable quotients \cite{courtieulcs01}. Nogin describes a
+to our definable quotients~\cite{courtieulcs01}. Nogin describes a
 modular implementation of quotient types in NuPRL (an extensional Type
-Theory) \cite{Nogin02quotienttypes}.
+Theory)~\cite{Nogin02quotienttypes}.
 
 \subsection{Main results}
 \label{sec:main-results}
 
 We develop the notion of a definable quotient within an existing
-intensional type theory instead of an extension by a new type former.
+intensional Type Theory instead of an extension by a new type former.
 This enables us to formally verify a number of basic results in Agda
 (see appendix), such as the relation between exact quotients,
 coequalizers and definable quotients. We give a number of examples for
@@ -350,14 +362,14 @@ definition. All the concepts have been formalized in Agda (see Appendix~\ref{app
 Given a setoid $(A,\sim)$,  a \emph{prequotient} $(Q,\class\dotph,\sound)$ over that setoid consists in
 \begin{enumerate}
 \item \label{enum:Q} a set $Q$,
-\item \label{enum:box}a function $\class\dotph\colon A \to Q$,
+\item \label{enum:box}a function $\class\dotph: A \to Q$,
 \item \label{enum:sound} a proof $\sound$ that  the function $\class\dotph$ is compatible with the relation $\sim$,
 that is \[\sound\colon (a,b : A) \to a\sim b \to [a] = [b],\]
 \end{enumerate}
 Such a prequotient is a \emph{quotient} if  we also have\begin{enumerate}
 \setcounter{enumi}{3}
 \item \label{enum:elim}
-for any $B\colon Q\to\Set$, an eliminator
+for any $B: Q\to\Set$, an eliminator
  \begin{align*}
  \qelim_B\,\,:\,\,\,&(f\colon (a:A) \to B\,\class a) \\
         {\to}\, &((p:a\sim b) \to f\,a \simeq_{\sound\,p}f\,b)\\
@@ -439,7 +451,7 @@ A \emph{definable quotient} is a prequotient $(Q, \class{\dotph}, \sound)$ on a 
 \end{definition}
 
 This is exactly the specification of  $\class{-}$ as a
-normalisation function with respect to to $\emb$ (see \cite{txa:jtait}).
+normalisation function with respect to $\emb$ (see~\cite{txa:jtait}).
 
 \begin{proposition}\label{prop:definableimpliesexact}
 All definable quotients are exact quotients.
