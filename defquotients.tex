@@ -224,14 +224,14 @@ the universe of small sets.%  Indeed, all our definitions are universe
 We
 write $\Prop$ for the subuniverse of propositions that are sets which
 (extensionally) have at most one inhabitant (proof-irrelevance). We assume that $\Prop$
-contains the equality type $a = b : \Prop$ for any $a,b : A : \Set$
+contains the equality type $a = b : \Prop$ for any $a,b : A : \Set$,
 \footnote{This is consistent with Voevodsky's univalence interpretation of type theory \cite{voevodsky}, if one identify sets with types whose h-level is 2.}  
 and is closed under
 universal ($\forall$) and existential ($\exists$)
 quantification. While $\forall$ exactly corresponds to a $\Pi$-type,
 $\exists$ is the squashing \cite{mendler1990quotient} of the
-corresponding $\Sigma$-type.  $\Prop$ is also closed under conjunction
-$\wedge$ which is interpreted as a $\Sigma$-type where both components
+corresponding $\Sigma$-type.  $\Prop$ is also closed under implication ($\implies$), conjunction
+($\wedge$) which is interpreted as a $\Sigma$-type where both components
 are propositional (and can be dependent) while $P \vee Q$ can be
 defined using $\exists$ and $\Bool$.  Subset comprehension over a
 predicate $P : A \to \Prop$  is interpreted as the corresponding $\Sigma$-type,
@@ -245,7 +245,7 @@ we write $b \simeq_{p} b'$ for  the \emph{heterogeneous equality} $\subst\,B\,p\
 our examples do not require functional extensionality, but if we do we
 assume that it is present in form of an uninterpreted constant $\Ext : (x : A) \to f\,x = g\,x \to f = g$,
 which is justified by Hofmann's observation that extensional Type
-Theory is a conservative extension of the theory considered in the present paper~\cite{hofmann1995thesis}. Alternatively we can eliminate $\Ext$ as suggested in
+Theory is a conservative extension of the theory considered in the present paper~\cite{hofmann1995thesis}. Alternatively, we can eliminate $\Ext$ as suggested in
 \cite{alti:lics99}. 
 % which can then also be extended to quotient types.
 
@@ -628,7 +628,9 @@ Q &= \set{(m , s) : \List A\mid  \forall i,j:\Fin\,m \cdot i\leq j\implies s\,i 
 \end{align*}
 where $\nub:\List\,A\to\List\,A$ takes advantage of the decidability of equality on $A$ to remove duplicates in a list.
 
-However, there is no hope to define   $\class\dotph : \List\,A \to Q$ when equality on $A$ is not decidable, as  $a=b$ is equivalent to $\length\,[(a,b)] = 1$, which is decidable.
+In the case of $A = \N \to \N$ we can use a technique similar to the case for multisets to define a quotient. However, it is not clear how to do this for higher order cases even when assuming continuity.
+
+% However, there is no hope to define   $\class\dotph : \List\,A \to Q$ when equality on $A$ is not decidable, as  $a=b$ is equivalent to $\length\,[(a,b)] = 1$, which is decidable.
 
 
 

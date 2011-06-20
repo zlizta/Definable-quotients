@@ -1,4 +1,3 @@
-
 \def\textmu{}
 %include agda.fmt
 
