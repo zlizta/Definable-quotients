@@ -4,8 +4,8 @@
 \hfuzz 0.1pt
 \overfullrule=15pt
 \brokenpenalty=10000
-\newcommand{\todo}[1]%{}%{\textcolor{red}{TO~DO:~#1}}
-
+\newcommand{\todo}[1]{\textcolor{red}{TO~DO:~#1}}
+\newcommand{\amend}[2][]{\textcolor{blue}{#2}}
 
 \usepackage{color}
 \usepackage{amsmath}
@@ -284,7 +284,7 @@ we are going to use subsequently.
 \begin{definition}
 A setoid $(A,\sim)$ is a set $A$ equipped with an equivalence relation ${\,\sim\,}\colon A \to A \to \Prop$.
 \end{definition}
-\todo{words}
+\todo{Comment a bit on this definition...}
 \subsection{Examples}\label{sec:setoids:examples}
 \subsubsection*{Integers}
 The integers can be viewed as the setoid $(\Z_0=\N\times\N,\sim)$ where $(a,b)\sim(c,d)$ if{f} $a+d=c+b$ reflecting the idea that $(a,b)$ represents the integer $a-b$.
@@ -417,13 +417,14 @@ Given two morphisms $g,h : S\to A$, a \emph{coequalizer} of $g$ and $h$ is a mor
 S\ar@<0.5ex>[r]^g\ar@<-0.5ex>[r]_h& A\ar[r]^{\class\dotph}\ar[dr]_{f} & Q\ar@{-->}[d]^{\dlift f}\\
 &&X
 }\]
-A coequalizer is \emph{exact} if
+A coequalizer is \emph{exact} if \amend{the square}
 \[\xymatrix{
 S\pullbackcorner\ar[r]^g\ar[d]_h & A\ar[d]^{\class\dotph} \\
 A\ar[r]_{\class\dotph} & Q
 }\]
-and it is \emph{split} if the morphism $\class\dotph$ is a split epi, that is if it has a right inverse $\emb : Q \to A$.
-\end{definition}
+\amend{is a pullback} and it is \emph{split} if the morphism $\class\dotph$ is a split epi, that is if it has a right inverse $\emb : Q \to A$.
+\amend{(Note that a coequalizer is always epi, that is right-cancellable with respect to composition.)}
+{\end{definition}
 
 We observe that there is an exact correspondence between quotients and coequalizers:
 \begin{proposition} In the context of Definition~\ref{def:coequalizer} above :
