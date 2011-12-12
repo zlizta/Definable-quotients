@@ -145,7 +145,7 @@ School of Computer Science, University of Nottingham, Ningbo Campus, 199 Taikang
 \maketitle
 
 \begin{abstract}
-  In Type Theory, a quotient set is a set representing a setoid.
+  In type theory, a quotient set is a set representing a setoid.
   Categorically, this corresponds to the concept of an exact
   coequalizer. In the present paper we consider the case of a
   \emph{\definable quotients}, where the quotient set arises as the
@@ -154,11 +154,16 @@ School of Computer Science, University of Nottingham, Ningbo Campus, 199 Taikang
   \definable quotients and notice that it is preferable to use the
   setoid structure when reasoning about the quotient set. We also show
   that there are examples where setoids cannot be represented in
-  ordinary Type Theory such as the real numbers or the partiality
+  ordinary type theory such as the real numbers or the partiality
   monad under the assumption that local continuity is admissible in
-  Type Theory.
+  type theory.
 \end{abstract}
 
+\todo{Add page numbers but I don't know how to do that.[Thomas]}
+
+\todo{If for MFPS 28, change document class anyway. [Thomas]}
+
+\todo{For the moment, occurrences of definable have been replaced by commands "definable", "adefinable", "Adefinable" --- see declarations at the top of the {\LaTeX } file --- which write "effective" instead. When everything has been thoroughly checked, replace these commands by the actual desired word.}
 \section{Introduction}\label{sec:introduction}
 
 In Intensional Type Theory~\cite{nordstrom1990programming}, quotient
@@ -168,7 +173,7 @@ relation. However, the disadvantage of using setoids is that we have
 now to lift any operation on sets to an operation on setoids. E.g. we need lists as
 an operation on setoids and not just on sets. Moreover, setoids are
 not safe in the sense that any consumer of a setoid may access the
-underlying representation. One way out is to use a Type Theory which
+underlying representation. One way out is to use a type theory which
 supports genuine quotients such as the forthcoming Epigram 2 system (based on
 \cite{alti:ott-conf}).  However, in many cases this is not
 necessary because the quotient is actually \definable. This is the
@@ -181,7 +186,7 @@ representing the same difference, that is  $(a,b)\sim(c,d)$ if{f} $a+d=c+b$.
 However, as it is well known, using a setoid here is unnecessary; we
 can use a set, namely $\N+\N$ where the first injection represents the
 positive numbers including $0$ whereas the second injection represents
-the proper negative numbers. We can now define operations like
+the proper negative numbers~(Section~\ref{sec:setoids:examples:integers}). We can now define operations like
 addition and multiplication and show algebraic properties,
 such as verifying that the structure is a ring. However, this is
 quite complicated and uses many unnecessary case
@@ -193,7 +198,7 @@ of the natural numbers.
 Hence we propose to use both the setoid
 and the associated set, but to use the setoid structure to define
 operations on the quotient set and to reason about it. In the present
-paper we introduce the formal framework to do this, i.e. we give the definitions of  quotient as well as definable quotients and show the
+paper we introduce the formal framework to do this, i.e. we give the definitions of  quotient as well as \definable quotients and show the
 equivalence of alternative definitions of quotients. We also verify that quotients
 correspond precisely to the notion of coequalizers, and that an
 additional condition, exactness, can equivalently be expressed in Type
@@ -209,10 +214,13 @@ suggest that it pays off to move to a type theory where all quotient
 types exist --- i.e. the type theory corresponding to a Heyting
 pretopos~\cite{maietti1999effective}. In this context our work can be
 seen as an exploration of the use of quotients within the settings of
-Intensional Type Theory.
+intensional type theory.
 
-\subsection{Type Theory basics}
+\subsection{Type theory basics}
 \label{sec:type-theory-basics}
+
+\todo{Explain what Prop is more explicitly and point out the difference with Prop in COQ.}
+
 
 We use standard type theoretic notation, inspired by Agda
 \cite{norell-phd}. We write $(x : A) \to B$ for dependent function
@@ -228,7 +236,7 @@ the universe of small sets.%  Indeed, all our definitions are universe
 We
 write $\Prop$ for the subuniverse of propositions that are sets which
 (extensionally) have at most one inhabitant (proof-irrelevance). We assume that $\Prop$
-contains the equality type $a = b : \Prop$ for any $a,b : A : \Set$\footnote{This is consistent with Voevodsky's univalence interpretation of Type Theory~\cite{voevodsky}, if one identify sets with types whose h-level is 2.}  
+contains the equality type $a = b : \Prop$ for any $a,b : A : \Set$\footnote{This is consistent with Voevodsky's univalence interpretation of type theory~\cite{voevodsky}, if one identify sets with types whose h-level is 2.}  
 and is closed under
 universal ($\forall$) and existential ($\exists$)
 quantification. While $\forall$ exactly corresponds to a $\Pi$-type,
@@ -245,10 +253,9 @@ implicit arguments and to improve readability, we will even omit the
 declaration of implicitly quantified arguments, assuming that the
 human reader, unlike a machine, can reconstruct those. Given elements $b : B\,a$ and $b' : B\,a'$ with a proof $p : a = a'$,
 we write $b \simeq_{p} b'$ for  the \emph{heterogeneous equality} $\subst\,B\,p\,b \equiv b'$. Most of
-our examples do not require functional extensionality, but if we do we
-assume that it is present in form of an uninterpreted constant $\Ext : (\forall(x : A) \to f\,x = g\,x) \to f = g$,
-which is justified by Hofmann's observation that extensional Type
-Theory is a conservative extension of the theory considered in the present paper~\cite{hofmann1995thesis}. Alternatively, we can eliminate $\Ext$ as suggested in
+our examples do not require functional extensionality, but if we do assume that it is present in form of an \amend[uninterpreted]{\todo{postulated}} constant $\Ext : (\forall(x : A) \to f\,x = g\,x) \to f = g$,
+which is justified by Hofmann's observation that extensional type
+theory is a conservative extension of the theory considered in the present paper~\cite{hofmann1995thesis}. Alternatively, we can eliminate $\Ext$ as suggested in
 \cite{alti:lics99}. 
 % which can then also be extended to quotient types.
 
@@ -261,18 +268,20 @@ Quotient types were introduced by Mendler in
 \cite{mendler1990quotient} and subsequently investigated in Hofmann's
 PhD dissertation~\cite{hofmann1995thesis}. An extensive investigation of setoids
 can be found in~\cite{barthe2003setoids}. Maetti considers extensions
-of both intensional and extensional Type Theory by quotient types
+of both intensional and extensional type theory by quotient types
 \cite{maietti1999effective}. Courtieu considers an extension of CIC
-(an intensional Type Theory) by \emph{normalized types} corresponding
+(an intensional type theory) by \emph{normalized types} corresponding
 to our \definable quotients~\cite{courtieulcs01}. Nogin describes a
-modular implementation of quotient types in NuPRL (an extensional Type
-Theory)~\cite{Nogin02quotienttypes}.
+modular implementation of quotient types in NuPRL (an extensional type
+theory)~\cite{Nogin02quotienttypes}.
+
+\todo{Roland's Do-it-yourself paper may be cited as~\cite{backhouse1989fac}. I have not read anything in it yet but added the paper to our reference folder. See whether you want to cite it. [Thomas] }
 
 \subsection{Main results}
 \label{sec:main-results}
 
 We develop the notion of \adefinable quotient within an existing
-intensional Type Theory instead of an extension by a new type former.
+intensional type theory instead of an extension by a new type former.
 This enables us to formally verify a number of basic results in Agda
 (see appendix), such as the relation between exact quotients,
 coequalizers and \definable quotients. We give a number of examples for
@@ -290,7 +299,7 @@ A setoid $(A,\sim)$ is a set $A$ equipped with an equivalence relation ${\,\sim\
 \end{definition}
 \todo{Comment a bit on this definition...}
 \subsection{Examples}\label{sec:setoids:examples}
-\subsubsection*{Integers}
+\subsubsection*{Integers}\label{sec:setoids:examples:integers}
 The integers can be viewed as the setoid $(\Z_0=\N\times\N,\sim)$ where $(a,b)\sim(c,d)$ if{f} $a+d=c+b$ reflecting the idea that $(a,b)$ represents the integer $a-b$.
 \subsubsection*{Rational numbers}
 The rational numbers can in turn be defined as $(\Z\times\N,\sim)$ where $(x,m)\sim(y,n)$ if{f} $x\times(n+1)=y\times(m+1)$, reflecting that $(x,m)$ represents the quotient $\frac {x}{m+1}$.
@@ -314,7 +323,7 @@ Given a set $A$ , the finite multisets of elements in $A$ is the setoid $(\List 
 \List A &= \Sigma n:\N.\Fin\,n\to A\\
 (m,f)\sim(n,g) &= \exists \varphi : \Fin\,m \to \Fin\,n \cdot\ \Bijection\,\varphi \land g\circ\varphi = f
 \end{align*}
-Notice that $(m,g)\sim(n,f)\implies m=n$ is provable in Type Theory, based on the definition of $\Bijection : (A\to B)\to \Prop$ which we omit here.
+Notice that $(m,g)\sim(n,f)\implies m=n$ is provable in type theory, based on the definition of $\Bijection : (A\to B)\to \Prop$ which we omit here.
 
 \subsubsection*{Finite sets}
 Given a set $A$, the finite sets of elements in $A$ is the setoid $(\List A,{\sim})$ where two lists are equivalent if{f} they contain the same elements :\begin{align*}
@@ -446,7 +455,7 @@ where $\dlift f=\lift f p$ and $p \colon \forall a,b\cdot a\sim b \to f\,a \equi
 
 \section{Definable quotients}\label{sec:defquotients}
 
-We now consider a general construction which allows us to construct quotients in Type Theory.
+We now consider a general construction which allows us to construct quotients in type theory.
 
 \begin{definition}\label{def:defquotients}
 An \emph{\definable quotient} is a prequotient $(Q, \class{\dotph}, \sound)$ on a setoid $(A,\sim)$ along with
@@ -507,7 +516,7 @@ Define $\Q = \set{(x,m):\Z\times\N \,|\, \gcd\, x\,  (m+1) = 1}$ and
 \class{(x,m)}&=\left(\frac{x}{d},\frac{m+1}{d}-1\right) \text{ where } d = \gcd\,x \,(m+1)\\
 \emb \,(x,m) &= (x,m)
 \end{align*}
-Note that the greatest common divisor function ($\gcd$) is definable in Type Theory. Completeness comes from the fact that, for any common divisor $d$ of $x$ and $m+1$, it is provable that $\left(\frac x d,\frac {m+1} d-1\right)\sim\left(x,m\right)$ because $\frac x d \times (m+1) = x\times(\frac {m+1} d - 1+1)$.  Stability holds because whenever $d=\gcd\, x\, (m+1) = 1$, we have $\left(\frac{x}{d},\frac{m+1}{d}-1\right)=(x,m)$.
+Note that the greatest common divisor function ($\gcd$) is definable in type theory. Completeness comes from the fact that, for any common divisor $d$ of $x$ and $m+1$, it is provable that $\left(\frac x d,\frac {m+1} d-1\right)\sim\left(x,m\right)$ because $\frac x d \times (m+1) = x\times(\frac {m+1} d - 1+1)$.  Stability holds because whenever $d=\gcd\, x\, (m+1) = 1$, we have $\left(\frac{x}{d},\frac{m+1}{d}-1\right)=(x,m)$.
 
 
 \subsubsection*{Unordered pairs}
@@ -570,7 +579,7 @@ We define :
                  &\text{let}\,i = \min \{ i : \N\mid f\,\varphi_ i \not= g\,\varphi_ i \}\\
                  &\text{in }\text{if}\, f\,\varphi_ i< g\,\varphi_ i\,\text{ then } f\,u \text{ else } g\,u.
 \end{align*}
-Notice as previously that the definition of $i$ and the test $f\,\varphi_i < g\,\varphi_ i$ do not depend on $u$ but only on $f$ and $g$. Under the assumption that local continuity holds~(see Definition~\ref{def:localcontinuity} below), we know that if $f\,u\not=g\,u$ then there must exist some $\varphi_i$, sharing a long enough prefix with $u$, such that $f\,\varphi_ i \not= g\,\varphi_ i$. However, if one works in a Type Theory where type checking is decidable, local continuity needs to be derivable and not just admissible for the system to accept the above definition. As an alternative, one may  postulate
+Notice as previously that the definition of $i$ and the test $f\,\varphi_i < g\,\varphi_ i$ do not depend on $u$ but only on $f$ and $g$. Under the assumption that local continuity holds~(see Definition~\ref{def:localcontinuity} below), we know that if $f\,u\not=g\,u$ then there must exist some $\varphi_i$, sharing a long enough prefix with $u$, such that $f\,\varphi_ i \not= g\,\varphi_ i$. However, if one works in a type theory where type checking is decidable, local continuity needs to be derivable and not just admissible for the system to accept the above definition. As an alternative, one may  postulate
 \begin{align*}
 &\text{local\_continuity}:\\
 &\forall f,g: (\N\to\N)\to\N\\
@@ -648,9 +657,9 @@ Still, in the case of $A = \N \to \N$ we can use a technique similar to the case
 
 
 \section{Undefinable quotients}
-However there are interesting setoid specifications for which it is impossible to construct \adefinable quotient in Type Theory. Examples include the real numbers and the partiality monad described in Section~\ref{sec:setoids:examples}.
-To prove that these are indeed undefinable quotients, we first establish some properties of Type Theory in a classical metatheory.
-We write $\vdash a : A$ if $a : A$ is derivable in the Type Theory under consideration. In case that $\vdash P : \Prop$, we simply  write $\vdash P$ to indicate that there is a proof $p$ of $P$ which is derivable, that is $\vdash p : P$.
+However there are interesting setoid specifications for which it is impossible to construct \adefinable quotient in type theory. Examples include the real numbers and the partiality monad described in Section~\ref{sec:setoids:examples}.
+To prove that these are indeed undefinable quotients, we first establish some properties of type theory in a classical metatheory.
+We write $\vdash a : A$ if $a : A$ is derivable in the type theory under consideration. In case that $\vdash P : \Prop$, we simply  write $\vdash P$ to indicate that there is a proof $p$ of $P$ which is derivable, that is $\vdash p : P$.
 \begin{definition}[separable elements, discrete sets]\hfill
 \begin{enumerate}
 \item Two elements $a$ and $b$ of a definable set are \emph{separable}, written $a \sep b$, if there exists a definable test $P\colon A\to \Bool$ such that $\vdash P\,a \neq P\,b$.
@@ -701,7 +710,7 @@ For more explanation on the terminology and some motivation, see~\cite[p.208]
    &\text{we have that }{\,\vdash \varphi\, f} = \varphi\, g.
 \end{align*}
 \end{definition}
-Local continuity expresses \amend{a consequence of} the fact that, to compute $\varphi\,f$, the reduction relation defining the operational semantics of Type Theory only inspects finitely many terms of the input sequence $f$. We have stated local continuity in its perhaps simplest form, at a particular type. However, we conjecture that it can be expressed and proved at all types. Whatever the case, it is easily shown that local continuity at type $(\N\to\N)\to\N$  entails local continuity at some other types, in particular at type $(\N\to\Q)\to\Bool$, which we next use to show that no set is a \definable quotient of the setoid $(\R_0,\sim)$ described in Section~\ref{sec:setoids:examples}.
+Local continuity expresses \amend{a consequence of} the fact that, to compute $\varphi\,f$, the reduction relation defining the operational semantics of type theory only inspects finitely many terms of the input sequence $f$. We have stated local continuity in its perhaps simplest form, at a particular type. However, we conjecture that it can be expressed and proved at all types. Whatever the case, it is easily shown that local continuity at type $(\N\to\N)\to\N$  entails local continuity at some other types, in particular at type $(\N\to\Q)\to\Bool$, which we next use to show that no set is a \definable quotient of the setoid $(\R_0,\sim)$ described in Section~\ref{sec:setoids:examples}.
 
 \begin{lemma}(local continuity for tests on rational sequences)
 \label{lem:lcratseq}
@@ -737,17 +746,17 @@ Define $g\,i=\text{if } i\leq n \text{ then } 0_\Q \text{ else } 1_\Q$, such tha
 
 Using very similar reasoning it can be shown that $\N_\bot$ is not definable either.
 
-It seems that all sets definable in ordinary Type Theory~(using only the set formers $\Pi$, $\Sigma$, $=$, finite sets, $W$, see e.g.~\cite{nordstrom1990programming}) are discrete. This observation shows that the reals are not  definable as an exact quotient in ordinary Type Theory while Proposition~\ref{prop:Rnotdiscrete} shows that reals are not a \definable  quotient in any extension of ordinary Type Theory, as long as local continuity is admissible.
+It seems that all sets definable in ordinary type theory~(using only the set formers $\Pi$, $\Sigma$, $=$, finite sets, $W$, see e.g.~\cite{nordstrom1990programming}) are discrete. This observation shows that the reals are not  definable as an exact quotient in ordinary type theory while Proposition~\ref{prop:Rnotdiscrete} shows that reals are not a \definable  quotient in any extension of ordinary type theory, as long as local continuity is admissible.
 
 
 \section{Conclusions}
 \label{sec:conclusions}
 
 The main result of the present work is that the notion of \adefinable
-quotient in Intensional Type Theory is useful and doesn't require any
+quotient in intensional type theory is useful and doesn't require any
 extension of the theory. We hope that our formalisation of the notion
 and the examples help to popularize this notion among people using
-Type Theory. Some of the examples are maybe surprising, i.e. the
+type theory. Some of the examples are maybe surprising, i.e. the
 possibility to define unordered pairs and multisets for 1st order
 function types, even though the order (and equality) of the elements
 are undecidable. Assuming an internal proof of local continuity, this
@@ -759,7 +768,7 @@ while the notion of \adefinable quotient is useful, we would also like
 to be able to use quotient sets which do not fall in this category.
 In the present work we have only covered the notion of a quotient by a
 propositional family. It seems interesting, especially in the
-context of higher dimensional Type Theory inspired by Voevodsky's proposal~\cite{voevodsky}, to consider
+context of higher dimensional type theory inspired by Voevodsky's proposal~\cite{voevodsky}, to consider
 non-propositional quotients, e.g. the quotient of a set by a
 groupoid. An example for \adefinable quotient of this kind would be
 the quotient of a non-canonical notion of finite sets by isomorphism.
