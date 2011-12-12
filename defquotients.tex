@@ -7,10 +7,14 @@
 
 \newcommand{\todo}[1]{\textcolor{red}{TO~DO:~#1}}
 \newcommand{\amend}[2][]{\textcolor{blue}{#2}}
-\newcommand{\definable}{\amend[]{\textbf{effective }}}
-\newcommand{\Definable}{\amend[]{\textbf{Effective }}}
-\newcommand{\adefinable}{\amend[]{\textbf{an effective }}}
-\newcommand{\Adefinable}{\amend[]{\textbf{An effective }}}
+\newcommand{\definable}{\amend[]{\textbf{definable }}}
+\newcommand{\Definable}{\amend[]{\textbf{Definable }}}
+\newcommand{\adefinable}{\amend[]{\textbf{a definable }}}
+\newcommand{\Adefinable}{\amend[]{\textbf{A definable }}}
+
+\newcommand{\effective}{\amend[]{\textbf{effective }}}
+\newcommand{\effectiveness}{\amend[]{\textbf{effectiveness }}}
+
 \usepackage{color}
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -95,7 +99,7 @@
 \DeclareMathOperator{\sound}{sound}
 \DeclareMathOperator{\qelimbeta}{qelim-\beta}
 \DeclareMathOperator{\qind}{qind}
-\DeclareMathOperator{\exact}{exact}
+\DeclareMathOperator{\exact}{effective}
 \DeclareMathOperator{\subst}{subst}
 \DeclareMathOperator{\emb}{emb}
 \DeclareMathOperator{\complete}{complete}
@@ -163,7 +167,7 @@ School of Computer Science, University of Nottingham, Ningbo Campus, 199 Taikang
 
 \todo{If for MFPS 28, change document class anyway. [Thomas]}
 
-\todo{For the moment, occurrences of definable have been replaced by commands "definable", "adefinable", "Adefinable" --- see declarations at the top of the {\LaTeX } file --- which write "effective" instead. When everything has been thoroughly checked, replace these commands by the actual desired word.}
+
 \section{Introduction}\label{sec:introduction}
 
 In Intensional Type Theory~\cite{nordstrom1990programming}, quotient
@@ -201,8 +205,8 @@ operations on the quotient set and to reason about it. In the present
 paper we introduce the formal framework to do this, i.e. we give the definitions of  quotient as well as \definable quotients and show the
 equivalence of alternative definitions of quotients. We also verify that quotients
 correspond precisely to the notion of coequalizers, and that an
-additional condition, exactness, can equivalently be expressed in Type
-Theory or in category theory. We present a number of examples for
+additional condition, \effectiveness, can equivalently be expressed in type
+theory or in category theory. We present a number of examples for
 \definable quotients which are the base of a library of \definable
 quotients.
 
@@ -283,7 +287,7 @@ theory)~\cite{Nogin02quotienttypes}.
 We develop the notion of \adefinable quotient within an existing
 intensional type theory instead of an extension by a new type former.
 This enables us to formally verify a number of basic results in Agda
-(see appendix), such as the relation between exact quotients,
+(see appendix), such as the relation between \effective quotients,
 coequalizers and \definable quotients. We give a number of examples for
 \definable quotients, some which might seem surprising such as the presentation
 of multisets over higher order types. Finally, we show that certain
@@ -366,11 +370,11 @@ See~\cite{capretta:2005}.
 
 \section{Quotients and coequalizers}\label{sec:quotients}
 
-We define what an (exact) quotient over a setoid is and relate this to
+We define what an (\effective) quotient over a setoid is and relate this to
 an alternative definition given by Hofmann and to the categorical
 definition. All the concepts have been formalized in Agda (see Appendix~\ref{app:agda:quotients}).
 
-\begin{definition}[prequotient, quotient, exact quotient]
+\begin{definition}[prequotient, quotient, \effective quotient]
 \label{def:quotient}
 
 \noindent
@@ -393,7 +397,7 @@ for any $B: Q\to\Set$, an eliminator
 such that $\qelimbeta : \qelim_B\,f \,p\,\class a\equiv f\,a$.
 
 \end{enumerate}
-Finally, such a quotient is \emph{exact} if additionally
+Finally, such a quotient is \emph{\effective} if additionally
 we have
 a proof\begin{enumerate}
 \setcounter{enumi}{4}
@@ -424,13 +428,17 @@ We refer to Appendix~\ref{app:agda:quotients} for a formal proof of Proposition~
 \bigskip
 
 Quotients correspond to coequalizers in category theory. Let us recall the definition.
+
+\todo{Reviewer 1: p.6 definition 4. and proposition 5 are ill posed: you need
+to specify in WHAT CATEGORY you are working in. Please specify also the notion of categorical equivalence relation,
+and for it you better work in a category closed under pullbacks.}
 \begin{definition}\label{def:coequalizer}
 Given two morphisms $g,h : S\to A$, a \emph{coequalizer} of $g$ and $h$ is a morphism $\class\dotph:A\to Q$ such that for any $f:A\to X$ satisfying $f \circ g = f \circ h$, there exists a unique $\dlift f$ such that
 \[\xymatrix{
 S\ar@<0.5ex>[r]^g\ar@<-0.5ex>[r]_h& A\ar[r]^{\class\dotph}\ar[dr]_{f} & Q\ar@{-->}[d]^{\dlift f}\\
 &&X
 }\]
-A coequalizer is \emph{exact} if \amend{the square}
+A coequalizer is \emph{\effective} if \amend{the square}
 \[\xymatrix{
 S\pullbackcorner\ar[r]^g\ar[d]_h & A\ar[d]^{\class\dotph} \\
 A\ar[r]_{\class\dotph} & Q
@@ -443,8 +451,8 @@ We observe that there is an exact correspondence between quotients and coequaliz
 \begin{proposition} In the context of Definition~\ref{def:coequalizer} above :
 \begin{enumerate}
 \item $Q$ is the quotient on $(S,\sim)$ where $s\sim s'$ if and only if $g\,s=h\,s'$.
-This quotient is exact if{f} the coequalizer is exact.
-\item Let $R$ be $\Sigma a,a':A,a\sim a'$ and $\pi_0,\pi_1 : R\to A$ the projection functions. The quotient for $(R,\sim)$ is then the coequalizer for those projections and it is exact if and only if the coequalizer is exact.
+This quotient is \effective if{f} the coequalizer is \effective.
+\item Let $R$ be $\Sigma a,a':A,a\sim a'$ and $\pi_0,\pi_1 : R\to A$ the projection functions. The quotient for $(R,\sim)$ is then the coequalizer for those projections and it is \effective if and only if the coequalizer is \effective.
 \[\xymatrix{
 R\ar@<0.5ex>[r]^{\pi_0}\ar@<-0.5ex>[r]_{\pi_1}& A\ar[r]^{\class\dotph}\ar[dr]_{f} & Q\ar@{-->}[d]^{\dlift f}\\
 &&X
@@ -470,7 +478,7 @@ This is exactly the specification of  $\class{-}$ as a
 normalisation function with respect to $\emb$ (see~\cite{txa:jtait}).
 
 \begin{proposition}\label{prop:definableimpliesexact}
-All \definable quotients are exact quotients.
+All \definable quotients are \effective quotients.
 \end{proposition}
 \begin{proof}
 
@@ -481,7 +489,7 @@ To derive $\qind$, let $f:(a\colon A)\to B\,\class a$ and $q:Q$. Since $ \class{
 It follows from Proposition~\ref{prop:nlifteq} that this defines a quotient.
 
 Finally, from $\class a \equiv \class b$
-we obtain by completeness that $a\sim\emb(\class a)\equiv\emb(\class b)\sim b$ and hence $a\sim b$. That is, the quotient is exact.
+we obtain by completeness that $a\sim\emb(\class a)\equiv\emb(\class b)\sim b$ and hence $a\sim b$. That is, the quotient is \effective.
 \end{proof}
 
 
@@ -735,7 +743,7 @@ that is $\vdash(\iota\circ \varphi)\,f = (\iota\circ \varphi)\,g$, by definition
 \begin{proposition}\label{prop:Rnotdiscrete} In the presence of local continuity, no set $R$ is a \definable quotient of the setoid $(\R_0,\sim)$.
 \end{proposition}
 \begin{proof}
-Suppose for the sake of contradiction that $(R,\class\dotph, \sound)$ is a \definable quotient of the setoid $(\R_0,\sim)$. The function $\class\dotph: \R_0\to R$ is a split epi, as it has a right inverse $\emb$, and hence by propositions~\ref{prop:RZdiscrete} and~\ref{prop:splitepidiscrete}, the set $R$ is discrete. By exactness of the quotient,  we have that $\class{\vec 0} \neq \class{\vec 1}$ where $\vec 0$ and $\vec 1$ are  elements of $\R_0$ representing the Cauchy sequences $\lambda x.0$ and $\lambda x.1$, respectively. By discreteness of $R$, there exists a definable function $P:R\to\Bool$
+Suppose for the sake of contradiction that $(R,\class\dotph, \sound)$ is a \definable quotient of the setoid $(\R_0,\sim)$. The function $\class\dotph: \R_0\to R$ is a split epi, as it has a right inverse $\emb$, and hence by propositions~\ref{prop:RZdiscrete} and~\ref{prop:splitepidiscrete}, the set $R$ is discrete. By \effectiveness of the quotient,  we have that $\class{\vec 0} \neq \class{\vec 1}$ where $\vec 0$ and $\vec 1$ are  elements of $\R_0$ representing the Cauchy sequences $\lambda x.0$ and $\lambda x.1$, respectively. By discreteness of $R$, there exists a definable function $P:R\to\Bool$
 such that $\vdash P\class{\vec 0}\neq P\class{\vec 1 }$. It follows that the  function $P^\prime:\R_0\to\Bool$ defined by $P^\prime\,s = P\class{s}$ has the property that $\vdash P^\prime\,\vec0\neq P^\prime\,\vec 1$ and that $P^\prime$ is closed under $\sim$. By local continuity at type $(\N\to\Q)\to\Bool$ (Lemma~\ref{lem:lcratseq}) and by proof irrelevance in the second component of the pairs in $\R_0$, there is a number $n_P$  such that, for all definable sequences $f\colon\N\to\Q$,
 \[
 \left(\forall i\leq n_P,\, \vdash f\,i = 0_\Q\right)\text{ entails } P^\prime \, f = P^\prime\,(\pi_0\,\vec0).
@@ -746,7 +754,7 @@ Define $g\,i=\text{if } i\leq n \text{ then } 0_\Q \text{ else } 1_\Q$, such tha
 
 Using very similar reasoning it can be shown that $\N_\bot$ is not definable either.
 
-It seems that all sets definable in ordinary type theory~(using only the set formers $\Pi$, $\Sigma$, $=$, finite sets, $W$, see e.g.~\cite{nordstrom1990programming}) are discrete. This observation shows that the reals are not  definable as an exact quotient in ordinary type theory while Proposition~\ref{prop:Rnotdiscrete} shows that reals are not a \definable  quotient in any extension of ordinary type theory, as long as local continuity is admissible.
+It seems that all sets definable in ordinary type theory~(using only the set formers $\Pi$, $\Sigma$, $=$, finite sets, $W$, see e.g.~\cite{nordstrom1990programming}) are discrete. This observation shows that the reals are not  definable as an \effective quotient in ordinary type theory while Proposition~\ref{prop:Rnotdiscrete} shows that reals are not a \definable  quotient in any extension of ordinary type theory, as long as local continuity is admissible.
 
 
 \section{Conclusions}
@@ -763,7 +771,7 @@ are undecidable. Assuming an internal proof of local continuity, this
 can be even extended beyond 1st order. We also show that under the
 assumption of local continuity the set of real numbers cannot be
 defined by normalisation. This also extends to other examples such as
-the partiality monad. These natural examples strongly suggest that
+the partiality monad \todo{Reviewer 3: either weaken claim or show something about the partiality monad [Thomas]}. These natural examples strongly suggest that
 while the notion of \adefinable quotient is useful, we would also like
 to be able to use quotient sets which do not fall in this category.
 In the present work we have only covered the notion of a quotient by a
