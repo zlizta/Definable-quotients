@@ -1,24 +1,31 @@
 % &latex
-\documentclass[envcountsame]{llncs}
-% Editing and debugging
+\documentclass[submission,copyright,creativecommons]{eptcs}
+\providecommand{\event}{MSFP 2012} % Name of the event you are submitting to
+\usepackage{breakurl}              % Not needed if you use pdflatex only.
 
-% For page number - Nuo
-\pagestyle{headings} 
 
+% Editing and debugging -==========================================
 \hfuzz 0.1pt
 \overfullrule=15pt
 \brokenpenalty=10000
 
-\newcommand{\todo}[1]{\textcolor{red}{TO~DO:~#1}}
-\newcommand{\remarks}[1]{\textcolor{blue}{Remark:~#1}}
+\usepackage{ifthen}
+\newboolean{REVIEW}
+\newcommand{\FINAL}{\setboolean{REVIEW}{false}}
+\newcommand{\REVIEW}{\setboolean{REVIEW}{true}}
+\newcommand{\IFREVIEW}[2]{\ifthenelse{\boolean{REVIEW}}{#1}{#2}}
+% !!!!!!!!!!!!!!!!!!
+\REVIEW  % COMMENT OUT TO REMOVE reviewing formatting and comments
+% !!!!!!!!!!!!!!!!!!
+\newcommand{\todo}   [1]{\IFREVIEW{\textcolor{red} {TO~DO:~#1 }}{}}
+\newcommand{\remarks}[1]{\IFREVIEW{\textcolor{blue}{Remark:~#1}}{}}
 \newcommand{\amend}[2][]{\textcolor{blue}{#2}}
-\newcommand{\definable}{\amend[]{\textbf{definable }}}
-\newcommand{\Definable}{\amend[]{\textbf{Definable }}}
-\newcommand{\adefinable}{\amend[]{\textbf{a definable }}}
-\newcommand{\Adefinable}{\amend[]{\textbf{A definable }}}
+\newcommand{\definable} {\IFREVIEW{\textbf{\textcolor{blue}{definable }}}{definable }}
+\newcommand{\adefinable}{\IFREVIEW{\textbf{\textcolor{blue}{a definable }}}{a definable }}
 
-\newcommand{\effective}{\amend[]{\textbf{effective }}}
-\newcommand{\effectiveness}{\amend[]{\textbf{effectiveness }}}
+\newcommand{\effective}{\IFREVIEW{\textbf{\textcolor{blue}{effective }}}{effective }}
+\newcommand{\effectiveness}{\IFREVIEW{\textbf{\textcolor{blue}{effectiveness }}}{effectiveness }}
+% End editing and debugging ========================================
 
 \usepackage{color}
 \usepackage{amsmath}
@@ -28,6 +35,11 @@
 \usepackage{Appendix/mylhstex}
 
 
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{proof}{Proof}
+\newtheorem{lemma}{Lemma}
 
 % Used for Agda prettty printing with lhs2tex --agda (with the %include agda.fmt directive)
 \RequirePackage[T1]{fontenc}
@@ -43,11 +55,11 @@
 % ---------
 % save and then undefine the conflicting command \vec
 % we need \makeatletter because \@undefined uses the special @ character.
-\newcommand{\mydummy}{}                % change if you need 
-\makeatletter
-\let\vec\mydummy                       % make \vec do same as \mydummy
-\let\vec\@undefined                    % undefine \proof
-\makeatother
+%\newcommand{\mydummy}{}                % change if you need 
+%\makeatletter
+%\let\vec\mydummy                       % make \vec do same as \mydummy
+%\let\vec\@undefined                    % undefine \proof
+%\makeatother
 \usepackage{MnSymbol}
 % ---------
 
@@ -138,20 +150,33 @@
 \newcommand{\pullbackcorner}[1][dr]{\save*!/#1-1.2pc/#1:(-1,1)@^{|-}\restore}
 \newcommand{\pushoutcorner} [1][dr]{\save*!/#1+1.2pc/#1:(1,-1)@^{|-}\restore}
 
+\newcommand{\csnott}{School of Computer Science\\University of Nottingham\\Jubilee Campus, Wollaton Road, Nottingham, NG8 1BB, UK}
+\newcommand{\csningbo}{School of Computer Science\\University of Nottingham\\Ningbo Campus, 199 Taikang East Road, Ningbo, 315100, China}
 % FRONTMATTER
-\title{\Definable Quotients in Type Theory}
-\author{Thorsten Altenkirch     \inst{1}
-   \and Thomas   Anberr\'{e}e   \inst{2}
-   \and Nuo      Li             \inst{2}}
-\institute{
-School of Computer Science, University of Nottingham, Jubilee Campus, Wollaton Road, Nottingham, NG8 1BB, UK
+\title{Definable Quotients in Type Theory}
+\author{
+Thorsten Altenkirch     
+\institute{\csnott}
+\email{txa@cs.nott.ac.uk}  
 \and
-School of Computer Science, University of Nottingham, Ningbo Campus, 199 Taikang East Road, Ningbo, 315100, China}
+Thomas   Anberr\'{e}e
+\institute{\csningbo}
+\email{thomas.anberree@nottingham.edu.cn}
+\and Nuo      Li             
+\institute{\csnott}
+\email{nzl@cs.nott.ac.uk}
+}%END AUTHOR
+\def\titlerunning{Definable Quotients in Type Theory}
+\def\authorrunning{T. Altenkirch, T. Anberr\'{e}e \& Nuo Li}
 % END FRONTMATTER
 
 \begin{document}
 
+
 \maketitle
+
+\IFREVIEW{\textcolor{red}{\begin{Huge}REVIEW MODE\end{Huge}
+Comment out the command $\backslash$REVIEW before submitting. }}{}
 
 \begin{abstract}
   In type theory, a quotient set is a set representing a setoid.
@@ -168,13 +193,7 @@ School of Computer Science, University of Nottingham, Ningbo Campus, 199 Taikang
   type theory.
 \end{abstract}
 
-\todo{Add page numbers but I don't know how to do that.[Thomas]}
-
-\remarks{I have added page numbers to heading [Nuo]}
-
-\todo{If for MFPS 28, change document class anyway. [Thomas]}
-
-
+% =======================================================================
 \section{Introduction}\label{sec:introduction}
 
 In Intensional Type Theory~\cite{nordstrom1990programming}, quotient
@@ -282,7 +301,7 @@ can be found in~\cite{barthe2003setoids}. Maetti considers extensions
 of both intensional and extensional type theory by quotient types
 \cite{maietti1999effective}. Courtieu considers an extension of CIC
 (an intensional type theory) by \emph{normalized types} corresponding
-to our \definable quotients~\cite{courtieulcs01}. Nogin describes a
+to our \definable quotients~\cite{courtieu2001lncs}. Nogin describes a
 modular implementation of quotient types in NuPRL (an extensional type
 theory)~\cite{Nogin02quotienttypes}.
 
@@ -302,6 +321,23 @@ coequalizers and \definable quotients. We give a number of examples for
 of multisets over higher order types. Finally, we show that certain
 quotient types are not \definable quotients in our sense.
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% =======================================================================
 \section{Setoids}\label{sec:setoids}
 
 We review the notion of a setoid and give a number of examples which
@@ -310,6 +346,7 @@ we are going to use subsequently.
 \begin{definition}
 A setoid $(A,\sim)$ is a set $A$ equipped with an equivalence relation ${\,\sim\,}\colon A \to A \to \Prop$.
 \end{definition}
+
 \todo{Comment a bit on this definition...}
 %\subsection{Examples}\label{sec:setoids:examples}
 \subsection{Integers}\label{sec:setoids:examples:integers}
@@ -349,10 +386,10 @@ For example the lists $[1,2,1]$ and $[1,2]$ are equivalent and both represent th
 \subsection{Partiality monad}\label{sec:setoids:examples:partialitymonad}
 \todo{Give a reference for the name [Thomas].}
 
-\remarks{In \url{http://www.cs.ox.ac.uk/ralf.hinze/WG2.8/22/slides/tarmo.pdf} , 
-it is called delay monad, 
-In \url{http://sneezy.cs.nott.ac.uk/darcs/dtp10/slides/danielsson.pdf},
-it is called partiality monad [Nuo]}
+%\remarks{In \url{http://www.cs.ox.ac.uk/ralf.hinze/WG2.8/22/slides/tarmo.pdf} , 
+%it is called delay monad, 
+%In \url{http://sneezy.cs.nott.ac.uk/darcs/dtp10/slides/danielsson.pdf},
+%it is called partiality monad [Nuo]}
 
 Given a set $A$, the set of partial computations over $A$ is given by
 $(A_{\bot_0},{\sim})$ where $A_{\bot_0}$ is the set of delayed
@@ -385,7 +422,7 @@ See~\cite{capretta:2005}.
 % \laterleft &: d\sqsubseteq d' \to \later\,d \sqsubseteq d'
 % \end{align*}
 % and we define $d\sim d'= d\sqsubseteq d' \wedge d'\sqsubseteq d$ .
-
+% =======================================================================
 \section{Quotients and coequalizers}\label{sec:quotients}
 
 We define what an (\effective) quotient over a setoid is and relate this to
@@ -479,6 +516,7 @@ where $\dlift f=\lift f p$ and $p \colon \forall a,b\cdot a\sim b \to f\,a \equi
 \end{enumerate}
 \end{proposition}
 
+% =======================================================================
 \section{Definable quotients}\label{sec:defquotients}
 
 We now consider a general construction which allows us to construct quotients in type theory.
@@ -676,12 +714,7 @@ where $\nub:\List\,A\to\List\,A$ takes advantage of the decidability of equality
 Notice that there is no hope to define   $\class\dotph : \List\,A \to Q$ when equality on $A$ is not decidable, as  $a=b$ is equivalent to $\length\,[(a,b)] = 1$, which is decidable.
 Still, in the case of $A = \N \to \N$ we can use a technique similar to the case for multisets to define a quotient --- but, as for multisets with $A=(\N\to\N)\to\N$, a convincing explanation will require a separate publication. However, it is not clear how to do this for higher order cases even when assuming continuity.
 
-
-
-
-
-
-
+% =======================================================================
 \section{Undefinable quotients}
 However there are interesting setoid specifications for which it is impossible to construct \adefinable quotient in type theory. Examples include the real numbers and the partiality monad described in Section~\ref{sec:setoids:examples:partialitymonad}.
 To prove that these are indeed undefinable quotients, we first establish some properties of type theory in a classical metatheory.
@@ -736,7 +769,7 @@ For more explanation on the terminology and some motivation, see~\cite[p.208]
    &\text{we have that }{\,\vdash \varphi\, f} = \varphi\, g.
 \end{align*}
 \end{definition}
-Local continuity expresses \amend{a consequence of} the fact that, to compute $\varphi\,f$, the reduction relation defining the operational semantics of type theory only inspects finitely many terms of the input sequence $f$. We have stated local continuity in its perhaps simplest form, at a particular type. However, we conjecture that it can be expressed and proved at all types. Whatever the case, it is easily shown that local continuity at type $(\N\to\N)\to\N$  entails local continuity at some other types, in particular at type $(\N\to\Q)\to\Bool$, which we next use to show that no set is a \definable quotient of the setoid $(\R_0,\sim)$ described in Section~\ref{sec:setoids:examples}.
+Local continuity expresses \amend{a consequence of} the fact that, to compute $\varphi\,f$, the reduction relation defining the operational semantics of type theory only inspects finitely many terms of the input sequence $f$. We have stated local continuity in its perhaps simplest form, at a particular type. However, we conjecture that it can be expressed and proved at all types. Whatever the case, it is easily shown that local continuity at type $(\N\to\N)\to\N$  entails local continuity at some other types, in particular at type $(\N\to\Q)\to\Bool$, which we next use to show that no set is a \definable quotient of the setoid $(\R_0,\sim)$ described in Section~\ref{sec:setoids:examples:reals}.
 
 \begin{lemma}(local continuity for tests on rational sequences)
 \label{lem:lcratseq}
@@ -775,6 +808,9 @@ Using very similar reasoning it can be shown that $\N_\bot$ is not definable eit
 It seems that all sets definable in ordinary type theory~(using only the set formers $\Pi$, $\Sigma$, $=$, finite sets, $W$, see e.g.~\cite{nordstrom1990programming}) are discrete. This observation shows that the reals are not  definable as an \effective quotient in ordinary type theory while Proposition~\ref{prop:Rnotdiscrete} shows that reals are not a \definable  quotient in any extension of ordinary type theory, as long as local continuity is admissible.
 
 
+
+
+% =======================================================================
 \section{Conclusions}
 \label{sec:conclusions}
 
@@ -800,7 +836,10 @@ groupoid. An example for \adefinable quotient of this kind would be
 the quotient of a non-canonical notion of finite sets by isomorphism.
 
 \bibliographystyle{plain}
+%\bibliographystyle{eptcs} % COULD NOT MAKE IT WORK
 \bibliography{biblio,alti}
+
+% ===================================================================
 
 \appendix
 
@@ -833,9 +872,11 @@ Table~\ref{tab:phi} shows the prefix of the first 21 sequences.
 Here are complete definitions written in the programming language Haskell. The first version is perhaps the easiest to understand but is given in terms of lists. The second version is a direct translation of the former in the language of functions directly. Finally, the third version is more direct and perhaps easier to read for some people.
 
 
-\input{Appendix/SeqEnum}
-
+%\input{Appendix/SeqEnum}
 \end{document}
+
+
+
 
 
 
