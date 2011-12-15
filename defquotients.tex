@@ -249,7 +249,7 @@ intensional type theory.
 \subsection{Type theory basics}
 \label{sec:type-theory-basics}
 
-\todo{Explain what Prop is more explicitly and point out the difference with Prop in COQ.}
+%\todo{Explain what Prop is more explicitly and point out the difference with Prop in COQ.}
 
 
 We use standard type theoretic notation, inspired by Agda
@@ -265,7 +265,10 @@ the universe of small sets.%  Indeed, all our definitions are universe
 % polymorphic and could have taken place in any (larger) universe.  
 We
 write $\Prop$ for the subuniverse of propositions that are sets which
-(extensionally) have at most one inhabitant (proof-irrelevance). We assume that $\Prop$
+(extensionally) have at most one inhabitant. That is our notion of
+$\Prop$ is basically Voevodsky's HProp \cite{voevodsky} and not Coq's Prop. We do not
+assume that $\Prop$ is impredicative.
+ We assume that $\Prop$
 contains the equality type $a = b : \Prop$ for any $a,b : A : \Set$\footnote{This is consistent with Voevodsky's univalence interpretation of type theory~\cite{voevodsky}, if one identify sets with types whose h-level is 2.}  
 and is closed under
 universal ($\forall$) and existential ($\exists$)
@@ -427,7 +430,12 @@ See~\cite{capretta:2005}.
 
 We define what an (\effective) quotient over a setoid is and relate this to
 an alternative definition given by Hofmann and to the categorical
-definition. All the concepts have been formalized in Agda (see Appendix~\ref{app:agda:quotients}).
+definition. We are working in the category of Sets (in the sense of
+Type Theory). However, since we ony use type-theoretic constructions
+our reasoning applies to any model of Type Theory (i.e. locally
+cartesian closed categories with the approporiate coherence properties
+or alternatively Categories with Families).
+All the concepts have been formalized in Agda (see Appendix~\ref{app:agda:quotients}).
 
 \begin{definition}[prequotient, quotient, \effective quotient]
 \label{def:quotient}
@@ -484,9 +492,9 @@ We refer to Appendix~\ref{app:agda:quotients} for a formal proof of Proposition~
 
 Quotients correspond to coequalizers in category theory. Let us recall the definition.
 
-\todo{Reviewer 1: p.6 definition 4. and proposition 5 are ill posed: you need
-to specify in WHAT CATEGORY you are working in. Please specify also the notion of categorical equivalence relation,
-and for it you better work in a category closed under pullbacks.}
+% \todo{Reviewer 1: p.6 definition 4. and proposition 5 are ill posed: you need
+% to specify in WHAT CATEGORY you are working in. Please specify also the notion of categorical equivalence relation,
+% and for it you better work in a category closed under pullbacks.}
 \begin{definition}\label{def:coequalizer}
 Given two morphisms $g,h : S\to A$, a \emph{coequalizer} of $g$ and $h$ is a morphism $\class\dotph:A\to Q$ such that for any $f:A\to X$ satisfying $f \circ g = f \circ h$, there exists a unique $\dlift f$ such that
 \[\xymatrix{
