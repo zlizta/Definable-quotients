@@ -15,7 +15,7 @@
 \newcommand{\REVIEW}{\setboolean{REVIEW}{true}}
 \newcommand{\IFREVIEW}[2]{\ifthenelse{\boolean{REVIEW}}{#1}{#2}}
 % !!!!!!!!!!!!!!!!!!
-\REVIEW  % COMMENT OUT TO REMOVE reviewing formatting and comments
+%\REVIEW  % COMMENT OUT TO REMOVE reviewing formatting and comments
 % !!!!!!!!!!!!!!!!!!
 \newcommand{\todo}   [1]{\IFREVIEW{\textcolor{red} {TO~DO:~#1 }}{}}
 \newcommand{\remarks}[1]{\IFREVIEW{\textcolor{blue}{Remark:~#1}}{}}
@@ -441,7 +441,7 @@ All the concepts have been formalized in Agda (see Appendix~\ref{app:agda:quotie
 \label{def:quotient}
 
 \noindent
-Given a setoid $(A,\sim)$,  a \emph{prequotient} $(Q,\class\dotph,\sound)$ over that setoid consists in
+Given a setoid $(A,\sim)$,  a \emph{prequotient} \\$(Q,\class\dotph,\sound)$ over that setoid consists in
 \begin{enumerate}
 \item \label{enum:Q} a set $Q$,
 \item \label{enum:box}a function $\class\dotph: A \to Q$,
