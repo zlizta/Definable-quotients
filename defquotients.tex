@@ -19,10 +19,10 @@
 % !!!!!!!!!!!!!!!!!!
 \newcommand{\todo}   [1]{\IFREVIEW{\textcolor{red} {TO~DO:~#1 }}{}}
 \newcommand{\remarks}[1]{\IFREVIEW{\textcolor{blue}{Remark:~#1}}{}}
-\newcommand{\amend}[2][]{\textcolor{blue}{#2}}
+\newcommand{\amend}[2][]{\IFREVIEW{\textcolor{blue}{#2}}{#2}}
 \newcommand{\definable} {\IFREVIEW{\textbf{\textcolor{blue}{definable }}}{definable }}
 \newcommand{\adefinable}{\IFREVIEW{\textbf{\textcolor{blue}{a definable }}}{a definable }}
-
+\newcommand{\Adefinable}{\IFREVIEW{\textbf{\textcolor{blue}{A definable }}}{A definable }}
 \newcommand{\effective}{\IFREVIEW{\textbf{\textcolor{blue}{effective }}}{effective }}
 \newcommand{\effectiveness}{\IFREVIEW{\textbf{\textcolor{blue}{effectiveness }}}{effectiveness }}
 % End editing and debugging ========================================
@@ -182,7 +182,7 @@ Comment out the command $\backslash$REVIEW before submitting. }}{}
   In type theory, a quotient set is a set representing a setoid.
   Categorically, this corresponds to the concept of an exact
   coequalizer. In the present paper we consider the case of a
-  \emph{\definable quotients}, where the quotient set arises as the
+  \emph{\definable quotient}, where the quotient set arises as the
   codomain of a normalization function --- this corresponds to the
   notion of a split coequalizer.  We give a number of examples of
   \definable quotients and notice that it is preferable to use the
@@ -530,11 +530,11 @@ where $\dlift f=\lift f p$ and $p \colon \forall a,b\cdot a\sim b \to f\,a \equi
 We now consider a general construction which allows us to construct quotients in type theory.
 
 \begin{definition}\label{def:defquotients}
-An \emph{\definable quotient} is a prequotient $(Q, \class{\dotph}, \sound)$ on a setoid $(A,\sim)$ along with
+\emph{\Adefinable quotient} is a prequotient $(Q, \class{\dotph}, \sound)$ on a setoid $(A,\sim)$ along with
 \begin{align*}
 \emb &: Q \to A\\
 \complete &: (a : A) \to \emb {\class a} \sim a\\
-\stable &: (q:Q) \to \class{\emb\,q} \equiv q\\
+\stable &: (q:Q) \to \class{\emb\,q} \equiv q.\\
 \end{align*}
 \end{definition}
 
@@ -823,14 +823,14 @@ It seems that all sets definable in ordinary type theory~(using only the set for
 \label{sec:conclusions}
 
 The main result of the present work is that the notion of \adefinable
-quotient in intensional type theory is useful and doesn't require any
+quotient in intensional type theory is useful and does not require any
 extension of the theory. We hope that our formalisation of the notion
 and the examples help to popularize this notion among people using
 type theory. Some of the examples are maybe surprising, i.e. the
-possibility to define unordered pairs and multisets for 1st order
+possibility to define unordered pairs and multisets for first order
 function types, even though the order (and equality) of the elements
 are undecidable. Assuming an internal proof of local continuity, this
-can be even extended beyond 1st order. We also show that under the
+can be even extended beyond first order. We also show that under the
 assumption of local continuity the set of real numbers cannot be
 defined by normalisation. This also extends to other examples such as
 the partiality monad \todo{Reviewer 3: either weaken claim or show something about the partiality monad [Thomas]}. These natural examples strongly suggest that
